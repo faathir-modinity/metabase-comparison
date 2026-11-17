@@ -981,12 +981,12 @@
     </div>
     <div class="mobile-tabs" role="tablist">
       <button class="mobile-tab-btn active" data-target="overview">01 Overview</button>
-      <button class="mobile-tab-btn" data-target="cloud-run">02 Cloud Run + IAP</button>
+      <button class="mobile-tab-btn" data-target="cloud-run">02 GCP Defense vs SaaS</button>
       <button class="mobile-tab-btn" data-target="cost-simulator">03 Cost Simulator</button>
       <button class="mobile-tab-btn" data-target="capability-matrix">04 7-Option Matrix</button>
       <button class="mobile-tab-btn" data-target="alternatives">05 Lightdash &amp; Tableau</button>
       <button class="mobile-tab-btn" data-target="migration-plan">06 AI &amp; Migration</button>
-      <button class="mobile-tab-btn" data-target="cloud-run-blueprint">07 Tech Blueprint</button>
+      <button class="mobile-tab-btn" data-target="cloud-run-blueprint">07 DevOps &amp; InfraSec</button>
     </div>
   </header>
 
@@ -1007,7 +1007,7 @@
               <span class="nav-num">01</span>
               <span class="nav-text-wrap">
                 <span class="nav-title">Executive Overview</span>
-                <span class="nav-caption">Plain-English summary &amp; top 3 choices</span>
+                <span class="nav-caption">Plain-English summary &amp; top choices</span>
               </span>
             </button>
           </li>
@@ -1015,8 +1015,8 @@
             <button class="nav-btn" data-target="cloud-run">
               <span class="nav-num">02</span>
               <span class="nav-text-wrap">
-                <span class="nav-title">Cloud Run + Google IAP</span>
-                <span class="nav-caption">August 2026 replay &amp; zero-day defense</span>
+                <span class="nav-title">GCP Defense vs. SaaS Risk</span>
+                <span class="nav-caption">August 2026 replay &amp; risk transfer</span>
               </span>
             </button>
           </li>
@@ -1060,8 +1060,8 @@
             <button class="nav-btn" data-target="cloud-run-blueprint">
               <span class="nav-num">07</span>
               <span class="nav-text-wrap">
-                <span class="nav-title">Cloud Run Tech Blueprint</span>
-                <span class="nav-caption">Decisions &amp; runbook for DevOps/InfraSec</span>
+                <span class="nav-title">DevOps &amp; InfraSec Review</span>
+                <span class="nav-caption">GCP VM hardening &amp; access decisions</span>
               </span>
             </button>
           </li>
@@ -1139,28 +1139,28 @@
         </div>
 
         <div class="callout-box">
-          <h3>The Core Problem in Plain Terms</h3>
+          <h3>The Core Executive Decision: Defend on GCP (~Rp 21.6M/yr) vs. Transfer Host Risk to SaaS (~Rp 1.39B/yr)</h3>
           <p>
-            Running Metabase on a traditional virtual machine (VM) means our team has to manually update the server, and the Metabase login page is visible to the public internet. However, moving to per-user cloud plans like <strong>Metabase Starter (~Rp 659M/yr)</strong> or <strong>Tableau (~Rp 1.69B/yr)</strong> either strips away our security audit logs or forces us to spend 3 to 6 months rebuilding 407 dashboards from scratch.
+            After reviewing with <strong>DevOps</strong> and <strong>InfraSec</strong>, the decision comes down to who owns host security responsibility. If we want to defend inside our own Google Cloud, we do not need to re-platform to Cloud Run; DevOps can lock down external access on our <strong>existing GCP VM with a Load Balancer, Cloud Armor WAF, and Google IAP (~Rp 21.6M/yr)</strong>. If leadership prefers to transfer 100% of server patching and host responsibility to an external vendor, we must choose <strong>Metabase Pro Cloud (~Rp 1.39B/yr)</strong> because cheaper plans like Starter delete our security audit logs.
           </p>
         </div>
 
         <h3 style="margin-block-end: 1rem;">Top 3 Practical Paths for Modinity</h3>
 
         <div class="verdict-grid">
-          <!-- Path A: Cloud Run + IAP -->
+          <!-- Path A: Hardened GCP VM -->
           <div class="verdict-card highlight-teal">
             <div>
-              <span class="verdict-badge badge-teal">Recommended Option A: Serverless GCP Upgrade</span>
-              <h3>Metabase Free on Google Cloud Run + Google IAP</h3>
-              <div class="verdict-price">~Rp 30.2M / yr <span>(~Rp 2.5M / month flat)</span></div>
+              <span class="verdict-badge badge-teal">Option A: Defend on GCP (DevOps Aligned)</span>
+              <h3>Hardened GCP VM + Cloud Armor WAF / IAP</h3>
+              <div class="verdict-price">~Rp 21.6M / yr <span>(~Rp 1.8M / month flat)</span></div>
               <p style="font-size:0.88rem;">
-                Instead of paying a vendor Rp 1.4B/year to manage a server, we move our existing free Metabase out of a traditional VM onto <strong>Google Cloud Run</strong> behind a <strong>Google Employee Login Gate (IAP)</strong>.
+                Keep our existing, post-August hardened VM on Google Cloud (zero database or container migration needed) and place a <strong>Global HTTPS Load Balancer + Cloud Armor WAF / Google IAP</strong> in front of it.
               </p>
               <ul class="clean-list">
-                <li><strong>Hackers cannot reach Metabase:</strong> Google blocks all internet traffic at the front gate unless the user is already signed into an official <code>@modinity.com</code> Google account.</li>
-                <li><strong>Zero server maintenance:</strong> Google manages the database (Cloud SQL), and an automatic weekly job updates Metabase with zero downtime.</li>
-                <li><strong>Zero disruption:</strong> Keeps all 407 dashboards, 7,365 charts, audit logs, and AI tools intact in <strong>2 to 3 hours</strong>.</li>
+                <li><strong>Blocks external attackers at the gate:</strong> Cloud Armor WAF blocks SQL injection payloads and Google IAP restricts external access before traffic reaches the VM.</li>
+                <li><strong>Zero migration risk:</strong> Keeps the exact stack already running today (407 dashboards, 7,365 charts, audit logs, and AI tools) with zero re-platforming.</li>
+                <li><strong>Trade-off (Internal Host Ownership):</strong> Our internal DevOps &amp; InfraSec teams remain responsible for server patching and host maintenance.</li>
               </ul>
             </div>
           </div>
@@ -1168,16 +1168,16 @@
           <!-- Path B: Metabase Pro Cloud -->
           <div class="verdict-card highlight-blue">
             <div>
-              <span class="verdict-badge badge-blue">Recommended Option B: Turnkey Vendor SaaS</span>
+              <span class="verdict-badge badge-blue">Option B: SaaS Risk Transfer (InfraSec Aligned)</span>
               <h3>Metabase Pro Cloud (Official Managed SaaS)</h3>
               <div class="verdict-price">~Rp 1.39B / yr <span>(Rp 97.6M -&gt; Rp 133.5M / mo)</span></div>
               <p style="font-size:0.88rem;">
-                If leadership prefers a 100% vendor-hosted SaaS contract with official SOC 2 compliance and built-in Row-Level Security, <strong>Metabase Pro Cloud</strong> is the only cloud upgrade that does not downgrade our capabilities.
+                If leadership wants to transfer 100% of host security, 24/7 zero-day patching, and SOC 2 compliance responsibility to the software vendor, <strong>Metabase Pro Cloud</strong> is the only SaaS tier that keeps our audit logs and AI workflows intact.
               </p>
               <ul class="clean-list">
-                <li><strong>1-day migration:</strong> Uses Metabase's built-in Cloud Migrator to copy all 407 dashboards and 7,365 charts automatically.</li>
-                <li><strong>Keeps all AI &amp; Audit features:</strong> Preserves 100% of Antigravity AI dashboard creation, Gemini Enterprise (<code>ge-mcp</code>), and built-in Usage &amp; Audit Logs.</li>
-                <li><strong>Unlocks Row-Level Security:</strong> Lets a single dashboard automatically filter rows based on which brand an employee belongs to.</li>
+                <li><strong>Full vendor risk transfer:</strong> Metabase Inc. owns server infrastructure, WAF rules, and 24/7 security patching SLAs.</li>
+                <li><strong>1-day migration &amp; full continuity:</strong> Built-in Cloud Migrator copies all 407 dashboards and 7,365 charts automatically, while preserving Antigravity AI, <code>ge-mcp</code>, and Audit Logs.</li>
+                <li><strong>Unlocks Row-Level Security:</strong> Lets a single dashboard automatically filter rows by brand or store manager.</li>
               </ul>
             </div>
           </div>
@@ -1189,10 +1189,10 @@
               <h3>Starter, Lightdash &amp; Tableau Trade-Offs</h3>
               <div class="verdict-price">Rp 583M to Rp 1.69B / yr</div>
               <p style="font-size:0.88rem;">
-                Each of the remaining options introduces a major operational or security penalty:
+                Each of the remaining options introduces a major operational or compliance penalty:
               </p>
               <ul class="clean-list">
-                <li><strong>Metabase Starter (~Rp 659M/yr):</strong> Costs half a billion Rupiah per year while <strong>deleting our security audit logs</strong> (we can no longer see who viewed or exported data) and adding zero new security features over Free.</li>
+                <li><strong>Metabase Starter (~Rp 659M/yr):</strong> Fails compliance risk transfer because it <strong>deletes our <code>query_execution</code> audit logs</strong> (leaving us unable to report affected rows to Komdigi under UU PDP if an account is compromised).</li>
                 <li><strong>Lightdash Cloud (~Rp 583M/yr):</strong> Flat-rate pricing for unlimited users, but <strong>cannot connect to our live Odoo ERP</strong> alongside BigQuery, blocks quick custom SQL charts, and requires rebuilding all 407 dashboards.</li>
                 <li><strong>Tableau Cloud (~Rp 1.69B/yr):</strong> Requires a 1-year upfront contract, locks 408 users into read-only mode, breaks our AI tools, and requires 3 to 6 months of manual rebuilding.</li>
               </ul>
@@ -1202,67 +1202,67 @@
 
         <div class="page-pager">
           <span></span>
-          <button class="pager-btn primary" data-goto="cloud-run">Next: How Cloud Run + Google IAP Works -&gt;</button>
+          <button class="pager-btn primary" data-goto="cloud-run">Next: GCP VM Defense vs. SaaS Risk Transfer -&gt;</button>
         </div>
       </section>
 
       <!-- =========================================================
-           PAGE 02: METABASE ON GOOGLE CLOUD RUN + IAP
+           PAGE 02: GCP VM DEFENSE VS SAAS RISK TRANSFER
            ========================================================= -->
       <section class="page-view" id="view-cloud-run">
         <header class="view-header">
           <div>
-            <span class="view-kicker">Chapter 02 / Recommended Architecture Upgrade</span>
-            <h2 class="view-title">Metabase on Google Cloud Run + Google Login Wall (IAP)</h2>
+            <span class="view-kicker">Chapter 02 / Security &amp; Responsibility Analysis</span>
+            <h2 class="view-title">Hardened GCP VM (~Rp 21.6M/yr) vs. SaaS Risk Transfer (~Rp 1.39B/yr)</h2>
             <p class="view-lead">
-              How we eliminate manual VM patching and public internet exposure for <strong>~Rp 2.5M/month</strong> while keeping 100% of our 407 dashboards and AI workflows.
+              How locking down our existing GCP VM prevents the August 2026 incident for <strong>~Rp 1.8M/month</strong>, and what actually changes when we pay Rp 1.39B/year to transfer host responsibility to SaaS.
             </p>
           </div>
         </header>
 
         <div class="arch-comparison">
-          <!-- Old VM Architecture -->
+          <!-- August 2026 Unprotected VM -->
           <div class="arch-box">
-            <span class="verdict-badge badge-warn">Option 1: Current Virtual Machine (VM) Setup</span>
+            <span class="verdict-badge badge-warn">Before August 14, 2026: Unprotected Public VM</span>
             <h3>Like a House with the Front Door on a Public Street</h3>
             <p style="font-size:0.88rem;">
-              Today, Metabase runs inside a standard Virtual Machine. While it works well, it has two classic operational headaches that concern IT leadership:
+              Prior to the August 14 remediation, Metabase ran on a Virtual Machine directly exposed to the internet without edge filtering:
             </p>
             <div class="flow-steps">
               <div class="flow-node expose-node">
-                <strong>1. Public Internet Can Reach the Metabase Login Page</strong>
-                Anyone on the internet can send web requests to <code>modisight.modinity.com</code>. If a new software bug is discovered in Metabase before we update it, external bots can probe the login screen or API.
+                <strong>1. Public Internet Reached the Login API Directly</strong>
+                External bots could send hundreds of requests straight to <code>POST /api/session/reset_password</code> without any Web Application Firewall (WAF) or Google login gate in front.
+              </div>
+              <div class="flow-node expose-node">
+                <strong>2. Stray Firewall Rule Exposed Port 3000</strong>
+                An untargeted firewall rule (<code>airflow-8080</code>) opened port <code>3000</code> across all VMs, letting external traffic bypass <code>nginx</code>. (Fixed on Aug 14).
               </div>
               <div class="flow-node">
-                <strong>2. Manual Server Maintenance</strong>
-                An engineer has to log into the server to update Linux, manage disk space, and pull new Metabase updates.
-              </div>
-              <div class="flow-node">
-                <strong>3. Database Lives on the Same Setup</strong>
-                Backup recovery and database maintenance depend on our internal server scripts.
+                <strong>3. No Automated Patch Alerting</strong>
+                Security patches depended on manual checks without an edge WAF to shield the server during the patching window.
               </div>
             </div>
           </div>
 
-          <!-- New Cloud Run + IAP Architecture -->
+          <!-- Hardened Existing GCP VM -->
           <div class="arch-box good-arch">
-            <span class="verdict-badge badge-teal">Option 2: Serverless Google Cloud Run + Google IAP</span>
-            <h3>Like a Vault Inside Google's High-Security Building</h3>
+            <span class="verdict-badge badge-teal">Option 2: Hardened Existing GCP VM (Load Balancer + WAF / IAP)</span>
+            <h3>Like a Vault Behind Google's Security Checkpoint</h3>
             <p style="font-size:0.88rem;">
-              We delete the Virtual Machine completely and run the exact same free Metabase software inside Google's serverless infrastructure:
+              As DevOps confirmed, we do not need to re-platform to Cloud Run. We keep our existing hardened VM and place Google's edge security directly in front of it:
             </p>
             <div class="flow-steps">
               <div class="flow-node shield-node">
-                <strong>1. Google Identity-Aware Proxy (IAP) Blocks Strangers at the Gate</strong>
-                Before a single request ever touches Metabase, Google checks if the visitor is logged into an active <code>@modinity.com</code> Google Workspace account with 2-Step Verification. Hackers and scanners on the internet are blocked by Google's front door and cannot even see Metabase.
+                <strong>1. Cloud Armor WAF + Optional Google IAP at the Front Gate</strong>
+                Cloud Armor WAF (<code>sqli-v33-stable</code>) blocks SQL injection payloads and throttles login attempts at Google's edge. If Google IAP (or VPN/Zero-Trust access) is enabled, external strangers cannot even see the Metabase login page without an authorized Google account.
               </div>
               <div class="flow-node shield-node">
-                <strong>2. Serverless Cloud Run Updates Itself Weekly</strong>
-                There is no server OS to maintain. Every Sunday night, an automated GitHub routine fetches the newest patched version of Metabase and swaps it in with zero downtime.
+                <strong>2. Direct VM Public Access Closed</strong>
+                The VM firewall only accepts traffic from Google's Load Balancer IP ranges, making port-bypass attacks impossible.
               </div>
               <div class="flow-node shield-node">
-                <strong>3. Managed Google Cloud SQL Handles Backups</strong>
-                All 407 dashboards and audit logs live in Google Cloud SQL with automatic daily backups and point-in-time recovery managed by Google.
+                <strong>3. Post-August Protections Already Active on the VM</strong>
+                Database connection encryption (<code>MB_ENCRYPTION_SECRET_KEY</code>), BigQuery PII Policy Tag masking across 83 tables, and removal of marketplace tokens from BigQuery are already live.
               </div>
             </div>
           </div>
@@ -1271,27 +1271,27 @@
         <div class="verdict-grid">
           <div class="metric-card">
             <div class="metric-label">Monthly Infrastructure Cost</div>
-            <div class="metric-val">~Rp 2.5M</div>
-            <div class="metric-note">~$80 Cloud Run + ~$50 Cloud SQL + ~$10 Load Balancer ($0 per user for 580+ users)</div>
+            <div class="metric-val">~Rp 1.8M</div>
+            <div class="metric-note">~$60 existing GCP VM + ~$40 Global HTTPS Load Balancer &amp; Cloud Armor WAF ($0 per user)</div>
           </div>
           <div class="metric-card">
-            <div class="metric-label">Migration Time</div>
-            <div class="metric-val">2 to 3 Hours</div>
-            <div class="metric-note">Copy existing Postgres database into Cloud SQL and point Cloud Run to it</div>
+            <div class="metric-label">Setup Time on Existing VM</div>
+            <div class="metric-val">1 to 2 Hours</div>
+            <div class="metric-note">Attach Load Balancer + Cloud Armor WAF to existing VM Instance Group (Zero DB/App migration)</div>
           </div>
           <div class="metric-card">
             <div class="metric-label">Annual Savings vs. Pro Cloud</div>
-            <div class="metric-val">Rp 1.36B / yr</div>
-            <div class="metric-note">Saves 97.8% of SaaS licensing costs while solving the security &amp; patching concern</div>
+            <div class="metric-val">Rp 1.37B / yr</div>
+            <div class="metric-note">Saves 98.4% of SaaS licensing costs while locking down external access on GCP</div>
           </div>
         </div>
 
         <!-- Case Study: August 2026 Replay -->
         <div class="panel-card" style="margin-block-end: 2rem;">
           <span class="verdict-badge badge-teal">Case Study / Replay of the August 2026 Incident</span>
-          <h3 style="font-size: 1.2rem; margin-block-end: 0.4rem;">What Would Have Happened in August 2026 on Cloud Run + Google IAP?</h3>
+          <h3 style="font-size: 1.2rem; margin-block-end: 0.4rem;">What Would Have Happened in August 2026 on a Hardened GCP VM (WAF + Restricted Access)?</h3>
           <p style="margin-block-end: 1.25rem; max-inline-size: 75ch;">
-            The August 2026 incident succeeded because three specific weaknesses lined up at the same time on our Virtual Machine. Here is what happened on the VM versus what happens on <strong>Google Cloud Run + Load Balancer (Google IAP &amp; Cloud Armor)</strong>:
+            The August 2026 incident succeeded because three weaknesses lined up at the same time on an exposed VM. Here is how locking down the existing GCP VM with <strong>Load Balancer + Cloud Armor WAF + Restricted External Access (IAP)</strong> stops every stage:
           </p>
 
           <div class="table-wrap" style="margin-block-end: 0;">
@@ -1299,8 +1299,8 @@
               <thead>
                 <tr>
                   <th style="inline-size: 15rem;">August 2026 Failure Point</th>
-                  <th style="inline-size: 20rem;">What Happened on the VM (August 10 to 13, 2026)</th>
-                  <th class="col-highlight-teal" style="inline-size: 22rem;">What Happens on Cloud Run + Google IAP</th>
+                  <th style="inline-size: 20rem;">What Happened on the Unprotected VM (Aug 10 to 13, 2026)</th>
+                  <th class="col-highlight-teal" style="inline-size: 22rem;">What Happens on Hardened GCP VM (Load Balancer + WAF / IAP)</th>
                 </tr>
               </thead>
               <tbody>
@@ -1311,30 +1311,30 @@
                     <div class="cell-copy">An external automated scanner sent 483 requests to <code>POST /api/session/reset_password</code> without logging in, using a SQL injection bug (CVE-2026-72898) to create admin sessions.</div>
                   </td>
                   <td class="col-highlight-teal">
-                    <span class="status-pill pill-good">100% Blocked at Google's Gate</span>
-                    <div class="cell-copy">With Google IAP active, Google checks for a valid <code>@modinity.com</code> login with 2FA before forwarding any request. All 483 unauthenticated requests are rejected by Google with <code>401 Unauthorized</code> before touching Metabase. Cloud Armor WAF (<code>sqli-v33-stable</code>) also blocks SQL injection payloads at the edge.</div>
+                    <span class="status-pill pill-good">100% Blocked at Google's Edge</span>
+                    <div class="cell-copy">Cloud Armor WAF (<code>sqli-v33-stable</code>) blocks the SQL injection payload at the Load Balancer and throttles <code>/api/session/*</code>. With Google IAP (or external access restriction) active, unauthenticated requests are rejected with <code>401 Unauthorized</code> before touching the VM.</div>
                   </td>
                 </tr>
                 <tr>
                   <td><strong>2. Accidental Open Port 3000 Firewall Bypass</strong></td>
                   <td>
                     <span class="status-pill pill-bad">Bypassed Web Server</span>
-                    <div class="cell-copy">A broad GCP firewall rule (<code>airflow-8080</code>) meant for another tool accidentally opened port <code>3000</code> across all VMs. The attacker connected straight to the VM IP on port <code>3000</code>, bypassing <code>nginx</code> completely.</div>
+                    <div class="cell-copy">A broad GCP firewall rule (<code>airflow-8080</code>) accidentally opened port <code>3000</code> across all VMs. The attacker connected straight to the VM IP on port <code>3000</code>, bypassing <code>nginx</code>.</div>
                   </td>
                   <td class="col-highlight-teal">
-                    <span class="status-pill pill-good">Physically Impossible</span>
-                    <div class="cell-copy">Cloud Run is serverless, has no public VM IP or open ports like <code>:3000</code>, and ignores GCE VM firewall rules. With ingress locked to <code>internal-and-cloud-load-balancing</code>, no one can bypass Google's Load Balancer or IAP.</div>
+                    <span class="status-pill pill-good">Closed &amp; Restricted to LB Only</span>
+                    <div class="cell-copy">Port <code>3000</code> is bound strictly to <code>127.0.0.1</code> (loopback) and the VM firewall only accepts ingress from Google's Load Balancer ranges (<code>35.191.0.0/16</code>, <code>130.211.0.0/22</code>). Direct IP probing fails completely.</div>
                   </td>
                 </tr>
                 <tr>
                   <td><strong>3. 4-Day Patch Delay (Aug 6 Fix vs. Aug 10 Attack)</strong></td>
                   <td>
-                    <span class="status-pill pill-warn">Waiting for Manual SSH Update</span>
-                    <div class="cell-copy">Metabase published the security fix (<code>v0.63.5</code>) on August 6. Our VM was still on <code>v0.63.1</code> four days later on August 10 because updates required manual engineering intervention.</div>
+                    <span class="status-pill pill-warn">No Edge Shield During Delay</span>
+                    <div class="cell-copy">Metabase published the security fix (<code>v0.63.5</code>) on August 6. Because there was no WAF or IAP in front of the VM, the unpatched server was exposed on August 10.</div>
                   </td>
                   <td class="col-highlight-teal">
-                    <span class="status-pill pill-good">Automated 24h Container Refresh</span>
-                    <div class="cell-copy">Because dashboards live in managed Google Cloud SQL, the Cloud Run container is stateless. An automated schedule pulls the latest patched Metabase release and deploys a fresh container automatically with zero downtime.</div>
+                    <span class="status-pill pill-good">Edge Shield + Automated Docker Update</span>
+                    <div class="cell-copy">Cloud Armor WAF and restricted external access shield the VM even before a patch is applied, while a scheduled weekly job updates the Docker container automatically.</div>
                   </td>
                 </tr>
               </tbody>
@@ -1342,46 +1342,41 @@
           </div>
         </div>
 
-        <!-- Zero-Day Tomorrow Comparison -->
+        <!-- Zero-Day Tomorrow & Risk Transfer Comparison -->
         <div class="panel-card" style="margin-block-end: 2rem;">
-          <span class="verdict-badge badge-blue">Future Resilience / Unpatched Zero-Day Scenario</span>
-          <h3 style="font-size: 1.2rem; margin-block-end: 0.4rem;">What If a Brand-New "Zero-Day" Bug Happens Tomorrow (Before Any Patch Exists)?</h3>
+          <span class="verdict-badge badge-blue">Future Resilience / Zero-Day Defense &amp; "Risk Transfer" Reality</span>
+          <h3 style="font-size: 1.2rem; margin-block-end: 0.4rem;">What If a Zero-Day Happens Tomorrow? (And What "Risk Transfer to SaaS" Actually Means)</h3>
           <p style="margin-block-end: 1.25rem; max-inline-size: 75ch;">
-            A "zero-day" is a brand-new software bug that hackers discover before the software vendor has written a fix. Notably, <strong>before August 6, 2026, even official Metabase Cloud was exploited</strong> during the zero-day phase because its login page is open to the public internet. Here is how the three architectures hold up when no patch exists yet:
+            As InfraSec highlighted, choosing between self-hosted GCP and SaaS is a question of <strong>who owns host responsibility</strong>. Notably, <strong>before August 6, 2026, even official Metabase Cloud was exploited</strong> during the zero-day phase because its login page is open to the public internet. Here is how each option compares on technical defense and legal/operational responsibility:
           </p>
 
           <div class="verdict-grid" style="margin-block-end: 0;">
             <div class="metric-card">
-              <span class="status-pill pill-bad">1. Traditional Public VM</span>
-              <h4 style="margin-block: 0.4rem;">Exposed Until Patched</h4>
+              <span class="status-pill pill-good">1. Hardened GCP VM (WAF + IAP)</span>
+              <h4 style="margin-block: 0.4rem;">Strongest Edge Gate, Internal Custodian</h4>
               <p style="font-size: 0.84rem; margin: 0;">
-                Anyone on the internet can reach the Metabase login screen and API endpoints directly. If a pre-login zero-day bug drops, external bots can exploit it before a patch is released.
+                <strong>Technical Defense:</strong> If external access is gated by Google IAP (or VPN), external hackers cannot even reach the Metabase login page during a zero-day.<br>
+                <strong>Responsibility:</strong> Modinity's internal DevOps &amp; InfraSec teams remain responsible for maintaining the GCP host (~Rp 21.6M/yr).
+              </p>
+            </div>
+
+            <div class="metric-card" style="border: 2px solid var(--accent-blue); background-color: var(--accent-blue-soft);">
+              <span class="status-pill pill-good">2. Metabase Pro Cloud (~Rp 1.39B/yr)</span>
+              <h4 style="margin-block: 0.4rem;">Full Operational Risk Transfer + Audit Logs</h4>
+              <p style="font-size: 0.84rem; margin: 0;">
+                <strong>Technical Defense:</strong> Metabase's security team patches cloud servers 24/7 as soon as fixes exist.<br>
+                <strong>Responsibility:</strong> Transfers 100% of host/patching responsibility to Metabase Inc. while keeping the <strong>Audit Logs</strong> required to answer Komdigi (UU PDP) if a user account is ever compromised.
               </p>
             </div>
 
             <div class="metric-card">
-              <span class="status-pill pill-warn">2. Official Metabase Cloud SaaS</span>
-              <h4 style="margin-block: 0.4rem;">Fast Patching, Public Login</h4>
+              <span class="status-pill pill-bad">3. Metabase Starter Cloud (~Rp 659M/yr)</span>
+              <h4 style="margin-block: 0.4rem;">Dangerous Compliance Blind Spot</h4>
               <p style="font-size: 0.84rem; margin: 0;">
-                Metabase's team patches their cloud servers first once a fix is written, which stops delayed-patching attacks. However, because <code>*.metabaseapp.com</code> login pages are public on the internet, pre-login zero-days can still reach the app before a fix exists.
-              </p>
-            </div>
-
-            <div class="metric-card" style="border: 2px solid var(--accent-primary); background-color: var(--accent-primary-soft);">
-              <span class="status-pill pill-good">3. Cloud Run Behind Google IAP</span>
-              <h4 style="margin-block: 0.4rem;">Shielded Even Before a Patch Exists</h4>
-              <p style="font-size: 0.84rem; margin: 0;">
-                Even if Metabase has an unpatched zero-day bug tomorrow, an external hacker on the internet cannot reach Metabase at all. They hit <strong>Google's login wall</strong> first and are blocked unless they have a real <code>@modinity.com</code> account with 2-Step Verification.
+                <strong>The Trap:</strong> Under Indonesian law (UU PDP / Komdigi), Modinity remains the legal <em>Data Controller</em> even when using SaaS. Starter transfers server patching to Metabase, <strong>but deletes our <code>query_execution</code> audit log</strong>, making it impossible to prove to Komdigi what data was accessed during an incident.
               </p>
             </div>
           </div>
-        </div>
-
-        <div class="callout-box">
-          <h3>When would we still need Metabase Pro Cloud (~Rp 1.39B/yr) instead of Cloud Run?</h3>
-          <p>
-            Only if Modinity specifically needs <strong>Row-Level Security (RLS)</strong> (where 50 store managers open the exact same dashboard URL and Metabase automatically filters the rows so each manager only sees their own store) or an external <strong>SOC 2 vendor certificate</strong> from Metabase. Today, we handle store and brand separation at Rp 0 cost using separate Metabase folders (Collections) and BigQuery views.
-          </p>
         </div>
 
         <div class="page-pager">
@@ -1463,7 +1458,7 @@
             </div>
             <div id="sim-bars"></div>
             <div style="margin-block-start:1.25rem; padding:0.85rem 1rem; background:var(--bg-subtle); border-radius:var(--radius-sm); font-size:0.82rem; color:var(--text-body);">
-              <strong>Why per-user pricing balloons so fast:</strong> Every time Modinity opens new stores or adds brand team members (+14 users/month), Metabase Cloud and Tableau automatically increase our monthly bill, whereas <strong>Cloud Run Metabase</strong> and <strong>Lightdash Cloud</strong> charge Rp 0 for additional viewers.
+              <strong>Why per-user pricing balloons so fast:</strong> Every time Modinity opens new stores or adds brand team members (+14 users/month), Metabase Cloud and Tableau automatically increase our monthly bill, whereas our <strong>Hardened GCP VM</strong> and <strong>Lightdash Cloud</strong> charge Rp 0 for additional viewers.
             </div>
           </div>
         </div>
@@ -1474,7 +1469,7 @@
           <div class="cost-card">
             <div>
               <span class="status-pill pill-neutral">1. Current VM</span>
-              <h4>Metabase Free (VM)</h4>
+              <h4>Metabase Free (Current VM)</h4>
               <div class="cost-formula">$0 license + ~$60/mo GCP VM</div>
               <div class="cost-yr-big" id="c1-fc">Rp 13.0M / yr</div>
               <div class="cost-yr-usd" id="c1-usd">$720 / year forecasted</div>
@@ -1488,16 +1483,16 @@
 
           <div class="cost-card rec-border">
             <div>
-              <span class="status-pill pill-good">2. Best Value Upgrade</span>
-              <h4>Metabase Free (Cloud Run + IAP)</h4>
-              <div class="cost-formula">$0 license + ~$140/mo Serverless GCP</div>
-              <div class="cost-yr-big" id="c2-fc">Rp 30.2M / yr</div>
-              <div class="cost-yr-usd" id="c2-usd">$1,680 / year forecasted</div>
+              <span class="status-pill pill-good">2. DevOps GCP Defense</span>
+              <h4>Hardened GCP VM (WAF + IAP)</h4>
+              <div class="cost-formula">$0 license + ~$100/mo VM + LB &amp; WAF</div>
+              <div class="cost-yr-big" id="c2-fc">Rp 21.6M / yr</div>
+              <div class="cost-yr-usd" id="c2-usd">$1,200 / year forecasted</div>
             </div>
             <div class="cost-meta-table">
-              <div class="cost-meta-row"><span>Month 1 (Now):</span> <strong id="c2-m1">Rp 2.5M</strong></div>
-              <div class="cost-meta-row"><span>Month 12:</span> <strong id="c2-m12">Rp 2.5M</strong></div>
-              <div class="cost-meta-row"><span>1-Yr Flat (No Growth):</span> <strong id="c2-flat">Rp 30.2M</strong></div>
+              <div class="cost-meta-row"><span>Month 1 (Now):</span> <strong id="c2-m1">Rp 1.8M</strong></div>
+              <div class="cost-meta-row"><span>Month 12:</span> <strong id="c2-m12">Rp 1.8M</strong></div>
+              <div class="cost-meta-row"><span>1-Yr Flat (No Growth):</span> <strong id="c2-flat">Rp 21.6M</strong></div>
             </div>
           </div>
 
@@ -1578,7 +1573,7 @@
         </div>
 
         <div class="page-pager">
-          <button class="pager-btn" data-goto="cloud-run">&lt;- Previous: Cloud Run + IAP</button>
+          <button class="pager-btn" data-goto="cloud-run">&lt;- Previous: GCP Defense vs. SaaS Risk</button>
           <button class="pager-btn primary" data-goto="capability-matrix">Next: 7-Option Capability Matrix -&gt;</button>
         </div>
       </section>
@@ -1592,7 +1587,7 @@
             <span class="view-kicker">Chapter 04 / Side-by-Side Comparison</span>
             <h2 class="view-title">Complete 7-Option Capability Matrix (in Plain English)</h2>
             <p class="view-lead">
-              Filter by topic below to see how each option handles security, audit trails, AI dashboard creation, and daily business reporting.
+              Filter by topic below to see how each option handles host responsibility (risk transfer), security, audit trails, AI dashboard creation, and daily business reporting.
             </p>
           </div>
         </header>
@@ -1600,7 +1595,7 @@
         <div class="toolbar-row">
           <div class="filter-group" role="tablist">
             <button class="chip-btn active" data-cat-filter="all">Show All Topics</button>
-            <button class="chip-btn" data-cat-filter="security">Security &amp; Audit Logs</button>
+            <button class="chip-btn" data-cat-filter="security">Security, Risk Transfer &amp; Audit</button>
             <button class="chip-btn" data-cat-filter="ai">AI &amp; Automation</button>
             <button class="chip-btn" data-cat-filter="business">Daily Business Use &amp; Migration</button>
           </div>
@@ -1612,7 +1607,7 @@
               <tr>
                 <th class="col-sticky" style="inline-size:13.5rem;">Requirement</th>
                 <th style="inline-size:12.5rem;">1. Metabase Free (Current VM)</th>
-                <th class="col-highlight-teal" style="inline-size:13.5rem;">2. Metabase Free (Cloud Run + IAP)</th>
+                <th class="col-highlight-teal" style="inline-size:13.5rem;">2. Hardened GCP VM (WAF + IAP)</th>
                 <th style="inline-size:12.5rem;">3. Metabase Starter (Cloud)</th>
                 <th class="col-highlight-blue" style="inline-size:13.5rem;">4. Metabase Pro (Cloud)</th>
                 <th style="inline-size:12rem;">5. Metabase Pro (Self-Hosted)</th>
@@ -1623,17 +1618,48 @@
             <tbody>
               <!-- Section: Security -->
               <tr class="section-divider" data-cat="security">
-                <td colspan="8">Security, Server Updates &amp; Compliance Audit Logs</td>
+                <td colspan="8">Host Responsibility (Risk Transfer), Edge Security &amp; Compliance Audit Logs</td>
+              </tr>
+              <tr data-cat="security">
+                <td class="col-sticky"><strong>Who owns host security &amp; patching responsibility? (Risk Transfer)</strong></td>
+                <td>
+                  <span class="status-pill pill-warn">Internal Team</span>
+                  <div class="cell-copy">Modinity DevOps &amp; InfraSec own server maintenance and patching SLAs.</div>
+                </td>
+                <td class="col-highlight-teal">
+                  <span class="status-pill pill-neutral">Internal Team (With GCP WAF)</span>
+                  <div class="cell-copy">Modinity DevOps &amp; InfraSec own the VM, shielded by Google Cloud Armor WAF &amp; automated Docker updates.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Transferred to Metabase</span>
+                  <div class="cell-copy">Metabase Inc. owns host security &amp; patching 24/7 (but we still hold UU PDP legal liability).</div>
+                </td>
+                <td class="col-highlight-blue">
+                  <span class="status-pill pill-good">Transferred to Metabase</span>
+                  <div class="cell-copy">Metabase Inc. owns host security, SOC 2 compliance, and 24/7 patching SLAs.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-bad">Internal Despite Cost</span>
+                  <div class="cell-copy">We pay Rp 1.4B/yr and still hold 100% of host responsibility internally.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Transferred to Lightdash</span>
+                  <div class="cell-copy">Lightdash Inc. owns host security and patching.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Transferred to Salesforce</span>
+                  <div class="cell-copy">Salesforce / Tableau owns host security and patching.</div>
+                </td>
               </tr>
               <tr data-cat="security">
                 <td class="col-sticky"><strong>Protection against internet hackers &amp; software bugs</strong></td>
                 <td>
                   <span class="status-pill pill-warn">Public Login Page</span>
-                  <div class="cell-copy">Login page is reachable from the internet; relies on firewall rules and manual server updates.</div>
+                  <div class="cell-copy">Login page is reachable from the internet without an edge WAF in front.</div>
                 </td>
                 <td class="col-highlight-teal">
-                  <span class="status-pill pill-good">Google Front Gate (IAP)</span>
-                  <div class="cell-copy">Strangers on the internet are blocked by Google before reaching Metabase. Only logged-in <code>@modinity.com</code> staff can enter.</div>
+                  <span class="status-pill pill-good">Cloud Armor WAF + IAP Gate</span>
+                  <div class="cell-copy">Cloud Armor blocks SQL injection at Google's edge; optional Google IAP blocks unauthenticated external visitors before reaching the VM.</div>
                 </td>
                 <td>
                   <span class="status-pill pill-good">Vendor Managed</span>
@@ -1663,8 +1689,8 @@
                   <div class="cell-copy">Engineers must log into the VM to run updates.</div>
                 </td>
                 <td class="col-highlight-teal">
-                  <span class="status-pill pill-good">Automated on GCP</span>
-                  <div class="cell-copy">Google Cloud SQL manages daily DB backups; weekly schedule auto-updates the Metabase container with zero downtime.</div>
+                  <span class="status-pill pill-good">Automated Cron on VM</span>
+                  <div class="cell-copy">Scheduled weekly Docker patch job + automated GCP persistent disk snapshots.</div>
                 </td>
                 <td>
                   <span class="status-pill pill-good">Metabase Team</span>
@@ -1695,11 +1721,11 @@
                 </td>
                 <td class="col-highlight-teal">
                   <span class="status-pill pill-good">Full Audit History</span>
-                  <div class="cell-copy">Keeps 100% access to the internal log database on Google Cloud SQL.</div>
+                  <div class="cell-copy">Keeps 100% access to the internal <code>query_execution</code> audit log database.</div>
                 </td>
                 <td>
                   <span class="status-pill pill-bad">Deleted / Blind</span>
-                  <div class="cell-copy">Starter locks us out of the internal database and does not include the Pro Audit UI. We cannot track exports or queries.</div>
+                  <div class="cell-copy">Starter locks us out of the internal database and does not include the Pro Audit UI. We cannot track exports or queries for Komdigi UU PDP.</div>
                 </td>
                 <td class="col-highlight-blue">
                   <span class="status-pill pill-good">Built-In Audit UI</span>
@@ -1726,7 +1752,7 @@
                 </td>
                 <td class="col-highlight-teal">
                   <span class="status-pill pill-good">100% Inside GCP</span>
-                  <div class="cell-copy">Cloud Run, Cloud SQL, and BigQuery all stay inside our private Google Cloud network.</div>
+                  <div class="cell-copy">VM, Load Balancer, and BigQuery all stay inside our private Google Cloud network.</div>
                 </td>
                 <td>
                   <span class="status-pill pill-warn">Sent to External AWS</span>
@@ -2052,9 +2078,9 @@
         <header class="view-header">
           <div>
             <span class="view-kicker">Chapter 06 / Implementation &amp; Continuity</span>
-            <h2 class="view-title">Zero Capability Loss &amp; 1-Day Migration Plan</h2>
+            <h2 class="view-title">Zero Capability Loss &amp; 1-Day Rollout Plan</h2>
             <p class="view-lead">
-              Whether we choose <strong>Option 2 (Cloud Run + Google IAP at ~Rp 30M/yr)</strong> or <strong>Option 4 (Metabase Pro Cloud at ~Rp 1.39B/yr)</strong>, our team loses zero functionality and migration takes less than 1 day.
+              Whether we choose <strong>Option 2 (Hardened Existing GCP VM at ~Rp 21.6M/yr)</strong> or <strong>Option 4 (Metabase Pro Cloud at ~Rp 1.39B/yr)</strong>, our team loses zero functionality and rollout takes less than 1 day.
             </p>
           </div>
         </header>
@@ -2062,27 +2088,27 @@
         <div class="callout-box">
           <h3>Will Creating Dashboards from Antigravity Change or Downgrade?</h3>
           <p>
-            <strong>No. It works 100% identically in both Cloud Run and Metabase Pro Cloud.</strong> Our Antigravity workflow uses Metabase's standard web API (<code>/api/card</code> and <code>/api/dashboard</code>) to write SQL queries, create charts, and arrange 24-column dashboard layouts automatically. Moving to Cloud Run or Metabase Pro Cloud only changes the server URL and API key in our configuration file.
+            <strong>No. It works 100% identically in both the Hardened GCP VM and Metabase Pro Cloud.</strong> Our Antigravity workflow uses Metabase's standard web API (<code>/api/card</code> and <code>/api/dashboard</code>) to write SQL queries, create charts, and arrange 24-column dashboard layouts automatically. On our existing GCP VM, zero config changes are needed; on Metabase Pro Cloud, we simply update the URL and API key.
           </p>
         </div>
 
         <div class="arch-comparison">
-          <!-- Rollout Plan A: Cloud Run -->
+          <!-- Rollout Plan A: Hardened GCP VM -->
           <div class="arch-box good-arch">
-            <span class="verdict-badge badge-teal">Rollout Plan A: Metabase on Cloud Run + IAP (~2 to 3 Hours)</span>
-            <h3>How We Move to Serverless Google Cloud Run</h3>
+            <span class="verdict-badge badge-teal">Rollout Plan A: Harden Existing GCP VM (~1 to 2 Hours, Zero Migration)</span>
+            <h3>How We Lock Down Our Existing GCP VM (DevOps Aligned)</h3>
             <ul class="clean-list" style="margin-block-start:1rem;">
-              <li><strong>Step 1 (30 mins):</strong> Create a managed <strong>Google Cloud SQL for PostgreSQL</strong> instance with automated daily backups inside our GCP project.</li>
-              <li><strong>Step 2 (30 mins):</strong> Copy our existing Metabase database (all 407 dashboards, 7,365 charts, collections, and audit logs) into Cloud SQL.</li>
-              <li><strong>Step 3 (45 mins):</strong> Deploy the official Metabase container onto <strong>Google Cloud Run</strong> connected to Cloud SQL, and enable the automated weekly version update job.</li>
-              <li><strong>Step 4 (30 mins):</strong> Turn on <strong>Google Identity-Aware Proxy (IAP)</strong> on the load balancer so only signed-in <code>@modinity.com</code> Google accounts can reach the server, then switch the <code>modisight.modinity.com</code> domain over.</li>
+              <li><strong>Step 1 (Zero App/DB Migration):</strong> Keep the existing Metabase VM and Postgres database as-is (all 407 dashboards, 7,365 charts, and 9 database connections stay untouched).</li>
+              <li><strong>Step 2 (30 mins):</strong> Place the existing VM into an Unmanaged Instance Group behind a <strong>Global HTTPS Load Balancer</strong> and restrict the VM firewall to accept traffic only from Google Load Balancer IPs.</li>
+              <li><strong>Step 3 (30 mins):</strong> Attach <strong>Google Cloud Armor WAF</strong> (blocking SQL injection <code>sqli-v33-stable</code> and throttling <code>/api/session/*</code>) and optionally enable <strong>Google IAP</strong> for external access control.</li>
+              <li><strong>Step 4 (15 mins):</strong> Enable a scheduled weekly container update check and BigQuery scan volume alert.</li>
             </ul>
           </div>
 
           <!-- Rollout Plan B: Metabase Pro Cloud -->
           <div class="arch-box">
             <span class="verdict-badge badge-blue">Rollout Plan B: Metabase Pro Cloud (~1 Day via Built-in Tool)</span>
-            <h3>How We Move to Official Metabase Pro Cloud</h3>
+            <h3>How We Move to Official Metabase Pro Cloud (SaaS Risk Transfer)</h3>
             <ul class="clean-list" style="margin-block-start:1rem;">
               <li><strong>Step 1 (15 mins):</strong> Open <code>Admin -&gt; Settings -&gt; Cloud</code> inside our current Metabase and click <strong>Migrate to Metabase Cloud</strong>.</li>
               <li><strong>Step 2 (Automatic):</strong> Metabase automatically packages all 407 dashboards, 7,365 charts, user accounts, and folder permissions into a cloud snapshot and provisions our new Pro Cloud instance.</li>
@@ -2095,39 +2121,62 @@
         <div class="panel-card">
           <h3 style="margin-block-end:0.5rem;">Summary Recommendation for Executive Decision</h3>
           <p style="margin-block-end:0.85rem;">
-            1. <strong>Approve Option 2 (Metabase Free on Google Cloud Run + Cloud SQL + Google IAP)</strong> as our immediate architecture upgrade. For <strong>~Rp 2.5M/month (~Rp 30.2M/year)</strong>, it removes manual VM maintenance, puts Google's authentication wall in front of Metabase so external attackers cannot touch the application, and preserves 100% of our 407 dashboards, audit logs, and AI tools.
+            1. <strong>If Cost &amp; Practical GCP Defense Is the Priority (~Rp 21.6M/year):</strong> Keep our <strong>existing GCP VM</strong> and let DevOps &amp; InfraSec attach the <strong>Global HTTPS Load Balancer + Cloud Armor WAF / Restricted External Access</strong>. It requires zero database or container migration, blocks external SQLi sprays at Google's edge, and preserves 100% of our 407 dashboards, audit logs, and AI tools.
           </p>
           <p style="margin:0;">
-            2. <strong>Keep Option 4 (Metabase Pro Cloud at ~Rp 1.39B/year)</strong> as our turnkey SaaS option if Modinity later requires automated Row-Level Security (RLS) inside shared dashboards or external vendor SOC 2 hosting, knowing we can migrate to it in 1 day without losing any capability.
+            2. <strong>If 100% Vendor Risk Transfer Is the Priority (~Rp 1.39B/year):</strong> Choose <strong>Metabase Pro Cloud</strong> (never Starter or Tableau). It transfers 24/7 server patching and SOC 2 compliance to Metabase Inc., migrates in 1 day, and preserves our Komdigi UU PDP audit trail (<code>query_execution</code> equivalent) and AI workflows.
           </p>
         </div>
 
         <div class="page-pager">
           <button class="pager-btn" data-goto="alternatives">&lt;- Previous: Lightdash &amp; Tableau</button>
-          <button class="pager-btn primary" data-goto="cloud-run-blueprint">Next: Chapter 07 Tech Blueprint (DevOps &amp; InfraSec) -&gt;</button>
+          <button class="pager-btn primary" data-goto="cloud-run-blueprint">Next: Chapter 07 DevOps &amp; InfraSec Review -&gt;</button>
         </div>
       </section>
 
       <!-- =========================================================
-           PAGE 07: TECHNICAL BLUEPRINT (DATA PLATFORM, DEVOPS & INFRASEC)
+           PAGE 07: DEVOPS & INFRASEC REVIEW & GCP HARDENING BLUEPRINT
            ========================================================= -->
       <section class="page-view" id="view-cloud-run-blueprint">
         <header class="view-header">
           <div>
-            <span class="view-kicker">Chapter 07 / Engineering Specification (Data Platform, DevOps &amp; InfraSec)</span>
-            <h2 class="view-title">Cloud Run Migration Blueprint: Architecture Decisions &amp; Runbook</h2>
+            <span class="view-kicker">Chapter 07 / DevOps, InfraSec &amp; Data Platform Alignment</span>
+            <h2 class="view-title">Engineering Review: Hardening Existing GCP VM vs. SaaS Risk Transfer</h2>
             <p class="view-lead">
-              Technical specification assuming we proceed with <strong>Option 2 (Serverless Metabase on Google Cloud Run + Managed Cloud SQL + Global HTTPS Load Balancer)</strong>, covering multi-domain user identity (<code>@modinity.com</code>, <code>@aliatexprint.com</code>, external <code>@gmail.com</code> franchise accounts), MCP service authentication, and the 5-phase deployment runbook.
+              Incorporating direct feedback from <strong>DevOps</strong> and <strong>InfraSec</strong>: why keeping our existing GCP VM (with Load Balancer + WAF / IAP) beats moving to Cloud Run, how multi-domain users (<code>@modinity.com</code>, <code>@aliatexprint.com</code>, <code>@gmail.com</code>) are handled, and the exact scope of SaaS Risk Transfer.
             </p>
           </div>
         </header>
+
+        <!-- Section 7.0: DevOps & InfraSec Consensus -->
+        <div class="arch-comparison">
+          <div class="arch-box good-arch">
+            <span class="verdict-badge badge-teal">DevOps Engineering Review (Farid)</span>
+            <h3>Why Keeping the Existing GCP VM Beats Re-Platforming to Cloud Run</h3>
+            <ul class="clean-list">
+              <li><strong>Same Application Stack:</strong> Metabase runs the exact same Java/Clojure container whether it is hosted on a GCE VM, Cloud Run, or Kubernetes. Moving the container to Cloud Run does not change application-level security.</li>
+              <li><strong>Zero Re-Platforming Needed for Edge Security:</strong> We do not need to migrate to Cloud Run or Cloud SQL just to restrict external access. We can attach a <strong>Global HTTPS Load Balancer + Cloud Armor WAF + Google IAP</strong> directly in front of the <strong>existing VM</strong> in under 2 hours.</li>
+              <li><strong>Current VM Is Already Hardened Post-August:</strong> The VM is already upgraded to <code>v0.63.10</code>, <code>MB_ENCRYPTION_SECRET_KEY</code> is active, port <code>3000</code> is bound to localhost (<code>127.0.0.1</code>), and BigQuery PII masking is live.</li>
+            </ul>
+          </div>
+
+          <div class="arch-box">
+            <span class="verdict-badge badge-blue">InfraSec Review (Berdianto)</span>
+            <h3>Host Responsibility ("Risk Transfer") vs. Open-Source Maintenance</h3>
+            <ul class="clean-list">
+              <li><strong>The Real Question Is the Host Custodian:</strong> In any self-hosted open-source deployment on GCP, Modinity's internal team carries the operational cost and responsibility of securing the host, monitoring WAF logs, and applying patches.</li>
+              <li><strong>When SaaS Is Justified:</strong> If management wants to transfer <strong>host &amp; patching responsibility</strong> to an external party, we must use a managed SaaS.</li>
+              <li><strong>Why SaaS Must Be Pro Cloud (Not Starter):</strong> Even with SaaS, Modinity remains the legal <em>Data Controller</em> under Indonesian law (<strong>UU PDP / Komdigi</strong>). Because <strong>Metabase Starter</strong> hides the internal <code>query_execution</code> audit log, InfraSec would be blind during an account breach. Only <strong>Metabase Pro Cloud (~Rp 1.39B/yr)</strong> provides both SaaS risk transfer and full audit logs.</li>
+            </ul>
+          </div>
+        </div>
 
         <!-- Section 7.1: Live User Identity & Domain Matrix -->
         <div class="panel-card" style="margin-block-end: 2rem;">
           <span class="verdict-badge badge-teal">1. Live User Identity &amp; Multi-Domain Baseline</span>
           <h3 style="font-size: 1.15rem; margin-block-end: 0.4rem;">Active User Breakdown in <code>core_user</code> (414 Active Users + 4 API Keys)</h3>
           <p style="margin-block-end: 1.15rem; max-inline-size: 76ch;">
-            Before configuring Google Cloud IAP or Cloud Armor on the Load Balancer, DevOps and InfraSec must account for all 11 email domains currently active on <code>modisight.modinity.com</code> (including secondary Google Workspace domains like <code>@aliatexprint.com</code> and external franchise owners on <code>@gmail.com</code>):
+            Whether we restrict external access on our existing GCP VM (via Cloud Armor WAF / Google IAP) or move to Metabase Pro Cloud, we must support all 11 active email domains (including <code>@aliatexprint.com</code> under Modinity's Google Admin organization and external <code>@gmail.com</code> franchise store owners):
           </p>
 
           <div class="table-wrap">
@@ -2139,7 +2188,7 @@
                   <th style="inline-size: 8rem;">Google OAuth SSO</th>
                   <th style="inline-size: 8rem;">Password Login</th>
                   <th style="inline-size: 13rem;">Identity Category</th>
-                  <th class="col-highlight-teal" style="inline-size: 20rem;">How Cloud Run + Google IAP Handles Access</th>
+                  <th class="col-highlight-teal" style="inline-size: 20rem;">How GCP VM Edge (WAF / IAP) Handles Access</th>
                 </tr>
               </thead>
               <tbody>
@@ -2151,7 +2200,7 @@
                   <td>Primary Google Workspace Org</td>
                   <td class="col-highlight-teal">
                     <span class="status-pill pill-good">Domain-Wide Allow</span>
-                    <div class="cell-copy">Grant IAP role <code>roles/iap.httpsResourceAccessor</code> to <code>domain:modinity.com</code> once. Zero manual user whitelisting.</div>
+                    <div class="cell-copy">Works natively. If IAP is enabled, grant <code>roles/iap.httpsResourceAccessor</code> to <code>domain:modinity.com</code> once.</div>
                   </td>
                 </tr>
                 <tr>
@@ -2183,8 +2232,8 @@
                   <td class="mono tabular">9</td>
                   <td>External Franchise Store Owners</td>
                   <td class="col-highlight-teal">
-                    <span class="status-pill pill-good">Google Group Whitelist</span>
-                    <div class="cell-copy">Google IAP natively supports <code>@gmail.com</code> accounts. Add franchise owners to a Google Group (<code>franchise-metabase-iap@modinity.com</code>) authorized in IAP, then they log into Metabase as usual.</div>
+                    <span class="status-pill pill-good">Supported (WAF or Google Group)</span>
+                    <div class="cell-copy">In WAF mode, zero change. In strict IAP mode, add franchise owners' <code>@gmail.com</code> addresses to a Google Group (<code>franchise-metabase-iap@modinity.com</code>) authorized in IAP.</div>
                   </td>
                 </tr>
                 <tr>
@@ -2194,8 +2243,8 @@
                   <td class="mono tabular">7</td>
                   <td>External Auditors &amp; Partners (Non-Gmail)</td>
                   <td class="col-highlight-teal">
-                    <span class="status-pill pill-warn">Link Google Account or WAF Mode</span>
-                    <div class="cell-copy">If strict IAP is enabled, non-Gmail users must either link their work email as a free Google Account (<code>accounts.google.com/SignUpWithoutGmail</code>) or switch to a <code>@gmail.com</code> login.</div>
+                    <span class="status-pill pill-warn">WAF Mode or Link Google Account</span>
+                    <div class="cell-copy">In WAF mode, zero change. If strict IAP is enabled, non-Gmail users must link their work email as a free Google Account or use a <code>@gmail.com</code> login.</div>
                   </td>
                 </tr>
               </tbody>
@@ -2203,154 +2252,53 @@
           </div>
         </div>
 
-        <!-- Section 7.2: The 4 Engineering Decisions Required -->
-        <h3 style="margin-block-end: 1rem;">2. Four Architecture Decisions Required Before Deployment</h3>
+        <!-- Section 7.2: Decisions Required if We Defend on the Existing GCP VM -->
+        <h3 style="margin-block-end: 1rem;">2. Key Decisions If We Choose "Defend on Existing GCP VM" (~Rp 21.6M/yr)</h3>
 
         <div class="arch-comparison">
           <!-- Decision 1: Edge Auth Mode -->
           <div class="arch-box good-arch">
-            <span class="verdict-badge badge-teal">Decision 01 / InfraSec &amp; Product Owner</span>
-            <h3>Edge Security Mode &amp; Franchise User UX</h3>
-            <p style="font-size: 0.88rem;">
-              We must choose between two edge enforcement modes on the Global HTTPS Load Balancer:
-            </p>
+            <span class="verdict-badge badge-teal">Decision 01 / Edge Perimeter Mode</span>
+            <h3>Cloud Armor WAF Only vs. Cloud Armor WAF + Google IAP</h3>
             <ul class="clean-list">
               <li>
-                <strong>Mode A: Cloud Armor WAF + Rate Limiting Only (Zero UX Change):</strong>
-                Enforces <code>sqli-v33-stable</code>, <code>lfi-v33-stable</code>, rate-limits <code>/api/session/*</code> to 20 req/min/IP, and blocks <code>POST /api/session/reset_password</code> at the edge. All 414 users (including <code>@aliatexprint.com</code>, <code>@gmail.com</code> franchise owners, and <code>@kpmg.com</code>) see the exact same single login screen as today.
+                <strong>Mode A: Global Load Balancer + Cloud Armor WAF (Recommended Default, Zero UX Change):</strong>
+                Places Google Cloud Armor in front of the existing VM Instance Group to block SQLi (<code>sqli-v33-stable</code>), block LFI (<code>lfi-v33-stable</code>), rate-limit <code>/api/session/*</code> to 20 req/min/IP, and disable <code>POST /api/session/reset_password</code> at the edge. All 414 users (including <code>@aliatexprint.com</code>, <code>@gmail.com</code> franchise owners, and <code>@kpmg.com</code>) and all MCP bots experience <strong>zero UX or code changes</strong>.
               </li>
               <li>
-                <strong>Mode B: Cloud Armor WAF + Strict Google Cloud IAP (Maximum Zero-Day Shield):</strong>
-                Adds Google's OAuth gate before traffic reaches the container.
-                <br><em>UX Trade-offs in Mode B:</em>
-                (1) Users authenticate at Google IAP first and then Metabase once every 14 days (because Metabase OSS does not auto-consume IAP's <code>X-Goog-Authenticated-User-JWT</code> header; header SSO requires Metabase Pro).
-                (2) Staff logged into a personal Gmail in Chrome will see a Google <code>403</code> screen until they switch accounts.
-                (3) Adding a new <code>@gmail.com</code> franchise owner requires adding their email to the <code>franchise-metabase-iap@modinity.com</code> Google Group.
+                <strong>Mode B: Cloud Armor WAF + Strict Google Cloud IAP Gate:</strong>
+                Adds Google's login wall in front of the VM so unauthenticated users cannot see the Metabase login screen at all. Requires whitelisting the 9 <code>@gmail.com</code> franchise owners in a Google Group and introduces a once-every-14-day double login cookie.
               </li>
             </ul>
           </div>
 
-          <!-- Decision 2: MCP & Service Auth -->
+          <!-- Decision 2: Patch & Alerting SLA -->
           <div class="arch-box">
-            <span class="verdict-badge badge-blue">Decision 02 / Data Platform &amp; AI Engineering</span>
-            <h3>MCP &amp; Bot Authentication (<code>ge-mcp</code>, <code>Modibot</code>, Antigravity)</h3>
-            <p style="font-size: 0.88rem;">
-              How our automated MCP servers and bots call Metabase without being blocked by edge rules:
-            </p>
+            <span class="verdict-badge badge-blue">Decision 02 / Patching &amp; Telemetry SLA</span>
+            <h3>Closing the August Root Causes on the Existing VM</h3>
             <ul class="clean-list">
               <li>
-                <strong>If Mode A (WAF Only) is selected:</strong>
-                <strong>0 lines of code change.</strong> Existing <code>X-API-Key: mb_...</code> headers in Antigravity (<code>metabase_mcp_impl.py</code>), <code>ge-mcp</code>, and <code>Modibot</code> work untouched.
+                <strong>Lock VM Firewall to Load Balancer Only:</strong>
+                Once the Global HTTPS Load Balancer is attached, update the GCE firewall so ports <code>80/443/3000</code> on the Metabase VM only accept traffic from Google Load Balancer health-check/proxy ranges (<code>35.191.0.0/16</code>, <code>130.211.0.0/22</code>).
               </li>
               <li>
-                <strong>If Mode B (Strict Google IAP) is selected:</strong>
-                (1) <strong>Internal Cloud Run bots (<code>ge-mcp</code> &amp; <code>Modibot</code>):</strong> Route directly to the internal Cloud Run URL (<code>https://modisight-&lt;hash&gt;-as.a.run.app</code>) over VPC using Cloud Run service-to-service IAM authentication, bypassing public IAP completely.
-                <br>(2) <strong>Local Antigravity MCP on laptops:</strong> Either configure a Load Balancer path rule on <code>/api/*</code> that permits requests carrying a valid <code>X-API-Key</code> header via Cloud Armor (0 Python changes), or add 5 lines in <code>metabase_mcp_impl.py</code> to pass <code>Proxy-Authorization: Bearer $(gcloud auth print-identity-token)</code>.
+                <strong>Preserve Client IPs in Nginx:</strong>
+                Log <code>X-Forwarded-For</code> in <code>nginx</code> and enable Load Balancer edge request logging so InfraSec has full IP attribution for every request.
               </li>
-            </ul>
-          </div>
-
-          <!-- Decision 3: Cloud Run Sizing -->
-          <div class="arch-box">
-            <span class="verdict-badge badge-blue">Decision 03 / DevOps Engineering</span>
-            <h3>Cloud Run Container Sizing, JVM Flags &amp; Concurrency</h3>
-            <p style="font-size: 0.88rem;">
-              Metabase is a stateful-feeling Clojure/JVM application (~30s cold boot) with an internal Quartz scheduler that fires Modinity's <strong>18 active Pulses/Subscriptions</strong>:
-            </p>
-            <ul class="clean-list">
-              <li><strong>Minimum &amp; Maximum Instances:</strong> Set <code>--min-instances=1</code> and <code>--max-instances=1</code> (or <code>2</code>). Keeping <code>min-instances=1</code> eliminates 30-second JVM cold starts, and capping at <code>1</code> avoids duplicate Quartz scheduled email pulses across multiple OSS containers.</li>
-              <li><strong>CPU Allocation:</strong> Set <code>--cpu=2 --memory=4Gi --no-cpu-throttling</code> (CPU always allocated) so background metadata syncs and scheduled subscriptions execute even when no browser request is active.</li>
-              <li><strong>JVM Memory Tuning:</strong> Pass <code>JAVA_TOOL_OPTIONS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Djava.awt.headless=true"</code> so the JVM respects the 4 GiB container cgroup limit without OOM-killing.</li>
-            </ul>
-          </div>
-
-          <!-- Decision 4: Database & VPC Connectivity -->
-          <div class="arch-box">
-            <span class="verdict-badge badge-teal">Decision 04 / Data Platform &amp; Network Security</span>
-            <h3>VPC Egress &amp; Secret Management Across 9 Databases</h3>
-            <p style="font-size: 0.88rem;">
-              Metabase connects to BigQuery (<code>db_id=2, 17</code>) plus internal PostgreSQL databases (<code>odoo</code> <code>db_id=3</code>, <code>modiair db</code> <code>db_id=10</code>, <code>dbt airflow db</code> <code>db_id=7</code>):
-            </p>
-            <ul class="clean-list">
-              <li><strong>Direct VPC Egress:</strong> Configure Cloud Run with <code>--network=&lt;modinity-vpc&gt; --subnet=&lt;subnet&gt; --vpc-egress=private-ranges-only</code> so Metabase reaches the Odoo Postgres replica and internal databases over private RFC1918 IPs without traversing the public internet.</li>
-              <li><strong>Cloud SQL Connection:</strong> Connect Metabase to the new <strong>Cloud SQL for PostgreSQL 16</strong> instance via Private IP (or Cloud SQL Auth Proxy socket) for <code>MB_DB_*</code> metadata storage.</li>
-              <li><strong>Encryption Key Continuity:</strong> Mount the existing <code>MB_ENCRYPTION_SECRET_KEY</code> from <strong>GCP Secret Manager</strong>. If this key changes or is omitted during migration, Metabase will fail to decrypt the stored connection credentials in <code>metabase_database.details</code>.</li>
+              <li>
+                <strong>Automated Patch &amp; BigQuery Scan Alerts:</strong>
+                Subscribe to Metabase security advisories (patch SLA &lt; 48h for CVSS &gt;= 9.0) and keep an active GCP Billing / Cloud Monitoring alert on abnormal daily BigQuery scan volume from the Metabase service account.
+              </li>
             </ul>
           </div>
         </div>
 
-        <!-- Section 7.3: Step-by-Step Technical Implementation Runbook -->
+        <!-- Section 7.3: 3-Step Edge Hardening Runbook on Existing VM -->
         <div class="panel-card">
-          <span class="verdict-badge badge-teal">3. Step-by-Step Engineering Implementation Runbook (~2.5 Hours Total)</span>
-          <h3 style="font-size: 1.15rem; margin-block-end: 0.75rem;">Execution Sequence for DevOps, Data Platform &amp; InfraSec</h3>
+          <span class="verdict-badge badge-teal">3. Edge Hardening Runbook on the Existing GCP VM (~1.5 Hours, Zero Downtime)</span>
+          <h3 style="font-size: 1.15rem; margin-block-end: 0.75rem;">Attaching Cloud Armor WAF to Our Current VM (No Cloud Run Migration Needed)</h3>
 
-          <h4 style="margin-block: 1rem 0.35rem;">Phase 1: Provision Cloud SQL &amp; Secret Manager (DevOps, 30 mins)</h4>
-          <p style="font-size: 0.88rem; margin: 0;">
-            Create a managed Cloud SQL for PostgreSQL 16 instance with automated daily backups and Point-in-Time Recovery (PITR), and store the existing encryption secret and DB password in Secret Manager:
-          </p>
-          <pre class="code-block"># 1. Create managed Cloud SQL instance (Private IP + Automated Backups)
-gcloud sql instances create modisight-pg16 \
-  --database-version=POSTGRES_16 \
-  --tier=db-custom-2-4096 \
-  --region=asia-southeast2 \
-  --network=projects/modinity-data-dev/global/networks/default \
-  --no-assign-ip \
-  --backup-start-time=19:00 \
-  --enable-point-in-time-recovery
-
-gcloud sql databases create metabase --instance=modisight-pg16
-
-# 2. Store existing MB_ENCRYPTION_SECRET_KEY and DB password in Secret Manager
-gcloud secrets create mb-encryption-key --replication-policy=automatic
-gcloud secrets versions add mb-encryption-key --data-file=./existing_mb_encryption_key.txt
-
-gcloud secrets create mb-db-pass --replication-policy=automatic
-gcloud secrets versions add mb-db-pass --data-file=./new_cloudsql_pass.txt</pre>
-
-          <h4 style="margin-block: 1.35rem 0.35rem;">Phase 2: Dump Existing VM Postgres &amp; Restore to Cloud SQL (Data Platform, 30 mins)</h4>
-          <p style="font-size: 0.88rem; margin: 0;">
-            Take a consistent snapshot of the current Metabase PostgreSQL database on the VM and restore it into Cloud SQL. This preserves all 407 dashboards, 7,365 cards, 414 users, API keys, and historical <code>query_execution</code> audit logs:
-          </p>
-          <pre class="code-block"># 1. On current VM: stop writes and dump Metabase app DB
-pg_dump -h 127.0.0.1 -U metabase -d metabase -Fc --no-acl --no-owner -f /tmp/modisight_prod.dump
-
-# 2. Restore into Cloud SQL PG16
-pg_restore -h &lt;CLOUD_SQL_PRIVATE_IP&gt; -U metabase -d metabase --no-acl --no-owner --clean --if-exists /tmp/modisight_prod.dump
-
-# 3. Verify row counts match pre-migration baseline
-psql -h &lt;CLOUD_SQL_PRIVATE_IP&gt; -U metabase -d metabase -c "
-  SELECT
-    (SELECT COUNT(*) FROM report_dashboard WHERE archived = false) AS dashboards,
-    (SELECT COUNT(*) FROM report_card WHERE archived = false) AS cards,
-    (SELECT COUNT(*) FROM core_user WHERE is_active = true) AS active_users;
-"</pre>
-
-          <h4 style="margin-block: 1.35rem 0.35rem;">Phase 3: Deploy Stateless Metabase Container to Cloud Run (DevOps, 45 mins)</h4>
-          <p style="font-size: 0.88rem; margin: 0;">
-            Deploy the latest patched Metabase release (<code>v0.63.10+</code> or current stable tag) with ingress restricted exclusively to the Internal VPC and Cloud Load Balancer:
-          </p>
-          <pre class="code-block">gcloud run deploy modisight \
-  --image=metabase/metabase:v0.63.10 \
-  --region=asia-southeast2 \
-  --platform=managed \
-  --ingress=internal-and-cloud-load-balancing \
-  --min-instances=1 \
-  --max-instances=1 \
-  --cpu=2 \
-  --memory=4Gi \
-  --no-cpu-throttling \
-  --port=3000 \
-  --network=default \
-  --subnet=default \
-  --vpc-egress=private-ranges-only \
-  --set-env-vars="MB_JETTY_HOST=0.0.0.0,MB_JETTY_PORT=3000,MB_DB_TYPE=postgres,MB_DB_DBNAME=metabase,MB_DB_PORT=5432,MB_DB_USER=metabase,MB_DB_HOST=&lt;CLOUD_SQL_PRIVATE_IP&gt;,MB_SITE_URL=https://modisight.modinity.com,JAVA_TOOL_OPTIONS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0" \
-  --set-secrets="MB_DB_PASS=mb-db-pass:latest,MB_ENCRYPTION_SECRET_KEY=mb-encryption-key:latest"</pre>
-
-          <h4 style="margin-block: 1.35rem 0.35rem;">Phase 4: Attach Global HTTPS Load Balancer, Cloud Armor WAF &amp; IAP (InfraSec, 45 mins)</h4>
-          <p style="font-size: 0.88rem; margin: 0;">
-            Create a Serverless NEG for Cloud Run, attach the Cloud Armor security policy blocking SQLi/LFI and rate-limiting session endpoints, and configure IAP domain/group bindings:
-          </p>
-          <pre class="code-block"># 1. Create Cloud Armor Policy (Blocks CVE-2026-72898 class SQLi &amp; throttles /api/session/*)
+          <pre class="code-block"># Step 1: Create Cloud Armor WAF Policy (Blocks CVE-2026-72898 SQLi payload &amp; throttles /api/session/*)
 gcloud compute security-policies create modisight-waf-policy
 
 gcloud compute security-policies rules create 1000 \
@@ -2368,24 +2316,18 @@ gcloud compute security-policies rules create 2000 \
   --exceed-action=deny-429 \
   --enforce-on-key=IP
 
-# 2. If Mode B (Google IAP) is enabled: authorize internal domains + external franchise group
-gcloud iap web add-iam-policy-binding --resource-type=backend-services --service=modisight-backend \
-  --member="domain:modinity.com" --role="roles/iap.httpsResourceAccessor"
-gcloud iap web add-iam-policy-binding --resource-type=backend-services --service=modisight-backend \
-  --member="domain:aliatexprint.com" --role="roles/iap.httpsResourceAccessor"
-gcloud iap web add-iam-policy-binding --resource-type=backend-services --service=modisight-backend \
-  --member="domain:buttonscarves.com" --role="roles/iap.httpsResourceAccessor"
-gcloud iap web add-iam-policy-binding --resource-type=backend-services --service=modisight-backend \
-  --member="domain:nadapuspita.com" --role="roles/iap.httpsResourceAccessor"
-gcloud iap web add-iam-policy-binding --resource-type=backend-services --service=modisight-backend \
-  --member="domain:zytadelia.com" --role="roles/iap.httpsResourceAccessor"
-gcloud iap web add-iam-policy-binding --resource-type=backend-services --service=modisight-backend \
-  --member="group:franchise-metabase-iap@modinity.com" --role="roles/iap.httpsResourceAccessor"</pre>
+# Step 2: Attach policy to the existing VM's Backend Service on the Global HTTPS Load Balancer
+gcloud compute backend-services update modisight-vm-backend \
+  --security-policy=modisight-waf-policy \
+  --global
 
-          <h4 style="margin-block: 1.35rem 0.35rem;">Phase 5: Automated Weekly Patch Pipeline (DevOps CI/CD, 15 mins)</h4>
-          <p style="font-size: 0.88rem; margin: 0;">
-            Schedule a weekly GitHub Action (every Sunday at 02:00 WIB) to pull the latest minor patch on the current release line, deploy a new Cloud Run revision, verify <code>GET /api/health</code> returns <code>{"status":"ok"}</code>, and shift traffic automatically.
-          </p>
+# Step 3: Lock down VM firewall so attackers cannot bypass the Load Balancer by hitting the VM IP directly
+gcloud compute firewall-rules create allow-lb-to-modisight-vm \
+  --network=default \
+  --action=ALLOW \
+  --rules=tcp:80,tcp:443 \
+  --source-ranges=35.191.0.0/16,130.211.0.0/22 \
+  --target-tags=modisight-vm</pre>
         </div>
 
         <div class="page-pager">
@@ -2498,7 +2440,7 @@ gcloud iap web add-iam-policy-binding --resource-type=backend-services --service
       for (let m = 0; m < 12; m++) {
         const u = uStart + (growth * m);
         sum1 += 60;
-        sum2 += 140;
+        sum2 += 100;
         sum3 += calcStarter(u);
         sum4 += calcPro(u);
         sum5 += calcPro(u) + 60;
@@ -2507,8 +2449,8 @@ gcloud iap web add-iam-policy-binding --resource-type=backend-services --service
       }
 
       const items = [
-        { id: 1, label: '1. Metabase Free (VM)', m1: 60, m12: 60, flat: 720, fc: sum1, color: '#6b7280' },
-        { id: 2, label: '2. Metabase (Cloud Run + IAP)', m1: 140, m12: 140, flat: 1680, fc: sum2, color: '#0f766e' },
+        { id: 1, label: '1. Metabase Free (Current VM)', m1: 60, m12: 60, flat: 720, fc: sum1, color: '#6b7280' },
+        { id: 2, label: '2. Hardened GCP VM (WAF + IAP)', m1: 100, m12: 100, flat: 1200, fc: sum2, color: '#0f766e' },
         { id: 6, label: '6. Lightdash Cloud Pro', m1: ldMonthly, m12: ldMonthly, flat: ldMonthly * 12, fc: sum6, color: '#d97706' },
         { id: 3, label: '3. Metabase Starter (Cloud)', m1: calcStarter(uStart), m12: calcStarter(uEnd), flat: calcStarter(uStart) * 12, fc: sum3, color: '#f59e0b' },
         { id: 4, label: '4. Metabase Pro (Cloud)', m1: calcPro(uStart), m12: calcPro(uEnd), flat: calcPro(uStart) * 12, fc: sum4, color: '#1d4ed8' },

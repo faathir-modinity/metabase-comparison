@@ -1002,7 +1002,7 @@
               <span class="nav-num">02</span>
               <span class="nav-text-wrap">
                 <span class="nav-title">Cloud Run + Google IAP</span>
-                <span class="nav-caption">Zero VM maintenance at ~Rp 30M/yr</span>
+                <span class="nav-caption">August 2026 replay &amp; zero-day defense</span>
               </span>
             </button>
           </li>
@@ -1260,6 +1260,97 @@
             <div class="metric-label">Annual Savings vs. Pro Cloud</div>
             <div class="metric-val">Rp 1.36B / yr</div>
             <div class="metric-note">Saves 97.8% of SaaS licensing costs while solving the security &amp; patching concern</div>
+          </div>
+        </div>
+
+        <!-- Case Study: August 2026 Replay -->
+        <div class="panel-card" style="margin-block-end: 2rem;">
+          <span class="verdict-badge badge-teal">Case Study / Replay of the August 2026 Incident</span>
+          <h3 style="font-size: 1.2rem; margin-block-end: 0.4rem;">What Would Have Happened in August 2026 on Cloud Run + Google IAP?</h3>
+          <p style="margin-block-end: 1.25rem; max-inline-size: 75ch;">
+            The August 2026 incident succeeded because three specific weaknesses lined up at the same time on our Virtual Machine. Here is what happened on the VM versus what happens on <strong>Google Cloud Run + Load Balancer (Google IAP &amp; Cloud Armor)</strong>:
+          </p>
+
+          <div class="table-wrap" style="margin-block-end: 0;">
+            <table class="comp-matrix" style="min-inline-size: 48rem;">
+              <thead>
+                <tr>
+                  <th style="inline-size: 15rem;">August 2026 Failure Point</th>
+                  <th style="inline-size: 20rem;">What Happened on the VM (August 10 to 13, 2026)</th>
+                  <th class="col-highlight-teal" style="inline-size: 22rem;">What Happens on Cloud Run + Google IAP</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1. Unauthenticated Attack on Password Reset API</strong></td>
+                  <td>
+                    <span class="status-pill pill-bad">Reached Metabase Directly</span>
+                    <div class="cell-copy">An external automated scanner sent 483 requests to <code>POST /api/session/reset_password</code> without logging in, using a SQL injection bug (CVE-2026-72898) to create admin sessions.</div>
+                  </td>
+                  <td class="col-highlight-teal">
+                    <span class="status-pill pill-good">100% Blocked at Google's Gate</span>
+                    <div class="cell-copy">With Google IAP active, Google checks for a valid <code>@modinity.com</code> login with 2FA before forwarding any request. All 483 unauthenticated requests are rejected by Google with <code>401 Unauthorized</code> before touching Metabase. Cloud Armor WAF (<code>sqli-v33-stable</code>) also blocks SQL injection payloads at the edge.</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>2. Accidental Open Port 3000 Firewall Bypass</strong></td>
+                  <td>
+                    <span class="status-pill pill-bad">Bypassed Web Server</span>
+                    <div class="cell-copy">A broad GCP firewall rule (<code>airflow-8080</code>) meant for another tool accidentally opened port <code>3000</code> across all VMs. The attacker connected straight to the VM IP on port <code>3000</code>, bypassing <code>nginx</code> completely.</div>
+                  </td>
+                  <td class="col-highlight-teal">
+                    <span class="status-pill pill-good">Physically Impossible</span>
+                    <div class="cell-copy">Cloud Run is serverless, has no public VM IP or open ports like <code>:3000</code>, and ignores GCE VM firewall rules. With ingress locked to <code>internal-and-cloud-load-balancing</code>, no one can bypass Google's Load Balancer or IAP.</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>3. 4-Day Patch Delay (Aug 6 Fix vs. Aug 10 Attack)</strong></td>
+                  <td>
+                    <span class="status-pill pill-warn">Waiting for Manual SSH Update</span>
+                    <div class="cell-copy">Metabase published the security fix (<code>v0.63.5</code>) on August 6. Our VM was still on <code>v0.63.1</code> four days later on August 10 because updates required manual engineering intervention.</div>
+                  </td>
+                  <td class="col-highlight-teal">
+                    <span class="status-pill pill-good">Automated 24h Container Refresh</span>
+                    <div class="cell-copy">Because dashboards live in managed Google Cloud SQL, the Cloud Run container is stateless. An automated schedule pulls the latest patched Metabase release and deploys a fresh container automatically with zero downtime.</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Zero-Day Tomorrow Comparison -->
+        <div class="panel-card" style="margin-block-end: 2rem;">
+          <span class="verdict-badge badge-blue">Future Resilience / Unpatched Zero-Day Scenario</span>
+          <h3 style="font-size: 1.2rem; margin-block-end: 0.4rem;">What If a Brand-New "Zero-Day" Bug Happens Tomorrow (Before Any Patch Exists)?</h3>
+          <p style="margin-block-end: 1.25rem; max-inline-size: 75ch;">
+            A "zero-day" is a brand-new software bug that hackers discover before the software vendor has written a fix. Notably, <strong>before August 6, 2026, even official Metabase Cloud was exploited</strong> during the zero-day phase because its login page is open to the public internet. Here is how the three architectures hold up when no patch exists yet:
+          </p>
+
+          <div class="verdict-grid" style="margin-block-end: 0;">
+            <div class="metric-card">
+              <span class="status-pill pill-bad">1. Traditional Public VM</span>
+              <h4 style="margin-block: 0.4rem;">Exposed Until Patched</h4>
+              <p style="font-size: 0.84rem; margin: 0;">
+                Anyone on the internet can reach the Metabase login screen and API endpoints directly. If a pre-login zero-day bug drops, external bots can exploit it before a patch is released.
+              </p>
+            </div>
+
+            <div class="metric-card">
+              <span class="status-pill pill-warn">2. Official Metabase Cloud SaaS</span>
+              <h4 style="margin-block: 0.4rem;">Fast Patching, Public Login</h4>
+              <p style="font-size: 0.84rem; margin: 0;">
+                Metabase's team patches their cloud servers first once a fix is written, which stops delayed-patching attacks. However, because <code>*.metabaseapp.com</code> login pages are public on the internet, pre-login zero-days can still reach the app before a fix exists.
+              </p>
+            </div>
+
+            <div class="metric-card" style="border: 2px solid var(--accent-primary); background-color: var(--accent-primary-soft);">
+              <span class="status-pill pill-good">3. Cloud Run Behind Google IAP</span>
+              <h4 style="margin-block: 0.4rem;">Shielded Even Before a Patch Exists</h4>
+              <p style="font-size: 0.84rem; margin: 0;">
+                Even if Metabase has an unpatched zero-day bug tomorrow, an external hacker on the internet cannot reach Metabase at all. They hit <strong>Google's login wall</strong> first and are blocked unless they have a real <code>@modinity.com</code> account with 2-Step Verification.
+              </p>
+            </div>
           </div>
         </div>
 

@@ -1484,15 +1484,6 @@
 
             <div class="slider-group">
               <div class="slider-head">
-                <span>Lightdash Cloud Flat Monthly Fee</span>
-                <span class="slider-readout" id="lbl-ld">$2,700 / mo</span>
-              </div>
-              <input type="range" id="inp-ld" min="1500" max="3500" step="100" value="2700">
-              <div class="slider-hint">Lightdash Cloud Pro charges a flat monthly workspace fee (~$2,400 to $3,000/mo) with unlimited users.</div>
-            </div>
-
-            <div class="slider-group">
-              <div class="slider-head">
                 <span>Exchange Rate (IDR per 1 USD)</span>
                 <span class="slider-readout" id="lbl-fx">Rp 18,000</span>
               </div>
@@ -2512,17 +2503,15 @@ gcloud compute firewall-rules create allow-lb-to-modisight-vm \
       switchView(initialHash, false);
     }
 
-    // 7-Option Cost Simulator Logic
+    // 6-Option Cost Simulator Logic
     const inpUsers = document.getElementById('inp-users');
     const inpGrowth = document.getElementById('inp-growth');
     const inpCreators = document.getElementById('inp-creators');
-    const inpLd = document.getElementById('inp-ld');
     const inpFx = document.getElementById('inp-fx');
 
     const lblUsers = document.getElementById('lbl-users');
     const lblGrowth = document.getElementById('lbl-growth');
     const lblCreators = document.getElementById('lbl-creators');
-    const lblLd = document.getElementById('lbl-ld');
     const lblFx = document.getElementById('lbl-fx');
     const lblRange = document.getElementById('lbl-range');
     const simBars = document.getElementById('sim-bars');
@@ -2562,7 +2551,7 @@ gcloud compute firewall-rules create allow-lb-to-modisight-vm \
       const uStart = parseInt(inpUsers.value, 10);
       const growth = parseInt(inpGrowth.value, 10);
       const creators = parseInt(inpCreators.value, 10);
-      const ldMonthly = parseInt(inpLd.value, 10);
+      const ldMonthly = 2700;
       const fx = parseInt(inpFx.value, 10);
 
       const uEnd = useFatExactCurve ? 453 : (uStart + (growth * 12));
@@ -2570,7 +2559,6 @@ gcloud compute firewall-rules create allow-lb-to-modisight-vm \
       lblUsers.textContent = uStart + ' users';
       lblGrowth.textContent = useFatExactCurve ? '+4.9 / mo (FAT)' : ('+' + growth + ' / mo');
       lblCreators.textContent = creators + (creators === 1 ? ' Creator' : ' Creators');
-      lblLd.textContent = '$' + ldMonthly.toLocaleString('en-US') + ' / mo';
       lblFx.textContent = 'Rp ' + fx.toLocaleString('en-US');
       lblRange.textContent = uStart + ' to ' + uEnd + ' users';
 
@@ -2662,7 +2650,8 @@ gcloud compute firewall-rules create allow-lb-to-modisight-vm \
       });
     }
 
-    [inpUsers, inpGrowth, inpCreators, inpLd, inpFx].forEach(el => {
+    [inpUsers, inpGrowth, inpCreators, inpFx].forEach(el => {
+      if (!el) return;
       el.addEventListener('input', () => {
         if (el === inpUsers || el === inpGrowth) {
           useFatExactCurve = false;

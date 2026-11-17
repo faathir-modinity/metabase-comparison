@@ -809,7 +809,7 @@
       box-shadow: 0 2px 4px rgba(20, 23, 31, 0.05);
     }
 
-    /* Sticky Filter Bar + Sticky Table Header on Page 04 (7-Option Matrix) */
+    /* Sticky Filter Bar + Sticky Table Header on Page 04 (6-Option Matrix) */
     .matrix-sticky-toolbar {
       position: sticky;
       inset-block-start: 0;
@@ -817,13 +817,10 @@
       background-color: var(--bg-canvas);
       padding-block: 0.7rem;
       margin-block-end: 0;
-      border-block-end: 1px solid var(--border-strong);
     }
 
     .matrix-table-wrap {
       overflow: visible;
-      border-start-start-radius: 0;
-      border-start-end-radius: 0;
     }
 
     #matrix-table {
@@ -836,6 +833,7 @@
       position: sticky;
       inset-block-start: var(--matrix-toolbar-h, 3.45rem);
       z-index: 20;
+      border-block-start: 1px solid var(--border-hairline);
     }
 
     #matrix-table thead th.col-sticky {
@@ -1772,13 +1770,13 @@
           <table class="comp-matrix" id="matrix-table">
             <thead>
               <tr>
-                <th class="col-sticky" style="inline-size:14rem;">Requirement</th>
-                <th style="inline-size:13rem;">1. Metabase Free (Current VM)</th>
-                <th class="col-highlight-teal" style="inline-size:14rem;">2. Hardened GCP VM (WAF + IAP)</th>
-                <th style="inline-size:13rem;">3. Metabase Starter (Cloud)</th>
-                <th class="col-highlight-blue" style="inline-size:14rem;">4. Metabase Pro (Cloud)</th>
-                <th style="inline-size:13.5rem;">5. Lightdash Cloud Pro</th>
-                <th style="inline-size:13.5rem;">6. Tableau Cloud Standard</th>
+                <th class="col-sticky" style="inline-size:16%;">Requirement</th>
+                <th style="inline-size:14%;">1. Metabase Free (Current VM)</th>
+                <th class="col-highlight-teal" style="inline-size:14%;">2. Hardened GCP VM (WAF + IAP)</th>
+                <th style="inline-size:14%;">3. Metabase Starter (Cloud)</th>
+                <th class="col-highlight-blue" style="inline-size:14%;">4. Metabase Pro (Cloud)</th>
+                <th style="inline-size:14%;">5. Lightdash Cloud Pro</th>
+                <th style="inline-size:14%;">6. Tableau Cloud Standard</th>
               </tr>
             </thead>
             <tbody>

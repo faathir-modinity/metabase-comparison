@@ -3,360 +3,591 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BI Platform Evaluation: Metabase vs. Tableau | Modinity Data &amp; BI</title>
+  <title>BI Architecture &amp; Cost Evaluation | Modinity Group</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-page: #f8fafc;
+      --bg-canvas: #f6f7f9;
       --bg-surface: #ffffff;
-      --bg-subtle: #f1f5f9;
-      --bg-accent-soft: #eff6ff;
-      --bg-rec-soft: #ecfdf5;
-      --bg-warn-soft: #fffbeb;
-      --bg-danger-soft: #fef2f2;
-      --text-main: #0f172a;
-      --text-secondary: #334155;
-      --text-muted: #64748b;
-      --border-light: #e2e8f0;
-      --border-strong: #cbd5e1;
-      --brand-primary: #1e293b;
-      --brand-accent: #2563eb;
-      --status-good-bg: #dcfce7;
-      --status-good-text: #166534;
-      --status-warn-bg: #fef3c7;
+      --bg-subtle: #f1f3f5;
+      --bg-sidebar: #111318;
+      --bg-sidebar-hover: #1c2029;
+      --bg-sidebar-active: #252b37;
+
+      --text-ink: #14171f;
+      --text-body: #374151;
+      --text-muted: #6b7280;
+      --text-on-dark: #f3f4f6;
+      --text-on-dark-muted: #9ca3af;
+
+      --border-hairline: #e5e7eb;
+      --border-strong: #d1d5db;
+      --border-dark: #262b36;
+
+      --accent-primary: #0f766e;
+      --accent-primary-soft: #f0fdfa;
+      --accent-primary-border: #99f6e4;
+
+      --accent-blue: #1d4ed8;
+      --accent-blue-soft: #eff6ff;
+      --accent-blue-border: #bfdbfe;
+
+      --status-good-bg: #ecfdf5;
+      --status-good-text: #065f46;
+      --status-good-border: #a7f3d0;
+
+      --status-warn-bg: #fffbeb;
       --status-warn-text: #92400e;
-      --status-bad-bg: #fee2e2;
+      --status-warn-border: #fde68a;
+
+      --status-bad-bg: #fef2f2;
       --status-bad-text: #991b1b;
-      --status-neutral-bg: #e2e8f0;
-      --status-neutral-text: #334155;
+      --status-bad-border: #fecaca;
+
+      --status-neutral-bg: #f3f4f6;
+      --status-neutral-text: #374151;
+      --status-neutral-border: #e5e7eb;
+
       --radius-sm: 0.375rem;
       --radius-md: 0.625rem;
       --radius-lg: 0.875rem;
-      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
-      --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+
+      --shadow-subtle: 0 1px 2px 0 rgba(20, 23, 31, 0.04);
+      --shadow-card: 0 1px 3px 0 rgba(20, 23, 31, 0.06), 0 1px 2px -1px rgba(20, 23, 31, 0.04);
+
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
     }
 
     *, *::before, *::after {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      font-size: 1rem;
-      line-height: 1.5;
-      color: var(--text-main);
-      background-color: var(--bg-page);
-      text-align: start;
+      font-family: var(--font-sans);
+      font-size: 0.96875rem;
+      line-height: 1.6;
+      color: var(--text-ink);
+      background-color: var(--bg-canvas);
       -webkit-font-smoothing: antialiased;
+      text-align: start;
     }
 
     h1, h2, h3, h4, th {
-      text-wrap: balance;
       margin-block-start: 0;
-      color: var(--text-main);
+      color: var(--text-ink);
+      letter-spacing: -0.022em;
+      text-wrap: balance;
+      line-height: 1.25;
     }
 
     p, li {
       text-wrap: pretty;
+      color: var(--text-body);
     }
 
-    .container {
-      inline-size: min(100% - 2rem, 84rem);
-      margin-inline: auto;
-      padding-block: 2rem 4rem;
+    code, .mono {
+      font-family: var(--font-mono);
+      font-size: 0.84em;
     }
 
-    /* Header */
-    .page-header {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    .tabular {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* App Shell Layout */
+    .app-shell {
+      display: grid;
+      grid-template-columns: 18rem minmax(0, 1fr);
+      min-block-size: 100dvh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background-color: var(--bg-sidebar);
+      color: var(--text-on-dark);
+      border-inline-end: 1px solid var(--border-dark);
+      position: sticky;
+      inset-block-start: 0;
+      block-size: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.5rem 1.125rem;
+      overflow-y: auto;
+      z-index: 20;
+    }
+
+    .brand-block {
+      padding-inline: 0.5rem;
+      padding-block-end: 1.25rem;
+      border-block-end: 1px solid var(--border-dark);
+      margin-block-end: 1.25rem;
+    }
+
+    .brand-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #5eead4;
+      display: block;
+      margin-block-end: 0.35rem;
+    }
+
+    .brand-title {
+      font-size: 1.05rem;
+      font-weight: 700;
       color: #ffffff;
-      padding-block: 2.5rem;
-      padding-inline: 1.5rem;
-      border-block-end: 1px solid #334155;
+      margin: 0;
+      letter-spacing: -0.02em;
     }
 
-    .page-header-inner {
-      inline-size: min(100%, 84rem);
+    .brand-sub {
+      font-size: 0.78rem;
+      color: var(--text-on-dark-muted);
+      margin-block: 0.25rem 0;
+    }
+
+    .nav-section-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-on-dark-muted);
+      padding-inline: 0.625rem;
+      margin-block: 0 0.5rem;
+    }
+
+    .nav-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .nav-btn {
+      inline-size: 100%;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.65rem 0.75rem;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-on-dark-muted);
+      font-family: var(--font-sans);
+      font-size: 0.86rem;
+      font-weight: 500;
+      text-align: start;
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      background-color: var(--bg-sidebar-hover);
+      color: #ffffff;
+    }
+
+    .nav-btn.active {
+      background-color: var(--bg-sidebar-active);
+      color: #ffffff;
+      border-color: #374151;
+      font-weight: 600;
+    }
+
+    .nav-num {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: #5eead4;
+      padding-block-start: 0.12rem;
+      flex-shrink: 0;
+    }
+
+    .nav-text-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .nav-title {
+      line-height: 1.25;
+    }
+
+    .nav-caption {
+      font-size: 0.72rem;
+      color: #9ca3af;
+      font-weight: 400;
+    }
+
+    .sidebar-meta {
+      margin-block-start: 1.5rem;
+      padding: 0.875rem;
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-md);
+      font-size: 0.75rem;
+      color: var(--text-on-dark-muted);
+    }
+
+    .sidebar-meta-row {
+      display: flex;
+      justify-content: space-between;
+      padding-block: 0.22rem;
+      border-block-end: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .sidebar-meta-row:last-child {
+      border-block-end: none;
+    }
+
+    .sidebar-meta-val {
+      font-family: var(--font-mono);
+      color: #ffffff;
+      font-weight: 500;
+    }
+
+    /* Mobile Header */
+    .mobile-bar {
+      display: none;
+      background-color: var(--bg-sidebar);
+      color: #ffffff;
+      padding: 0.875rem 1.25rem;
+      border-block-end: 1px solid var(--border-dark);
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 30;
+    }
+
+    .mobile-bar-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-block-end: 0.65rem;
+    }
+
+    .mobile-tabs {
+      display: flex;
+      gap: 0.4rem;
+      overflow-x: auto;
+      padding-block-end: 0.25rem;
+    }
+
+    .mobile-tab-btn {
+      white-space: nowrap;
+      padding: 0.4rem 0.75rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid #374151;
+      background: #1c2029;
+      color: #d1d5db;
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .mobile-tab-btn.active {
+      background: #0f766e;
+      border-color: #14b8a6;
+      color: #ffffff;
+    }
+
+    /* Main Content Area */
+    .main-stage {
+      padding: clamp(1.5rem, 3vw, 2.75rem) clamp(1.25rem, 4vw, 3.5rem);
+      max-inline-size: 86rem;
+      inline-size: 100%;
       margin-inline: auto;
+    }
+
+    .page-view {
+      display: none;
+      animation: fadeIn 0.18s ease-out;
+    }
+
+    .page-view.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Page Header */
+    .view-header {
+      margin-block-end: 2rem;
+      padding-block-end: 1.5rem;
+      border-block-end: 1px solid var(--border-hairline);
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      align-items: flex-start;
-      gap: 1.5rem;
+      align-items: flex-end;
+      gap: 1rem;
     }
 
-    .header-badge {
-      display: inline-block;
-      background-color: rgba(59, 130, 246, 0.2);
-      border: 1px solid rgba(96, 165, 250, 0.4);
-      color: #93c5fd;
+    .view-kicker {
+      font-family: var(--font-mono);
       font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--accent-primary);
       font-weight: 600;
-      padding-block: 0.25rem;
-      padding-inline: 0.625rem;
-      border-radius: 999rem;
-      margin-block-end: 0.75rem;
-      letter-spacing: 0.02em;
+      margin-block-end: 0.4rem;
+      display: block;
     }
 
-    .page-header h1 {
-      color: #ffffff;
-      font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.25rem);
-      line-height: 1.2;
+    .view-title {
+      font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+      font-weight: 700;
       margin-block-end: 0.5rem;
     }
 
-    .page-header p {
-      color: #cbd5e1;
-      font-size: 1rem;
+    .view-lead {
+      font-size: 1.02rem;
+      color: var(--text-body);
       max-inline-size: 68ch;
       margin: 0;
     }
 
-    .header-meta {
-      background-color: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: var(--radius-md);
-      padding-block: 0.875rem;
-      padding-inline: 1.125rem;
-      font-size: 0.875rem;
-      color: #e2e8f0;
-      min-inline-size: 16rem;
+    /* Bento Grid & Metric Cards */
+    .bento-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr));
+      gap: 1rem;
+      margin-block-end: 2rem;
     }
 
-    .header-meta div + div {
-      margin-block-start: 0.35rem;
-    }
-
-    .header-meta strong {
-      color: #ffffff;
-    }
-
-    /* Executive Summary Banner */
-    .exec-banner {
+    .metric-card {
       background-color: var(--bg-surface);
-      border: 1px solid var(--border-light);
-      border-inline-start: 4px solid var(--brand-accent);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+      padding: 1.15rem 1.25rem;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .metric-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .metric-val {
+      font-family: var(--font-mono);
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--text-ink);
+      margin-block: 0.25rem 0.2rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .metric-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Executive Verdict Cards (3 Columns) */
+    .verdict-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+      gap: 1.25rem;
+      margin-block-end: 2rem;
+    }
+
+    .verdict-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .verdict-card.highlight-teal {
+      border: 2px solid var(--accent-primary);
+      background: linear-gradient(180deg, var(--accent-primary-soft) 0%, #ffffff 28%);
+    }
+
+    .verdict-card.highlight-blue {
+      border: 2px solid var(--accent-blue);
+      background: linear-gradient(180deg, var(--accent-blue-soft) 0%, #ffffff 28%);
+    }
+
+    .verdict-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.22rem 0.6rem;
+      border-radius: var(--radius-sm);
+      margin-block-end: 0.85rem;
+    }
+
+    .badge-teal {
+      background-color: var(--status-good-bg);
+      color: var(--status-good-text);
+      border: 1px solid var(--status-good-border);
+    }
+
+    .badge-blue {
+      background-color: var(--accent-blue-soft);
+      color: var(--accent-blue);
+      border: 1px solid var(--accent-blue-border);
+    }
+
+    .badge-warn {
+      background-color: var(--status-warn-bg);
+      color: var(--status-warn-text);
+      border: 1px solid var(--status-warn-border);
+    }
+
+    .badge-bad {
+      background-color: var(--status-bad-bg);
+      color: var(--status-bad-text);
+      border: 1px solid var(--status-bad-border);
+    }
+
+    .verdict-price {
+      font-family: var(--font-mono);
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--text-ink);
+      margin-block: 0.35rem 0.75rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .verdict-price span {
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .clean-list {
+      padding-inline-start: 1.15rem;
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .clean-list li + li {
+      margin-block-start: 0.5rem;
+    }
+
+    /* Callout Banner */
+    .callout-box {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-inline-start: 4px solid var(--accent-primary);
       border-radius: var(--radius-md);
       padding: 1.25rem 1.5rem;
       margin-block-end: 2rem;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-subtle);
     }
 
-    .exec-banner h2 {
-      font-size: 1.125rem;
-      margin-block-end: 0.5rem;
-    }
-
-    .exec-banner p {
-      margin: 0;
-      color: var(--text-secondary);
-      max-inline-size: 85ch;
-    }
-
-    /* Section Headings */
-    .section-block {
-      margin-block-end: 2.5rem;
-    }
-
-    .section-header {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 0.75rem;
-      margin-block-end: 1rem;
-    }
-
-    .section-header h2 {
-      font-size: clamp(1.25rem, 1rem + 0.8vw, 1.5rem);
-      margin: 0;
-    }
-
-    .section-subtitle {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      margin: 0;
-    }
-
-    /* Interactive Calculator Panel */
-    .calc-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
-      gap: 1.25rem;
-      margin-block-end: 1.5rem;
-    }
-
-    .calc-controls {
-      background-color: var(--bg-surface);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .control-group + .control-group {
-      margin-block-start: 1rem;
-    }
-
-    .control-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--text-secondary);
+    .callout-box h3 {
+      font-size: 1rem;
       margin-block-end: 0.35rem;
     }
 
-    .control-value {
-      color: var(--brand-accent);
-      font-variant-numeric: tabular-nums;
+    .callout-box p {
+      margin: 0;
+      font-size: 0.92rem;
+      max-inline-size: 75ch;
+    }
+
+    /* Simulator Layout */
+    .sim-layout {
+      display: grid;
+      grid-template-columns: minmax(18rem, 25rem) minmax(0, 1fr);
+      gap: 1.5rem;
+      margin-block-end: 2rem;
+    }
+
+    .panel-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .slider-group + .slider-group {
+      margin-block-start: 1.25rem;
+      padding-block-start: 1.15rem;
+      border-block-start: 1px solid var(--border-hairline);
+    }
+
+    .slider-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-block-end: 0.4rem;
+      font-size: 0.86rem;
+      font-weight: 600;
+    }
+
+    .slider-readout {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+      background-color: var(--accent-primary-soft);
+      padding: 0.1rem 0.5rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--accent-primary-border);
     }
 
     input[type="range"] {
       inline-size: 100%;
-      accent-color: var(--brand-accent);
+      accent-color: var(--accent-primary);
       cursor: pointer;
     }
 
-    .control-hint {
-      font-size: 0.75rem;
+    .slider-hint {
+      font-size: 0.76rem;
       color: var(--text-muted);
-      margin-block-start: 0.2rem;
+      margin-block-start: 0.25rem;
     }
 
-    /* 5 Option Cost Cards */
-    .option-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(14.5rem, 1fr));
-      gap: 1rem;
-      margin-block-end: 1.5rem;
-    }
-
-    .option-card {
-      background-color: var(--bg-surface);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 1.125rem;
-      box-shadow: var(--shadow-sm);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-    }
-
-    .option-card.recommended {
-      border: 2px solid #10b981;
-      background-color: #f0fdf4;
-    }
-
-    .option-card.warn-option {
-      border-color: #fcd34d;
-    }
-
-    .option-tag {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding-block: 0.15rem;
-      padding-inline: 0.5rem;
-      border-radius: 999rem;
-      margin-block-end: 0.5rem;
-      inline-size: fit-content;
-    }
-
-    .tag-rec {
-      background-color: var(--status-good-bg);
-      color: var(--status-good-text);
-    }
-
-    .tag-warn {
-      background-color: var(--status-warn-bg);
-      color: var(--status-warn-text);
-    }
-
-    .tag-cloud {
-      background-color: var(--bg-accent-soft);
-      color: #1d4ed8;
-    }
-
-    .tag-neutral {
-      background-color: var(--status-neutral-bg);
-      color: var(--status-neutral-text);
-    }
-
-    .option-card h3 {
-      font-size: 1rem;
-      margin-block-end: 0.25rem;
-    }
-
-    .option-formula {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-block-end: 0.875rem;
-    }
-
-    .price-big {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: var(--text-main);
-      font-variant-numeric: tabular-nums;
-      line-height: 1.2;
-    }
-
-    .price-sub {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-block-end: 0.75rem;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .price-breakdown {
-      border-block-start: 1px solid var(--border-light);
-      padding-block-start: 0.625rem;
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .price-breakdown div {
-      display: flex;
-      justify-content: space-between;
-      margin-block-end: 0.25rem;
-    }
-
-    /* Visual Bar Comparison */
-    .bar-chart-box {
-      background-color: var(--bg-surface);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 1.25rem 1.5rem;
-      box-shadow: var(--shadow-sm);
-    }
-
+    /* Horizontal Bar Chart */
     .bar-row {
       display: grid;
-      grid-template-columns: minmax(11rem, 15rem) 1fr minmax(8rem, 11rem);
+      grid-template-columns: 13.5rem minmax(0, 1fr) 11.5rem;
       align-items: center;
-      gap: 1rem;
-      margin-block-end: 0.75rem;
-      font-size: 0.875rem;
+      gap: 0.85rem;
+      padding-block: 0.5rem;
+      border-block-end: 1px solid var(--bg-subtle);
     }
 
     .bar-row:last-child {
-      margin-block-end: 0;
+      border-block-end: none;
     }
 
-    .bar-label {
+    .bar-name {
+      font-size: 0.83rem;
       font-weight: 600;
-      color: var(--text-secondary);
+      color: var(--text-ink);
     }
 
     .bar-track {
+      block-size: 1.15rem;
       background-color: var(--bg-subtle);
-      block-size: 1.35rem;
       border-radius: var(--radius-sm);
-      overflow: clip;
+      overflow: hidden;
     }
 
     .bar-fill {
@@ -365,803 +596,1567 @@
       transition: inline-size 0.2s ease;
     }
 
-    .bar-val {
+    .bar-amount {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 600;
       text-align: end;
-      font-weight: 700;
       font-variant-numeric: tabular-nums;
     }
 
-    @media (max-width: 640px) {
-      .bar-row {
-        grid-template-columns: 1fr;
-        gap: 0.25rem;
-      }
-      .bar-val {
-        text-align: start;
-      }
+    /* 7 Option Cost Grid */
+    .cost-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(16.5rem, 1fr));
+      gap: 1rem;
     }
 
-    /* Filter Tabs */
-    .filter-tabs {
+    .cost-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-subtle);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .cost-card.rec-border {
+      border: 2px solid var(--accent-primary);
+    }
+
+    .cost-card.pro-border {
+      border: 2px solid var(--accent-blue);
+    }
+
+    .cost-card h4 {
+      font-size: 0.98rem;
+      margin-block: 0.35rem 0.2rem;
+    }
+
+    .cost-formula {
+      font-family: var(--font-mono);
+      font-size: 0.73rem;
+      color: var(--text-muted);
+      margin-block-end: 0.75rem;
+    }
+
+    .cost-yr-big {
+      font-family: var(--font-mono);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-ink);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cost-yr-usd {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-block-end: 0.85rem;
+    }
+
+    .cost-meta-table {
+      border-block-start: 1px solid var(--border-hairline);
+      padding-block-start: 0.65rem;
+      font-size: 0.79rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .cost-meta-row {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-body);
+    }
+
+    .cost-meta-row strong {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Architecture Diagram Box (Page 3) */
+    .arch-comparison {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+      gap: 1.5rem;
+      margin-block-end: 2rem;
+    }
+
+    .arch-box {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .arch-box.good-arch {
+      border: 2px solid var(--accent-primary);
+    }
+
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-block: 1.15rem;
+    }
+
+    .flow-node {
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-hairline);
+      background-color: var(--bg-canvas);
+      font-size: 0.86rem;
+    }
+
+    .flow-node.shield-node {
+      background-color: var(--status-good-bg);
+      border-color: var(--status-good-border);
+      color: var(--status-good-text);
+    }
+
+    .flow-node.expose-node {
+      background-color: var(--status-bad-bg);
+      border-color: var(--status-bad-border);
+      color: var(--status-bad-text);
+    }
+
+    .flow-node strong {
+      display: block;
+      margin-block-end: 0.15rem;
+      color: inherit;
+    }
+
+    /* Matrix Table (Page 4) */
+    .toolbar-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
       margin-block-end: 1rem;
     }
 
-    .tab-btn {
-      appearance: none;
-      border: 1px solid var(--border-strong);
-      background-color: var(--bg-surface);
-      color: var(--text-secondary);
-      padding-block: 0.45rem;
-      padding-inline: 0.9rem;
-      border-radius: 999rem;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
     }
 
-    .tab-btn:hover {
+    .chip-btn {
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background-color: var(--bg-surface);
+      color: var(--text-body);
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .chip-btn:hover {
       background-color: var(--bg-subtle);
     }
 
-    .tab-btn.active {
-      background-color: var(--brand-primary);
+    .chip-btn.active {
+      background-color: var(--text-ink);
       color: #ffffff;
-      border-color: var(--brand-primary);
+      border-color: var(--text-ink);
     }
 
-    /* Comparison Matrix Table */
-    .table-scroll {
+    .table-wrap {
       background-color: var(--bg-surface);
-      border: 1px solid var(--border-light);
+      border: 1px solid var(--border-hairline);
       border-radius: var(--radius-md);
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-subtle);
       overflow-x: auto;
       scrollbar-gutter: stable;
     }
 
-    table.matrix {
+    table.comp-matrix {
       inline-size: 100%;
-      min-inline-size: 62rem;
+      min-inline-size: 72rem;
       border-collapse: collapse;
-      font-size: 0.875rem;
+      font-size: 0.84rem;
     }
 
-    table.matrix th,
-    table.matrix td {
-      padding: 0.85rem 1rem;
-      border-block-end: 1px solid var(--border-light);
-      border-inline-end: 1px solid var(--border-light);
+    table.comp-matrix th,
+    table.comp-matrix td {
+      padding: 0.85rem 0.9rem;
+      border-block-end: 1px solid var(--border-hairline);
+      border-inline-end: 1px solid var(--border-hairline);
       vertical-align: top;
       text-align: start;
     }
 
-    table.matrix th:last-child,
-    table.matrix td:last-child {
+    table.comp-matrix th:last-child,
+    table.comp-matrix td:last-child {
       border-inline-end: none;
     }
 
-    table.matrix thead th {
-      background-color: #f8fafc;
+    table.comp-matrix thead th {
+      background-color: #f8f9fa;
       font-weight: 700;
-      color: var(--text-main);
       position: sticky;
       inset-block-start: 0;
-      z-index: 2;
+      z-index: 5;
       border-block-end: 2px solid var(--border-strong);
     }
 
-    table.matrix thead th.col-rec {
-      background-color: #ecfdf5;
-      border-block-start: 3px solid #10b981;
+    table.comp-matrix th.col-sticky,
+    table.comp-matrix td.col-sticky {
+      position: sticky;
+      inset-inline-start: 0;
+      background-color: #ffffff;
+      z-index: 4;
+      border-inline-end: 2px solid var(--border-strong);
+      font-weight: 600;
     }
 
-    table.matrix td.col-rec {
-      background-color: rgba(236, 253, 245, 0.4);
+    table.comp-matrix thead th.col-sticky {
+      background-color: #f8f9fa;
+      z-index: 6;
     }
 
-    table.matrix tr.cat-row td {
+    table.comp-matrix th.col-highlight-teal {
+      background-color: var(--accent-primary-soft);
+      border-block-start: 3px solid var(--accent-primary);
+    }
+
+    table.comp-matrix td.col-highlight-teal {
+      background-color: rgba(240, 253, 250, 0.45);
+    }
+
+    table.comp-matrix th.col-highlight-blue {
+      background-color: var(--accent-blue-soft);
+      border-block-start: 3px solid var(--accent-blue);
+    }
+
+    table.comp-matrix td.col-highlight-blue {
+      background-color: rgba(239, 246, 255, 0.45);
+    }
+
+    table.comp-matrix tr.section-divider td {
       background-color: var(--bg-subtle);
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
       font-weight: 700;
-      font-size: 0.8rem;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--text-secondary);
+      letter-spacing: 0.06em;
+      color: var(--text-ink);
       padding-block: 0.55rem;
     }
 
-    .pill {
+    .status-pill {
       display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding-block: 0.15rem;
-      padding-inline: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.14rem 0.48rem;
       border-radius: var(--radius-sm);
       margin-block-end: 0.35rem;
+      border: 1px solid transparent;
     }
 
     .pill-good {
       background-color: var(--status-good-bg);
       color: var(--status-good-text);
+      border-color: var(--status-good-border);
     }
 
     .pill-warn {
       background-color: var(--status-warn-bg);
       color: var(--status-warn-text);
+      border-color: var(--status-warn-border);
     }
 
     .pill-bad {
       background-color: var(--status-bad-bg);
       color: var(--status-bad-text);
+      border-color: var(--status-bad-border);
     }
 
     .pill-neutral {
       background-color: var(--status-neutral-bg);
       color: var(--status-neutral-text);
+      border-color: var(--status-neutral-border);
     }
 
-    .cell-desc {
-      color: var(--text-secondary);
-      font-size: 0.82rem;
+    .cell-copy {
+      font-size: 0.8rem;
+      color: var(--text-body);
       line-height: 1.45;
     }
 
-    /* Deep Dive Cards */
-    .deep-dive-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
-      gap: 1.25rem;
-    }
-
-    .dive-card {
-      background-color: var(--bg-surface);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 1.35rem;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .dive-card h3 {
-      font-size: 1.05rem;
-      margin-block-end: 0.65rem;
+    /* Page Bottom Navigation */
+    .page-pager {
+      margin-block-start: 2.5rem;
+      padding-block-start: 1.5rem;
+      border-block-start: 1px solid var(--border-hairline);
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .pager-btn {
+      display: inline-flex;
       align-items: center;
       gap: 0.5rem;
+      padding: 0.65rem 1.1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-strong);
+      background-color: var(--bg-surface);
+      color: var(--text-ink);
+      font-family: var(--font-sans);
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
     }
 
-    .dive-card ul {
-      margin: 0;
-      padding-inline-start: 1.2rem;
-      color: var(--text-secondary);
-      font-size: 0.9rem;
+    .pager-btn:hover {
+      background-color: var(--bg-subtle);
+      border-color: var(--text-ink);
     }
 
-    .dive-card li + li {
-      margin-block-start: 0.55rem;
+    .pager-btn.primary {
+      background-color: var(--text-ink);
+      color: #ffffff;
+      border-color: var(--text-ink);
     }
 
-    .footer-note {
-      margin-block-start: 3rem;
-      padding-block-start: 1.5rem;
-      border-block-start: 1px solid var(--border-light);
-      font-size: 0.825rem;
-      color: var(--text-muted);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 1rem;
+    .pager-btn.primary:hover {
+      background-color: #272c3a;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 68rem) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .mobile-bar {
+        display: block;
+      }
+      .sim-layout {
+        grid-template-columns: 1fr;
+      }
+      .bar-row {
+        grid-template-columns: 10rem minmax(0, 1fr) 8.5rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <header class="page-header">
-    <div class="page-header-inner">
+  <!-- Mobile Top Navigation -->
+  <header class="mobile-bar">
+    <div class="mobile-bar-top">
       <div>
-        <span class="header-badge">Data &amp; Business Intelligence Architecture Review</span>
-        <h1>BI Platform Comparison: Metabase vs. Tableau</h1>
-        <p>Evaluating Security, Audit Logs, AI &amp; MCP Capabilities, and 12-Month Cost Forecast across 5 Deployment Options.</p>
+        <span class="brand-eyebrow" style="margin:0;">Modinity Data &amp; BI</span>
+        <strong style="font-size:0.95rem;">BI Platform Evaluation (7 Options)</strong>
       </div>
-      <div class="header-meta">
-        <div><strong>Current Active Users:</strong> 414 users (Nov 2026)</div>
-        <div><strong>Historical Growth:</strong> +14 net users / month</div>
-        <div><strong>12-Month Forecast:</strong> ~582 active users</div>
-        <div><strong>FX Assumption:</strong> 1 USD = Rp 18,000</div>
-      </div>
+      <span class="mono" style="font-size:0.75rem; color:#9ca3af;">414 -&gt; 582 Users</span>
+    </div>
+    <div class="mobile-tabs" role="tablist">
+      <button class="mobile-tab-btn active" data-target="overview">01 Overview</button>
+      <button class="mobile-tab-btn" data-target="cloud-run">02 Cloud Run + IAP</button>
+      <button class="mobile-tab-btn" data-target="cost-simulator">03 Cost Simulator</button>
+      <button class="mobile-tab-btn" data-target="capability-matrix">04 7-Option Matrix</button>
+      <button class="mobile-tab-btn" data-target="alternatives">05 Lightdash &amp; Tableau</button>
+      <button class="mobile-tab-btn" data-target="migration-plan">06 AI &amp; Migration</button>
     </div>
   </header>
 
-  <main class="container">
-
-    <section class="exec-banner">
-      <h2>Executive summary</h2>
-      <p>
-        <strong>Metabase Starter (Cloud)</strong> costs <strong>~Rp 659M/year</strong> (forecasted) while running the exact same basic security tier as the Free version, locking out our internal security audit logs (<code>query_execution</code>), locking AI agents out of the internal metadata database, and routing <strong>Gemini Enterprise (ge-mcp)</strong> traffic outside our Google Cloud network.
-        If the goal is maximum security, full AI/MCP capability, and full auditability, our two practical choices are <strong>Option 1: Hardened Self-Hosted on GCP with Cloud Armor WAF (~Rp 13M/year)</strong> or <strong>Option 3: Metabase Pro Cloud (~Rp 1.39B/year)</strong>.
-      </p>
-    </section>
-
-    <!-- Section 1: Interactive Cost & User Growth Calculator -->
-    <section class="section-block">
-      <div class="section-header">
-        <div>
-          <h2>1. Interactive 12-month cost &amp; user forecast (monthly billing)</h2>
-          <p class="section-subtitle">Adjust the sliders below to test how seat growth and exchange rates impact monthly and 1-year cumulative spend.</p>
+  <div class="app-shell">
+    <!-- Persistent Left Sidebar -->
+    <aside class="sidebar">
+      <div>
+        <div class="brand-block">
+          <span class="brand-eyebrow">Modinity Group</span>
+          <h1 class="brand-title">BI Platform Review</h1>
+          <p class="brand-sub">Executive Decision Guide across 7 Deployment Options</p>
         </div>
+
+        <div class="nav-section-label">Evaluation Chapters</div>
+        <ul class="nav-list" role="tablist">
+          <li>
+            <button class="nav-btn active" data-target="overview">
+              <span class="nav-num">01</span>
+              <span class="nav-text-wrap">
+                <span class="nav-title">Executive Overview</span>
+                <span class="nav-caption">Plain-English summary &amp; top 3 choices</span>
+              </span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-btn" data-target="cloud-run">
+              <span class="nav-num">02</span>
+              <span class="nav-text-wrap">
+                <span class="nav-title">Cloud Run + Google IAP</span>
+                <span class="nav-caption">Zero VM maintenance at ~Rp 30M/yr</span>
+              </span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-btn" data-target="cost-simulator">
+              <span class="nav-num">03</span>
+              <span class="nav-text-wrap">
+                <span class="nav-title">12-Month Cost Simulator</span>
+                <span class="nav-caption">Interactive 7-option budget model</span>
+              </span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-btn" data-target="capability-matrix">
+              <span class="nav-num">04</span>
+              <span class="nav-text-wrap">
+                <span class="nav-title">7-Option Capability Matrix</span>
+                <span class="nav-caption">Security, audit logs, AI &amp; daily use</span>
+              </span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-btn" data-target="alternatives">
+              <span class="nav-num">05</span>
+              <span class="nav-text-wrap">
+                <span class="nav-title">Lightdash &amp; Tableau</span>
+                <span class="nav-caption">What we lose if we switch tools</span>
+              </span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-btn" data-target="migration-plan">
+              <span class="nav-num">06</span>
+              <span class="nav-text-wrap">
+                <span class="nav-title">AI Workflow &amp; Migration</span>
+                <span class="nav-caption">Antigravity, Gemini &amp; 1-day rollout</span>
+              </span>
+            </button>
+          </li>
+        </ul>
       </div>
 
-      <div class="calc-grid">
-        <div class="calc-controls">
-          <div class="control-group">
-            <div class="control-label">
-              <span>Current Active Users (Month 1)</span>
-              <span class="control-value" id="lbl-users">414 users</span>
+      <div class="sidebar-meta">
+        <div style="font-weight:600; color:#ffffff; margin-block-end:0.4rem;">Live Modisight Baseline</div>
+        <div class="sidebar-meta-row">
+          <span>Active Users (Nov)</span>
+          <span class="sidebar-meta-val">414</span>
+        </div>
+        <div class="sidebar-meta-row">
+          <span>Monthly Growth</span>
+          <span class="sidebar-meta-val">+14 / mo</span>
+        </div>
+        <div class="sidebar-meta-row">
+          <span>12-Mo Projected</span>
+          <span class="sidebar-meta-val">582 users</span>
+        </div>
+        <div class="sidebar-meta-row">
+          <span>Live Dashboards</span>
+          <span class="sidebar-meta-val">407</span>
+        </div>
+        <div class="sidebar-meta-row">
+          <span>Live Charts</span>
+          <span class="sidebar-meta-val">7,365</span>
+        </div>
+        <div class="sidebar-meta-row">
+          <span>FX Rate Used</span>
+          <span class="sidebar-meta-val">Rp 18,000</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Stage -->
+    <main class="main-stage">
+
+      <!-- =========================================================
+           PAGE 01: EXECUTIVE OVERVIEW
+           ========================================================= -->
+      <section class="page-view active" id="view-overview">
+        <header class="view-header">
+          <div>
+            <span class="view-kicker">Chapter 01 / Executive Summary</span>
+            <h2 class="view-title">How should Modinity host Business Intelligence in 2027?</h2>
+            <p class="view-lead">
+              We evaluated <strong>7 deployment options</strong> across Metabase, Lightdash, and Tableau to solve server security and maintenance without breaking our 407 live dashboards or AI automation.
+            </p>
+          </div>
+        </header>
+
+        <!-- Live Scale Bento Metrics -->
+        <div class="bento-metrics">
+          <div class="metric-card">
+            <div class="metric-label">Active Users Today</div>
+            <div class="metric-val">414</div>
+            <div class="metric-note">Growing by +14 net users/month to ~582 users in 12 months</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Live Dashboards</div>
+            <div class="metric-val">407</div>
+            <div class="metric-note">Across Store Ops, Brands, Finance, Inventory &amp; Executive</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Active Charts (Cards)</div>
+            <div class="metric-val">7,365</div>
+            <div class="metric-note">4,446 custom SQL charts + 2,809 point-and-click business charts</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">90-Day Query Volume</div>
+            <div class="metric-val">1.82M</div>
+            <div class="metric-note">1.58M on BigQuery + 242,098 directly on live Odoo ERP</div>
+          </div>
+        </div>
+
+        <div class="callout-box">
+          <h3>The Core Problem in Plain Terms</h3>
+          <p>
+            Running Metabase on a traditional virtual machine (VM) means our team has to manually update the server, and the Metabase login page is visible to the public internet. However, moving to per-user cloud plans like <strong>Metabase Starter (~Rp 659M/yr)</strong> or <strong>Tableau (~Rp 1.69B/yr)</strong> either strips away our security audit logs or forces us to spend 3 to 6 months rebuilding 407 dashboards from scratch.
+          </p>
+        </div>
+
+        <h3 style="margin-block-end: 1rem;">Top 3 Practical Paths for Modinity</h3>
+
+        <div class="verdict-grid">
+          <!-- Path A: Cloud Run + IAP -->
+          <div class="verdict-card highlight-teal">
+            <div>
+              <span class="verdict-badge badge-teal">Recommended Option A: Serverless GCP Upgrade</span>
+              <h3>Metabase Free on Google Cloud Run + Google IAP</h3>
+              <div class="verdict-price">~Rp 30.2M / yr <span>(~Rp 2.5M / month flat)</span></div>
+              <p style="font-size:0.88rem;">
+                Instead of paying a vendor Rp 1.4B/year to manage a server, we move our existing free Metabase out of a traditional VM onto <strong>Google Cloud Run</strong> behind a <strong>Google Employee Login Gate (IAP)</strong>.
+              </p>
+              <ul class="clean-list">
+                <li><strong>Hackers cannot reach Metabase:</strong> Google blocks all internet traffic at the front gate unless the user is already signed into an official <code>@modinity.com</code> Google account.</li>
+                <li><strong>Zero server maintenance:</strong> Google manages the database (Cloud SQL), and an automatic weekly job updates Metabase with zero downtime.</li>
+                <li><strong>Zero disruption:</strong> Keeps all 407 dashboards, 7,365 charts, audit logs, and AI tools intact in <strong>2 to 3 hours</strong>.</li>
+              </ul>
             </div>
-            <input type="range" id="inp-users" min="50" max="800" step="1" value="414">
-            <div class="control-hint">Live count on modisight as of 16 Nov 2026: 414 active users.</div>
           </div>
 
-          <div class="control-group">
-            <div class="control-label">
-              <span>Net User Growth per Month</span>
-              <span class="control-value" id="lbl-growth">+14 / month</span>
+          <!-- Path B: Metabase Pro Cloud -->
+          <div class="verdict-card highlight-blue">
+            <div>
+              <span class="verdict-badge badge-blue">Recommended Option B: Turnkey Vendor SaaS</span>
+              <h3>Metabase Pro Cloud (Official Managed SaaS)</h3>
+              <div class="verdict-price">~Rp 1.39B / yr <span>(Rp 97.6M -&gt; Rp 133.5M / mo)</span></div>
+              <p style="font-size:0.88rem;">
+                If leadership prefers a 100% vendor-hosted SaaS contract with official SOC 2 compliance and built-in Row-Level Security, <strong>Metabase Pro Cloud</strong> is the only cloud upgrade that does not downgrade our capabilities.
+              </p>
+              <ul class="clean-list">
+                <li><strong>1-day migration:</strong> Uses Metabase's built-in Cloud Migrator to copy all 407 dashboards and 7,365 charts automatically.</li>
+                <li><strong>Keeps all AI &amp; Audit features:</strong> Preserves 100% of Antigravity AI dashboard creation, Gemini Enterprise (<code>ge-mcp</code>), and built-in Usage &amp; Audit Logs.</li>
+                <li><strong>Unlocks Row-Level Security:</strong> Lets a single dashboard automatically filter rows based on which brand an employee belongs to.</li>
+              </ul>
             </div>
-            <input type="range" id="inp-growth" min="0" max="40" step="1" value="14">
-            <div class="control-hint">May to Nov 2026 actual average: +14 net active users/month.</div>
           </div>
-        </div>
 
-        <div class="calc-controls">
-          <div class="control-group">
-            <div class="control-label">
-              <span>Creator / Analyst Seats (Tableau)</span>
-              <span class="control-value" id="lbl-creators">6 Creators</span>
+          <!-- Path C: Why others fail -->
+          <div class="verdict-card">
+            <div>
+              <span class="verdict-badge badge-warn">Why the Other Options Fall Short</span>
+              <h3>Starter, Lightdash &amp; Tableau Trade-Offs</h3>
+              <div class="verdict-price">Rp 583M to Rp 1.69B / yr</div>
+              <p style="font-size:0.88rem;">
+                Each of the remaining options introduces a major operational or security penalty:
+              </p>
+              <ul class="clean-list">
+                <li><strong>Metabase Starter (~Rp 659M/yr):</strong> Costs half a billion Rupiah per year while <strong>deleting our security audit logs</strong> (we can no longer see who viewed or exported data) and adding zero new security features over Free.</li>
+                <li><strong>Lightdash Cloud (~Rp 583M/yr):</strong> Flat-rate pricing for unlimited users, but <strong>cannot connect to our live Odoo ERP</strong> alongside BigQuery, blocks quick custom SQL charts, and requires rebuilding all 407 dashboards.</li>
+                <li><strong>Tableau Cloud (~Rp 1.69B/yr):</strong> Requires a 1-year upfront contract, locks 408 users into read-only mode, breaks our AI tools, and requires 3 to 6 months of manual rebuilding.</li>
+              </ul>
             </div>
-            <input type="range" id="inp-creators" min="1" max="25" step="1" value="6">
-            <div class="control-hint">Tableau bills $75/mo per Creator and $15/mo per Viewer (0 Explorers).</div>
           </div>
+        </div>
 
-          <div class="control-group">
-            <div class="control-label">
-              <span>Exchange Rate (IDR per 1 USD)</span>
-              <span class="control-value" id="lbl-fx">Rp 18,000</span>
+        <div class="page-pager">
+          <span></span>
+          <button class="pager-btn primary" data-goto="cloud-run">Next: How Cloud Run + Google IAP Works -&gt;</button>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PAGE 02: METABASE ON GOOGLE CLOUD RUN + IAP
+           ========================================================= -->
+      <section class="page-view" id="view-cloud-run">
+        <header class="view-header">
+          <div>
+            <span class="view-kicker">Chapter 02 / Recommended Architecture Upgrade</span>
+            <h2 class="view-title">Metabase on Google Cloud Run + Google Login Wall (IAP)</h2>
+            <p class="view-lead">
+              How we eliminate manual VM patching and public internet exposure for <strong>~Rp 2.5M/month</strong> while keeping 100% of our 407 dashboards and AI workflows.
+            </p>
+          </div>
+        </header>
+
+        <div class="arch-comparison">
+          <!-- Old VM Architecture -->
+          <div class="arch-box">
+            <span class="verdict-badge badge-warn">Option 1: Current Virtual Machine (VM) Setup</span>
+            <h3>Like a House with the Front Door on a Public Street</h3>
+            <p style="font-size:0.88rem;">
+              Today, Metabase runs inside a standard Virtual Machine. While it works well, it has two classic operational headaches that concern IT leadership:
+            </p>
+            <div class="flow-steps">
+              <div class="flow-node expose-node">
+                <strong>1. Public Internet Can Reach the Metabase Login Page</strong>
+                Anyone on the internet can send web requests to <code>modisight.modinity.com</code>. If a new software bug is discovered in Metabase before we update it, external bots can probe the login screen or API.
+              </div>
+              <div class="flow-node">
+                <strong>2. Manual Server Maintenance</strong>
+                An engineer has to log into the server to update Linux, manage disk space, and pull new Metabase updates.
+              </div>
+              <div class="flow-node">
+                <strong>3. Database Lives on the Same Setup</strong>
+                Backup recovery and database maintenance depend on our internal server scripts.
+              </div>
             </div>
-            <input type="range" id="inp-fx" min="15000" max="20000" step="250" value="18000">
-            <div class="control-hint">Defaulted to Rp 18,000 / USD for budget buffer.</div>
+          </div>
+
+          <!-- New Cloud Run + IAP Architecture -->
+          <div class="arch-box good-arch">
+            <span class="verdict-badge badge-teal">Option 2: Serverless Google Cloud Run + Google IAP</span>
+            <h3>Like a Vault Inside Google's High-Security Building</h3>
+            <p style="font-size:0.88rem;">
+              We delete the Virtual Machine completely and run the exact same free Metabase software inside Google's serverless infrastructure:
+            </p>
+            <div class="flow-steps">
+              <div class="flow-node shield-node">
+                <strong>1. Google Identity-Aware Proxy (IAP) Blocks Strangers at the Gate</strong>
+                Before a single request ever touches Metabase, Google checks if the visitor is logged into an active <code>@modinity.com</code> Google Workspace account with 2-Step Verification. Hackers and scanners on the internet are blocked by Google's front door and cannot even see Metabase.
+              </div>
+              <div class="flow-node shield-node">
+                <strong>2. Serverless Cloud Run Updates Itself Weekly</strong>
+                There is no server OS to maintain. Every Sunday night, an automated GitHub routine fetches the newest patched version of Metabase and swaps it in with zero downtime.
+              </div>
+              <div class="flow-node shield-node">
+                <strong>3. Managed Google Cloud SQL Handles Backups</strong>
+                All 407 dashboards and audit logs live in Google Cloud SQL with automatic daily backups and point-in-time recovery managed by Google.
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="bar-chart-box">
-          <h3 style="font-size: 0.95rem; margin-block-end: 0.85rem;">1-Year Forecasted Total Spend (<span id="lbl-m12-range">414 to 582 users</span>)</h3>
-          <div id="chart-bars"></div>
+        <div class="verdict-grid">
+          <div class="metric-card">
+            <div class="metric-label">Monthly Infrastructure Cost</div>
+            <div class="metric-val">~Rp 2.5M</div>
+            <div class="metric-note">~$80 Cloud Run + ~$50 Cloud SQL + ~$10 Load Balancer ($0 per user for 580+ users)</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Migration Time</div>
+            <div class="metric-val">2 to 3 Hours</div>
+            <div class="metric-note">Copy existing Postgres database into Cloud SQL and point Cloud Run to it</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Annual Savings vs. Pro Cloud</div>
+            <div class="metric-val">Rp 1.36B / yr</div>
+            <div class="metric-note">Saves 97.8% of SaaS licensing costs while solving the security &amp; patching concern</div>
+          </div>
         </div>
-      </div>
 
-      <!-- 5 Option Cards -->
-      <div class="option-cards">
-        <div class="option-card recommended">
+        <div class="callout-box">
+          <h3>When would we still need Metabase Pro Cloud (~Rp 1.39B/yr) instead of Cloud Run?</h3>
+          <p>
+            Only if Modinity specifically needs <strong>Row-Level Security (RLS)</strong> (where 50 store managers open the exact same dashboard URL and Metabase automatically filters the rows so each manager only sees their own store) or an external <strong>SOC 2 vendor certificate</strong> from Metabase. Today, we handle store and brand separation at Rp 0 cost using separate Metabase folders (Collections) and BigQuery views.
+          </p>
+        </div>
+
+        <div class="page-pager">
+          <button class="pager-btn" data-goto="overview">&lt;- Previous: Executive Overview</button>
+          <button class="pager-btn primary" data-goto="cost-simulator">Next: 12-Month Cost Simulator -&gt;</button>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PAGE 03: INTERACTIVE 12-MONTH COST SIMULATOR (7 OPTIONS)
+           ========================================================= -->
+      <section class="page-view" id="view-cost-simulator">
+        <header class="view-header">
           <div>
-            <span class="option-tag tag-rec">Option 1 (Current + Hardened)</span>
-            <h3>Metabase Free Self-Hosted</h3>
-            <div class="option-formula">$0 license + ~$60/mo GCP VM &amp; WAF</div>
-            <div class="price-big" id="c1-yr-fc">Rp 13.0M / yr</div>
-            <div class="price-sub" id="c1-yr-usd">$720 / year forecasted</div>
+            <span class="view-kicker">Chapter 03 / Financial Model</span>
+            <h2 class="view-title">Interactive 12-Month Cost &amp; Seat Growth Simulator</h2>
+            <p class="view-lead">
+              Test how Modinity's user growth (currently <strong>414 active users</strong> growing at <strong>+14 users/month</strong>) affects our annual budget across all 7 options.
+            </p>
           </div>
-          <div class="price-breakdown">
-            <div><span>Current monthly:</span> <strong id="c1-m1">Rp 1.1M</strong></div>
-            <div><span>Month 12 monthly:</span> <strong id="c1-m12">Rp 1.1M</strong></div>
-            <div><span>1-Yr flat (no growth):</span> <span id="c1-flat">Rp 13.0M</span></div>
+        </header>
+
+        <div class="sim-layout">
+          <!-- Sliders Panel -->
+          <div class="panel-card">
+            <h3 style="font-size:1.02rem; margin-block-end:1rem;">Model Assumptions</h3>
+
+            <div class="slider-group">
+              <div class="slider-head">
+                <span>Current Active Users (Month 1)</span>
+                <span class="slider-readout" id="lbl-users">414 users</span>
+              </div>
+              <input type="range" id="inp-users" min="100" max="900" step="1" value="414">
+              <div class="slider-hint">Actual active users on modisight as of 16 Nov 2026: 414 users.</div>
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-head">
+                <span>New Users Added per Month</span>
+                <span class="slider-readout" id="lbl-growth">+14 / mo</span>
+              </div>
+              <input type="range" id="inp-growth" min="0" max="40" step="1" value="14">
+              <div class="slider-hint">May to Nov 2026 actual net growth: +14 active users/month.</div>
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-head">
+                <span>Data Analyst / Creator Seats (Tableau)</span>
+                <span class="slider-readout" id="lbl-creators">6 Creators</span>
+              </div>
+              <input type="range" id="inp-creators" min="1" max="25" step="1" value="6">
+              <div class="slider-hint">Tableau charges $75/mo per Creator and $15/mo per Viewer (0 Explorers).</div>
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-head">
+                <span>Lightdash Cloud Flat Monthly Fee</span>
+                <span class="slider-readout" id="lbl-ld">$2,700 / mo</span>
+              </div>
+              <input type="range" id="inp-ld" min="1500" max="3500" step="100" value="2700">
+              <div class="slider-hint">Lightdash Cloud Pro charges a flat monthly workspace fee (~$2,400 to $3,000/mo) with unlimited users.</div>
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-head">
+                <span>Exchange Rate (IDR per 1 USD)</span>
+                <span class="slider-readout" id="lbl-fx">Rp 18,000</span>
+              </div>
+              <input type="range" id="inp-fx" min="15500" max="20000" step="250" value="18000">
+              <div class="slider-hint">Conservative budget rate: 1 USD = Rp 18,000.</div>
+            </div>
+          </div>
+
+          <!-- Visual Bar Comparison Panel -->
+          <div class="panel-card">
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-block-end:1rem;">
+              <h3 style="font-size:1.02rem; margin:0;">1-Year Cumulative Spend (<span id="lbl-range">414 to 582 users</span>)</h3>
+              <span class="mono" style="font-size:0.75rem; color:var(--text-muted);">Monthly Billing Forecast</span>
+            </div>
+            <div id="sim-bars"></div>
+            <div style="margin-block-start:1.25rem; padding:0.85rem 1rem; background:var(--bg-subtle); border-radius:var(--radius-sm); font-size:0.82rem; color:var(--text-body);">
+              <strong>Why per-user pricing balloons so fast:</strong> Every time Modinity opens new stores or adds brand team members (+14 users/month), Metabase Cloud and Tableau automatically increase our monthly bill, whereas <strong>Cloud Run Metabase</strong> and <strong>Lightdash Cloud</strong> charge Rp 0 for additional viewers.
+            </div>
           </div>
         </div>
 
-        <div class="option-card warn-option">
+        <!-- 7 Option Cards Breakdown -->
+        <h3 style="margin-block-end: 1rem;">Detailed Cost Breakdown Across All 7 Options</h3>
+        <div class="cost-cards-grid">
+          <div class="cost-card">
+            <div>
+              <span class="status-pill pill-neutral">1. Current VM</span>
+              <h4>Metabase Free (VM)</h4>
+              <div class="cost-formula">$0 license + ~$60/mo GCP VM</div>
+              <div class="cost-yr-big" id="c1-fc">Rp 13.0M / yr</div>
+              <div class="cost-yr-usd" id="c1-usd">$720 / year forecasted</div>
+            </div>
+            <div class="cost-meta-table">
+              <div class="cost-meta-row"><span>Month 1 (Now):</span> <strong id="c1-m1">Rp 1.1M</strong></div>
+              <div class="cost-meta-row"><span>Month 12:</span> <strong id="c1-m12">Rp 1.1M</strong></div>
+              <div class="cost-meta-row"><span>1-Yr Flat (No Growth):</span> <strong id="c1-flat">Rp 13.0M</strong></div>
+            </div>
+          </div>
+
+          <div class="cost-card rec-border">
+            <div>
+              <span class="status-pill pill-good">2. Best Value Upgrade</span>
+              <h4>Metabase Free (Cloud Run + IAP)</h4>
+              <div class="cost-formula">$0 license + ~$140/mo Serverless GCP</div>
+              <div class="cost-yr-big" id="c2-fc">Rp 30.2M / yr</div>
+              <div class="cost-yr-usd" id="c2-usd">$1,680 / year forecasted</div>
+            </div>
+            <div class="cost-meta-table">
+              <div class="cost-meta-row"><span>Month 1 (Now):</span> <strong id="c2-m1">Rp 2.5M</strong></div>
+              <div class="cost-meta-row"><span>Month 12:</span> <strong id="c2-m12">Rp 2.5M</strong></div>
+              <div class="cost-meta-row"><span>1-Yr Flat (No Growth):</span> <strong id="c2-flat">Rp 30.2M</strong></div>
+            </div>
+          </div>
+
+          <div class="cost-card">
+            <div>
+              <span class="status-pill pill-bad">3. Loses Audit Logs</span>
+              <h4>Metabase Starter (Cloud)</h4>
+              <div class="cost-formula">$100 base (5 users) + $6/user/mo</div>
+              <div class="cost-yr-big" id="c3-fc">Rp 659.2M / yr</div>
+              <div class="cost-yr-usd" id="c3-usd">$36,624 / year forecasted</div>
+            </div>
+            <div class="cost-meta-table">
+              <div class="cost-meta-row"><span>Month 1 (Now):</span> <strong id="c3-m1">Rp 46.0M</strong></div>
+              <div class="cost-meta-row"><span>Month 12:</span> <strong id="c3-m12">Rp 63.9M</strong></div>
+              <div class="cost-meta-row"><span>1-Yr Flat (No Growth):</span> <strong id="c3-flat">Rp 551.7M</strong></div>
+            </div>
+          </div>
+
+          <div class="cost-card pro-border">
+            <div>
+              <span class="status-pill pill-good">4. Best Turnkey SaaS</span>
+              <h4>Metabase Pro (Cloud)</h4>
+              <div class="cost-formula">$575 base (10 users) + $12/user/mo</div>
+              <div class="cost-yr-big" id="c4-fc">Rp 1.39B / yr</div>
+              <div class="cost-yr-usd" id="c4-usd">$77,028 / year forecasted</div>
+            </div>
+            <div class="cost-meta-table">
+              <div class="cost-meta-row"><span>Month 1 (Now):</span> <strong id="c4-m1">Rp 97.6M</strong></div>
+              <div class="cost-meta-row"><span>Month 12:</span> <strong id="c4-m12">Rp 133.5M</strong></div>
+              <div class="cost-meta-row"><span>1-Yr Flat (No Growth):</span> <strong id="c4-flat">Rp 1.17B</strong></div>
+            </div>
+          </div>
+
+          <div class="cost-card">
+            <div>
+              <span class="status-pill pill-warn">5. Paid + Manual VM</span>
+              <h4>Metabase Pro (Self-Hosted)</h4>
+              <div class="cost-formula">$575 base + $12/user + $60 GCP</div>
+              <div class="cost-yr-big" id="c5-fc">Rp 1.40B / yr</div>
+              <div class="cost-yr-usd" id="c5-usd">$77,748 / year forecasted</div>
+            </div>
+            <div class="cost-meta-table">
+              <div class="cost-meta-row"><span>Month 1 (Now):</span> <strong id="c5-m1">Rp 98.7M</strong></div>
+              <div class="cost-meta-row"><span>Month 12:</span> <strong id="c5-m12">Rp 134.6M</strong></div>
+              <div class="cost-meta-row"><span>1-Yr Flat (No Growth):</span> <strong id="c5-flat">Rp 1.18B</strong></div>
+            </div>
+          </div>
+
+          <div class="cost-card">
+            <div>
+              <span class="status-pill pill-warn">6. Flat SaaS / Rebuild</span>
+              <h4>Lightdash Cloud Pro</h4>
+              <div class="cost-formula">Flat workspace fee (Unlimited users)</div>
+              <div class="cost-yr-big" id="c6-fc">Rp 583.2M / yr</div>
+              <div class="cost-yr-usd" id="c6-usd">$32,400 / year forecasted</div>
+            </div>
+            <div class="cost-meta-table">
+              <div class="cost-meta-row"><span>Month 1 (Now):</span> <strong id="c6-m1">Rp 48.6M</strong></div>
+              <div class="cost-meta-row"><span>Month 12:</span> <strong id="c6-m12">Rp 48.6M</strong></div>
+              <div class="cost-meta-row"><span>1-Yr Flat (No Growth):</span> <strong id="c6-flat">Rp 583.2M</strong></div>
+            </div>
+          </div>
+
+          <div class="cost-card">
+            <div>
+              <span class="status-pill pill-bad">7. Annual Upfront Lock</span>
+              <h4>Tableau Cloud Standard</h4>
+              <div class="cost-formula">$75 Creator + $15 Viewer (0 Explorer)</div>
+              <div class="cost-yr-big" id="c7-fc">Rp 1.69B / yr</div>
+              <div class="cost-yr-usd" id="c7-usd">$93,780 / year forecasted</div>
+            </div>
+            <div class="cost-meta-table">
+              <div class="cost-meta-row"><span>Month 1 Eq:</span> <strong id="c7-m1">Rp 118.3M</strong></div>
+              <div class="cost-meta-row"><span>Month 12 Eq:</span> <strong id="c7-m12">Rp 163.1M</strong></div>
+              <div class="cost-meta-row"><span>1-Yr Flat (No Growth):</span> <strong id="c7-flat">Rp 1.42B</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-pager">
+          <button class="pager-btn" data-goto="cloud-run">&lt;- Previous: Cloud Run + IAP</button>
+          <button class="pager-btn primary" data-goto="capability-matrix">Next: 7-Option Capability Matrix -&gt;</button>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PAGE 04: 7-OPTION CAPABILITY MATRIX (LAYMAN TERMS)
+           ========================================================= -->
+      <section class="page-view" id="view-capability-matrix">
+        <header class="view-header">
           <div>
-            <span class="option-tag tag-warn">Option 2 (Downgrades Audit/AI)</span>
-            <h3>Metabase Starter (Cloud)</h3>
-            <div class="option-formula">$100 base (5 users) + $6/user/mo</div>
-            <div class="price-big" id="c2-yr-fc">Rp 659.2M / yr</div>
-            <div class="price-sub" id="c2-yr-usd">$36,624 / year forecasted</div>
+            <span class="view-kicker">Chapter 04 / Side-by-Side Comparison</span>
+            <h2 class="view-title">Complete 7-Option Capability Matrix (in Plain English)</h2>
+            <p class="view-lead">
+              Filter by topic below to see how each option handles security, audit trails, AI dashboard creation, and daily business reporting.
+            </p>
           </div>
-          <div class="price-breakdown">
-            <div><span>Current monthly:</span> <strong id="c2-m1">Rp 46.0M</strong></div>
-            <div><span>Month 12 monthly:</span> <strong id="c2-m12">Rp 63.9M</strong></div>
-            <div><span>1-Yr flat (no growth):</span> <span id="c2-flat">Rp 551.7M</span></div>
+        </header>
+
+        <div class="toolbar-row">
+          <div class="filter-group" role="tablist">
+            <button class="chip-btn active" data-cat-filter="all">Show All Topics</button>
+            <button class="chip-btn" data-cat-filter="security">Security &amp; Audit Logs</button>
+            <button class="chip-btn" data-cat-filter="ai">AI &amp; Automation</button>
+            <button class="chip-btn" data-cat-filter="business">Daily Business Use &amp; Migration</button>
           </div>
         </div>
 
-        <div class="option-card">
+        <div class="table-wrap">
+          <table class="comp-matrix" id="matrix-table">
+            <thead>
+              <tr>
+                <th class="col-sticky" style="inline-size:13.5rem;">Requirement</th>
+                <th style="inline-size:12.5rem;">1. Metabase Free (Current VM)</th>
+                <th class="col-highlight-teal" style="inline-size:13.5rem;">2. Metabase Free (Cloud Run + IAP)</th>
+                <th style="inline-size:12.5rem;">3. Metabase Starter (Cloud)</th>
+                <th class="col-highlight-blue" style="inline-size:13.5rem;">4. Metabase Pro (Cloud)</th>
+                <th style="inline-size:12rem;">5. Metabase Pro (Self-Hosted)</th>
+                <th style="inline-size:13rem;">6. Lightdash Cloud Pro</th>
+                <th style="inline-size:13rem;">7. Tableau Cloud Standard</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Section: Security -->
+              <tr class="section-divider" data-cat="security">
+                <td colspan="8">Security, Server Updates &amp; Compliance Audit Logs</td>
+              </tr>
+              <tr data-cat="security">
+                <td class="col-sticky"><strong>Protection against internet hackers &amp; software bugs</strong></td>
+                <td>
+                  <span class="status-pill pill-warn">Public Login Page</span>
+                  <div class="cell-copy">Login page is reachable from the internet; relies on firewall rules and manual server updates.</div>
+                </td>
+                <td class="col-highlight-teal">
+                  <span class="status-pill pill-good">Google Front Gate (IAP)</span>
+                  <div class="cell-copy">Strangers on the internet are blocked by Google before reaching Metabase. Only logged-in <code>@modinity.com</code> staff can enter.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Vendor Managed</span>
+                  <div class="cell-copy">Metabase Cloud team manages edge security and software updates.</div>
+                </td>
+                <td class="col-highlight-blue">
+                  <span class="status-pill pill-good">Vendor Managed</span>
+                  <div class="cell-copy">Metabase Cloud team manages edge security and software updates (SOC 2 Type II).</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-warn">Manual Server</span>
+                  <div class="cell-copy">Our team still has to protect and update the server ourselves.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Vendor Managed</span>
+                  <div class="cell-copy">Lightdash Cloud team manages security and updates.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Vendor Managed</span>
+                  <div class="cell-copy">Salesforce / Tableau manages security and updates.</div>
+                </td>
+              </tr>
+              <tr data-cat="security">
+                <td class="col-sticky"><strong>Who updates the server &amp; database backups?</strong></td>
+                <td>
+                  <span class="status-pill pill-warn">Manual by Our Team</span>
+                  <div class="cell-copy">Engineers must log into the VM to run updates.</div>
+                </td>
+                <td class="col-highlight-teal">
+                  <span class="status-pill pill-good">Automated on GCP</span>
+                  <div class="cell-copy">Google Cloud SQL manages daily DB backups; weekly schedule auto-updates the Metabase container with zero downtime.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Metabase Team</span>
+                  <div class="cell-copy">100% handled by Metabase Cloud.</div>
+                </td>
+                <td class="col-highlight-blue">
+                  <span class="status-pill pill-good">Metabase Team</span>
+                  <div class="cell-copy">100% handled by Metabase Cloud.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-bad">Manual Despite Cost</span>
+                  <div class="cell-copy">We pay Rp 1.4B/yr and still have to update the VM ourselves.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Lightdash Team</span>
+                  <div class="cell-copy">100% handled by Lightdash Cloud.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Tableau Team</span>
+                  <div class="cell-copy">100% handled by Tableau Cloud.</div>
+                </td>
+              </tr>
+              <tr data-cat="security">
+                <td class="col-sticky"><strong>Activity &amp; download audit log (Seeing who viewed or exported data)</strong></td>
+                <td>
+                  <span class="status-pill pill-good">Full Audit History</span>
+                  <div class="cell-copy">We have full access to the internal log table (used for our August government compliance report).</div>
+                </td>
+                <td class="col-highlight-teal">
+                  <span class="status-pill pill-good">Full Audit History</span>
+                  <div class="cell-copy">Keeps 100% access to the internal log database on Google Cloud SQL.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-bad">Deleted / Blind</span>
+                  <div class="cell-copy">Starter locks us out of the internal database and does not include the Pro Audit UI. We cannot track exports or queries.</div>
+                </td>
+                <td class="col-highlight-blue">
+                  <span class="status-pill pill-good">Built-In Audit UI</span>
+                  <div class="cell-copy">Includes official Usage Analytics and Audit Log screens to track every view, query, and download.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Full Audit History</span>
+                  <div class="cell-copy">Includes both the Pro Audit UI and raw database logs.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Built-In Usage UI</span>
+                  <div class="cell-copy">Includes workspace usage analytics dashboards.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Built-In Admin Views</span>
+                  <div class="cell-copy">Includes Tableau Admin Insights.</div>
+                </td>
+              </tr>
+              <tr data-cat="security">
+                <td class="col-sticky"><strong>Does company data stay inside our Google Cloud?</strong></td>
+                <td>
+                  <span class="status-pill pill-good">100% Inside GCP</span>
+                  <div class="cell-copy">Data never leaves Modinity's Google Cloud network.</div>
+                </td>
+                <td class="col-highlight-teal">
+                  <span class="status-pill pill-good">100% Inside GCP</span>
+                  <div class="cell-copy">Cloud Run, Cloud SQL, and BigQuery all stay inside our private Google Cloud network.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-warn">Sent to External AWS</span>
+                  <div class="cell-copy">Every query travels outside our Google Cloud to Metabase's AWS servers.</div>
+                </td>
+                <td class="col-highlight-blue">
+                  <span class="status-pill pill-warn">Sent to External AWS</span>
+                  <div class="cell-copy">Every query travels outside our Google Cloud to Metabase's AWS servers.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">100% Inside GCP</span>
+                  <div class="cell-copy">Stays inside our Google Cloud network.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-warn">Sent to External Cloud</span>
+                  <div class="cell-copy">Queries route through Lightdash's external cloud servers.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-warn">Sent to External AWS</span>
+                  <div class="cell-copy">Queries route through Tableau's external AWS servers.</div>
+                </td>
+              </tr>
+
+              <!-- Section: AI & Automation -->
+              <tr class="section-divider" data-cat="ai">
+                <td colspan="8">AI Dashboard Creation (Antigravity), Gemini Enterprise &amp; Modibot</td>
+              </tr>
+              <tr data-cat="ai">
+                <td class="col-sticky"><strong>Building dashboards directly from Antigravity AI</strong></td>
+                <td>
+                  <span class="status-pill pill-good">Instant (Seconds)</span>
+                  <div class="cell-copy">AI writes SQL and publishes multi-chart dashboards directly via Metabase API in seconds.</div>
+                </td>
+                <td class="col-highlight-teal">
+                  <span class="status-pill pill-good">Instant (Seconds)</span>
+                  <div class="cell-copy">Works 100% identically to today. Zero change to how we build dashboards.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Instant (Seconds)</span>
+                  <div class="cell-copy">Works via the same Metabase API.</div>
+                </td>
+                <td class="col-highlight-blue">
+                  <span class="status-pill pill-good">Instant (Seconds)</span>
+                  <div class="cell-copy">Works 100% identically to today via the Metabase API.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Instant (Seconds)</span>
+                  <div class="cell-copy">Works 100% identically to today.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-warn">Requires Code Deploy</span>
+                  <div class="cell-copy">Has an AI connector, but charts require defining metrics in Git code files (<code>dbt YAML</code>) and deploying first.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-bad">Broken / Manual Desktop</span>
+                  <div class="cell-copy">No API to create a single SQL chart. Requires generating 10,000-line desktop files (<code>.twb</code>) and overwriting whole workbooks.</div>
+                </td>
+              </tr>
+              <tr data-cat="ai">
+                <td class="col-sticky"><strong>Gemini Enterprise (<code>ge-mcp</code>) &amp; Lark <code>Modibot</code></strong></td>
+                <td>
+                  <span class="status-pill pill-good">Works Natively</span>
+                  <div class="cell-copy">Both tools are built directly on our Metabase setup.</div>
+                </td>
+                <td class="col-highlight-teal">
+                  <span class="status-pill pill-good">Works Natively</span>
+                  <div class="cell-copy">Zero code rewrite needed; stays fast inside Google Cloud.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-warn">Loses API Key Audit</span>
+                  <div class="cell-copy">Works after changing the URL, but we lose the log showing which AI key ran which query.</div>
+                </td>
+                <td class="col-highlight-blue">
+                  <span class="status-pill pill-good">Works + Audited</span>
+                  <div class="cell-copy">Works after changing the URL and keeps full API key audit logs.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Works Natively</span>
+                  <div class="cell-copy">Zero changes needed.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-bad">Must Rewrite Both</span>
+                  <div class="cell-copy">Both bots would have to be rebuilt from scratch for Lightdash.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-bad">Must Rewrite Both</span>
+                  <div class="cell-copy">Both bots would have to be rebuilt from scratch for Tableau.</div>
+                </td>
+              </tr>
+
+              <!-- Section: Daily Business Use & Migration -->
+              <tr class="section-divider" data-cat="business">
+                <td colspan="8">Daily Business Reporting, Multi-Database Support &amp; Migration Effort</td>
+              </tr>
+              <tr data-cat="business">
+                <td class="col-sticky"><strong>Quick custom SQL charts (4,446 of our current charts)</strong></td>
+                <td>
+                  <span class="status-pill pill-good">Full Support</span>
+                  <div class="cell-copy">Analysts can write any custom SQL query and add dashboard filters immediately.</div>
+                </td>
+                <td class="col-highlight-teal">
+                  <span class="status-pill pill-good">Full Support</span>
+                  <div class="cell-copy">All 4,446 custom SQL charts keep working with zero changes.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Full Support</span>
+                  <div class="cell-copy">All 4,446 custom SQL charts keep working.</div>
+                </td>
+                <td class="col-highlight-blue">
+                  <span class="status-pill pill-good">Full Support</span>
+                  <div class="cell-copy">All 4,446 custom SQL charts keep working.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Full Support</span>
+                  <div class="cell-copy">All 4,446 custom SQL charts keep working.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-bad">Second-Class Feature</span>
+                  <div class="cell-copy">Lightdash forces metrics through Git code first. Raw SQL charts lose standard semantic filters and cannot even be duplicated with a button.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-warn">Desktop Only</span>
+                  <div class="cell-copy">Custom SQL must be authored inside Tableau Desktop software by one of the 6 Creators.</div>
+                </td>
+              </tr>
+              <tr data-cat="business">
+                <td class="col-sticky"><strong>Connecting to Live Odoo ERP &amp; BigQuery at the same time</strong></td>
+                <td>
+                  <span class="status-pill pill-good">Supported (9 DBs)</span>
+                  <div class="cell-copy">Queries BigQuery (1.58M runs) and live Odoo ERP (242k runs) side-by-side.</div>
+                </td>
+                <td class="col-highlight-teal">
+                  <span class="status-pill pill-good">Supported (9 DBs)</span>
+                  <div class="cell-copy">All 9 database connections work side-by-side on the same dashboard.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Supported</span>
+                  <div class="cell-copy">Supports multiple database connections.</div>
+                </td>
+                <td class="col-highlight-blue">
+                  <span class="status-pill pill-good">Supported</span>
+                  <div class="cell-copy">Supports multiple database connections.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Supported</span>
+                  <div class="cell-copy">Supports multiple database connections.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-bad">1 Warehouse Only</span>
+                  <div class="cell-copy">One Lightdash project can only connect to BigQuery. Live Odoo ERP reporting (85 charts) breaks unless synced to BigQuery first.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Supported</span>
+                  <div class="cell-copy">Can publish separate data sources to Tableau Cloud.</div>
+                </td>
+              </tr>
+              <tr data-cat="business">
+                <td class="col-sticky"><strong>Self-service for our 408 non-technical business users</strong></td>
+                <td>
+                  <span class="status-pill pill-good">Full Exploration</span>
+                  <div class="cell-copy">Any user can filter, drill down, or build point-and-click tables (2,809 charts built this way).</div>
+                </td>
+                <td class="col-highlight-teal">
+                  <span class="status-pill pill-good">Full Exploration</span>
+                  <div class="cell-copy">Every employee gets full exploration at Rp 0 extra per user.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Full Exploration</span>
+                  <div class="cell-copy">Every paid seat gets full Metabase access.</div>
+                </td>
+                <td class="col-highlight-blue">
+                  <span class="status-pill pill-good">Full Exploration + RLS</span>
+                  <div class="cell-copy">Full access plus automatic row-level brand/store filtering.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">Full Exploration + RLS</span>
+                  <div class="cell-copy">Full access plus automatic row-level filtering.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-warn">Requires Engineer Setup</span>
+                  <div class="cell-copy">Unlimited users can explore, but only on tables where data engineers have already written YAML code definitions.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-bad">Strictly Read-Only</span>
+                  <div class="cell-copy">With 0 Explorers, all 408 Viewers ($15/mo) are locked into read-only mode unless upgraded to $42/mo Explorer seats.</div>
+                </td>
+              </tr>
+              <tr data-cat="business">
+                <td class="col-sticky"><strong>Time required to migrate 407 dashboards &amp; 7,365 charts</strong></td>
+                <td>
+                  <span class="status-pill pill-good">0 Hours (Live)</span>
+                  <div class="cell-copy">Already running.</div>
+                </td>
+                <td class="col-highlight-teal">
+                  <span class="status-pill pill-good">2 to 3 Hours</span>
+                  <div class="cell-copy">Backup and restore existing database to Google Cloud SQL. Zero dashboards rebuilt.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">~1 Day</span>
+                  <div class="cell-copy">Built-in <code>Admin &gt; Settings &gt; Cloud</code> automatic copy tool.</div>
+                </td>
+                <td class="col-highlight-blue">
+                  <span class="status-pill pill-good">~1 Day</span>
+                  <div class="cell-copy">Built-in <code>Admin &gt; Settings &gt; Cloud</code> automatic copy tool.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-good">~1 Hour</span>
+                  <div class="cell-copy">Paste license key into current setup.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-bad">3 to 6 Months</span>
+                  <div class="cell-copy">Every single one of our 407 dashboards and 7,365 charts must be coded and rebuilt from scratch.</div>
+                </td>
+                <td>
+                  <span class="status-pill pill-bad">3 to 6 Months</span>
+                  <div class="cell-copy">Every single one of our 407 dashboards and 7,365 charts must be manually rebuilt in Tableau Desktop.</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="page-pager">
+          <button class="pager-btn" data-goto="cost-simulator">&lt;- Previous: Cost Simulator</button>
+          <button class="pager-btn primary" data-goto="alternatives">Next: Why Not Lightdash or Tableau? -&gt;</button>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PAGE 05: WHY NOT LIGHTDASH OR TABLEAU?
+           ========================================================= -->
+      <section class="page-view" id="view-alternatives">
+        <header class="view-header">
           <div>
-            <span class="option-tag tag-cloud">Option 3 (Full Cloud SaaS)</span>
-            <h3>Metabase Pro (Cloud)</h3>
-            <div class="option-formula">$575 base (10 users) + $12/user/mo</div>
-            <div class="price-big" id="c3-yr-fc">Rp 1.39B / yr</div>
-            <div class="price-sub" id="c3-yr-usd">$77,028 / year forecasted</div>
+            <span class="view-kicker">Chapter 05 / Alternative BI Tools</span>
+            <h2 class="view-title">What Do We Lose If We Switch to Lightdash or Tableau?</h2>
+            <p class="view-lead">
+              Both Lightdash and Tableau are respected tools, but switching away from Metabase means giving up core workflows that Modinity uses thousands of times a day.
+            </p>
           </div>
-          <div class="price-breakdown">
-            <div><span>Current monthly:</span> <strong id="c3-m1">Rp 97.6M</strong></div>
-            <div><span>Month 12 monthly:</span> <strong id="c3-m12">Rp 133.5M</strong></div>
-            <div><span>1-Yr flat (no growth):</span> <span id="c3-flat">Rp 1.17B</span></div>
+        </header>
+
+        <!-- Lightdash Deep Dive -->
+        <div class="panel-card" style="margin-block-end: 1.75rem;">
+          <span class="verdict-badge badge-warn">Option 6 Deep Dive: Lightdash Cloud Pro (~Rp 583M/yr Flat Fee)</span>
+          <h3 style="font-size:1.2rem; margin-block-end:0.5rem;">Why Lightdash Looks Attractive on Paper, and What Actually Breaks</h3>
+          <p style="margin-block-end:1.25rem;">
+            Lightdash is built specifically on top of <strong>dbt</strong> (the data transformation tool Modinity uses) and charges a flat monthly workspace fee (~$2,400 to $3,000/month) for unlimited users instead of charging per viewer. However, checking our live Metabase usage reveals <strong>4 major capabilities we would lose immediately</strong>:
+          </p>
+
+          <div class="verdict-grid" style="margin-block-end:0;">
+            <div class="metric-card">
+              <div class="metric-label">1. We Lose Instant Custom SQL Charts</div>
+              <div class="metric-val">4,446 Charts</div>
+              <p style="font-size:0.84rem; margin:0.4rem 0 0;">
+                <strong>61% of Modinity's charts</strong> are custom SQL queries built in seconds by analysts or AI. In Lightdash, charts are supposed to be defined in Git code files (<code>schema.yml</code>) first. Raw SQL charts in Lightdash cannot use standard semantic filters and cannot even be duplicated with a button.
+              </p>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-label">2. We Lose Live Odoo ERP Reporting</div>
+              <div class="metric-val">242,098 Queries</div>
+              <p style="font-size:0.84rem; margin:0.4rem 0 0;">
+                In the last 90 days, Modinity ran <strong>242,098 queries across 85 charts</strong> directly against our live Odoo database. A Lightdash project can only connect to <strong>one database (BigQuery)</strong>. We could no longer combine live Odoo data and BigQuery data in one place.
+              </p>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-label">3. Business Users Wait on Engineers</div>
+              <div class="metric-val">2,809 GUI Charts</div>
+              <p style="font-size:0.84rem; margin:0.4rem 0 0;">
+                In Metabase, as soon as a table exists in BigQuery, business users can click and summarize it (2,809 charts built this way). In Lightdash, a table or column is completely invisible to business users until a data engineer writes YAML code for it and deploys it.
+              </p>
+            </div>
           </div>
         </div>
 
-        <div class="option-card">
+        <!-- Tableau Deep Dive -->
+        <div class="panel-card">
+          <span class="verdict-badge badge-bad">Option 7 Deep Dive: Tableau Cloud Standard (~Rp 1.69B/yr Forecasted)</span>
+          <h3 style="font-size:1.2rem; margin-block-end:0.5rem;">Why Tableau Is the Most Expensive &amp; Disruptive Option</h3>
+          <p style="margin-block-end:1.25rem;">
+            With 6 Creator seats ($75/mo), 0 Explorer seats, and 408+ Viewer seats ($15/mo), Tableau costs more than any other option while slowing down our data &amp; AI delivery:
+          </p>
+
+          <div class="verdict-grid" style="margin-block-end:0;">
+            <div class="metric-card">
+              <div class="metric-label">1. Requires 1-Year Upfront Contract</div>
+              <div class="metric-val">Rp 1.42B+ Upfront</div>
+              <p style="font-size:0.84rem; margin:0.4rem 0 0;">
+                Unlike Metabase or Cloud Run (which can be paid monthly), Tableau Cloud requires signing an annual contract paid upfront, locking Modinity in before a single dashboard is migrated.
+              </p>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-label">2. Downgrades 408 Users to Read-Only</div>
+              <div class="metric-val">0 Explorers</div>
+              <p style="font-size:0.84rem; margin:0.4rem 0 0;">
+                In Metabase, all 414 users can build their own views and pivot tables. In Tableau, $15/mo Viewers are strictly read-only. Allowing brand or finance leads to build their own views requires upgrading them to $42/mo Explorer seats.
+              </p>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-label">3. Breaks AI Dashboard Creation</div>
+              <div class="metric-val">407 Dashboards</div>
+              <p style="font-size:0.84rem; margin:0.4rem 0 0;">
+                Tableau dashboards are complex desktop files (<code>.twb</code> XML), not simple SQL cards. Even with <code>tableau-mcp</code>, AI cannot read chart SQL or update a single chart on a live dashboard, and our 6 analysts would spend 3 to 6 months rebuilding 407 dashboards by hand.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-pager">
+          <button class="pager-btn" data-goto="capability-matrix">&lt;- Previous: 7-Option Matrix</button>
+          <button class="pager-btn primary" data-goto="migration-plan">Next: AI Workflow &amp; Migration Plan -&gt;</button>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PAGE 06: AI WORKFLOW & 1-DAY MIGRATION PLAN
+           ========================================================= -->
+      <section class="page-view" id="view-migration-plan">
+        <header class="view-header">
           <div>
-            <span class="option-tag tag-neutral">Option 4 (Self-Hosted RLS)</span>
-            <h3>Metabase Pro (Self-Hosted)</h3>
-            <div class="option-formula">$575 base + $12/user + $60 GCP</div>
-            <div class="price-big" id="c4-yr-fc">Rp 1.40B / yr</div>
-            <div class="price-sub" id="c4-yr-usd">$77,748 / year forecasted</div>
+            <span class="view-kicker">Chapter 06 / Implementation &amp; Continuity</span>
+            <h2 class="view-title">Zero Capability Loss &amp; 1-Day Migration Plan</h2>
+            <p class="view-lead">
+              Whether we choose <strong>Option 2 (Cloud Run + Google IAP at ~Rp 30M/yr)</strong> or <strong>Option 4 (Metabase Pro Cloud at ~Rp 1.39B/yr)</strong>, our team loses zero functionality and migration takes less than 1 day.
+            </p>
           </div>
-          <div class="price-breakdown">
-            <div><span>Current monthly:</span> <strong id="c4-m1">Rp 98.7M</strong></div>
-            <div><span>Month 12 monthly:</span> <strong id="c4-m12">Rp 134.6M</strong></div>
-            <div><span>1-Yr flat (no growth):</span> <span id="c4-flat">Rp 1.18B</span></div>
+        </header>
+
+        <div class="callout-box">
+          <h3>Will Creating Dashboards from Antigravity Change or Downgrade?</h3>
+          <p>
+            <strong>No. It works 100% identically in both Cloud Run and Metabase Pro Cloud.</strong> Our Antigravity workflow uses Metabase's standard web API (<code>/api/card</code> and <code>/api/dashboard</code>) to write SQL queries, create charts, and arrange 24-column dashboard layouts automatically. Moving to Cloud Run or Metabase Pro Cloud only changes the server URL and API key in our configuration file.
+          </p>
+        </div>
+
+        <div class="arch-comparison">
+          <!-- Rollout Plan A: Cloud Run -->
+          <div class="arch-box good-arch">
+            <span class="verdict-badge badge-teal">Rollout Plan A: Metabase on Cloud Run + IAP (~2 to 3 Hours)</span>
+            <h3>How We Move to Serverless Google Cloud Run</h3>
+            <ul class="clean-list" style="margin-block-start:1rem;">
+              <li><strong>Step 1 (30 mins):</strong> Create a managed <strong>Google Cloud SQL for PostgreSQL</strong> instance with automated daily backups inside our GCP project.</li>
+              <li><strong>Step 2 (30 mins):</strong> Copy our existing Metabase database (all 407 dashboards, 7,365 charts, collections, and audit logs) into Cloud SQL.</li>
+              <li><strong>Step 3 (45 mins):</strong> Deploy the official Metabase container onto <strong>Google Cloud Run</strong> connected to Cloud SQL, and enable the automated weekly version update job.</li>
+              <li><strong>Step 4 (30 mins):</strong> Turn on <strong>Google Identity-Aware Proxy (IAP)</strong> on the load balancer so only signed-in <code>@modinity.com</code> Google accounts can reach the server, then switch the <code>modisight.modinity.com</code> domain over.</li>
+            </ul>
+          </div>
+
+          <!-- Rollout Plan B: Metabase Pro Cloud -->
+          <div class="arch-box">
+            <span class="verdict-badge badge-blue">Rollout Plan B: Metabase Pro Cloud (~1 Day via Built-in Tool)</span>
+            <h3>How We Move to Official Metabase Pro Cloud</h3>
+            <ul class="clean-list" style="margin-block-start:1rem;">
+              <li><strong>Step 1 (15 mins):</strong> Open <code>Admin -&gt; Settings -&gt; Cloud</code> inside our current Metabase and click <strong>Migrate to Metabase Cloud</strong>.</li>
+              <li><strong>Step 2 (Automatic):</strong> Metabase automatically packages all 407 dashboards, 7,365 charts, user accounts, and folder permissions into a cloud snapshot and provisions our new Pro Cloud instance.</li>
+              <li><strong>Step 3 (1 to 2 hours):</strong> Re-enter database passwords (BigQuery service account and Odoo replica) in the new Cloud admin screen.</li>
+              <li><strong>Step 4 (1 hour, handled by AI):</strong> Antigravity updates the URL and API key in our local MCP config, <code>ge-mcp</code> (Gemini Enterprise), and <code>Modibot</code>, and updates any audit queries to use Pro's Usage Analytics tables.</li>
+            </ul>
           </div>
         </div>
 
-        <div class="option-card">
-          <div>
-            <span class="option-tag tag-neutral">Option 5 (Annual Upfront Only)</span>
-            <h3>Tableau Cloud Standard</h3>
-            <div class="option-formula">$75 Creator + $15 Viewer (0 Explorer)</div>
-            <div class="price-big" id="c5-yr-fc">Rp 1.69B / yr</div>
-            <div class="price-sub" id="c5-yr-usd">$93,780 / year forecasted</div>
-          </div>
-          <div class="price-breakdown">
-            <div><span>Current monthly eq:</span> <strong id="c5-m1">Rp 118.3M</strong></div>
-            <div><span>Month 12 monthly eq:</span> <strong id="c5-m12">Rp 163.1M</strong></div>
-            <div><span>1-Yr flat (no growth):</span> <span id="c5-flat">Rp 1.42B</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 2: Full 5-Option Capability Matrix -->
-    <section class="section-block">
-      <div class="section-header">
-        <div>
-          <h2>2. Side-by-side capability matrix (5 options)</h2>
-          <p class="section-subtitle">Filter by category to inspect security, auditability, AI/MCP workflows, and migration effort.</p>
-        </div>
-        <div class="filter-tabs" role="tablist">
-          <button class="tab-btn active" data-filter="all">All Categories</button>
-          <button class="tab-btn" data-filter="security">Security &amp; Audit</button>
-          <button class="tab-btn" data-filter="ai">AI, MCP &amp; Gemini Enterprise</button>
-          <button class="tab-btn" data-filter="workflow">BI Workflow &amp; Migration</button>
-        </div>
-      </div>
-
-      <div class="table-scroll">
-        <table class="matrix" id="comparison-table">
-          <thead>
-            <tr>
-              <th style="inline-size: 15rem;">Capability / Requirement</th>
-              <th class="col-rec" style="inline-size: 16rem;">1. Metabase Free Self-Hosted (Current)</th>
-              <th style="inline-size: 16rem;">2. Metabase Starter (Cloud)</th>
-              <th style="inline-size: 16rem;">3. Metabase Pro (Cloud)</th>
-              <th style="inline-size: 16rem;">4. Metabase Pro (Self-Hosted)</th>
-              <th style="inline-size: 16rem;">5. Tableau Standard (Cloud)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Category: Security & Audit -->
-            <tr class="cat-row" data-cat="security">
-              <td colspan="6">Security, Patching &amp; Compliance Audit Logs</td>
-            </tr>
-            <tr data-cat="security">
-              <td><strong>Server patching &amp; CVE updates</strong></td>
-              <td class="col-rec">
-                <span class="pill pill-neutral">Internal Team + WAF</span>
-                <div class="cell-desc">Managed on GCP VM with Cloud Armor WAF blocking SQLi at the edge + automated 24h Docker patch schedule.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">Automatic (Metabase)</span>
-                <div class="cell-desc">Patched automatically by Metabase Cloud team.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">Automatic (Metabase)</span>
-                <div class="cell-desc">Patched automatically by Metabase Cloud team.</div>
-              </td>
-              <td>
-                <span class="pill pill-warn">Internal Team</span>
-                <div class="cell-desc">Despite paying Rp 1.4B/yr, our team still manages and patches the GCP server manually.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">Automatic (Salesforce)</span>
-                <div class="cell-desc">Patched automatically on Tableau Cloud.</div>
-              </td>
-            </tr>
-            <tr data-cat="security">
-              <td><strong>Security audit trail (Who ran what query / downloaded data)</strong></td>
-              <td class="col-rec">
-                <span class="pill pill-good">Full Audit Trail</span>
-                <div class="cell-desc">Full access to <code>query_execution</code> and <code>login_history</code> in internal Postgres DB (used for August Komdigi report).</div>
-              </td>
-              <td>
-                <span class="pill pill-bad">Lost / Not Available</span>
-                <div class="cell-desc">Starter hides the internal DB and has no Audit Log UI. We lose visibility into who ran queries or exported data.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">Full Audit Trail</span>
-                <div class="cell-desc">Includes built-in Pro Usage Analytics &amp; Audit Log UI.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">Full Audit Trail</span>
-                <div class="cell-desc">Includes both built-in Pro Audit UI and raw internal Postgres DB.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">Available</span>
-                <div class="cell-desc">Available via Tableau Admin Insights.</div>
-              </td>
-            </tr>
-            <tr data-cat="security">
-              <td><strong>Data network perimeter</strong></td>
-              <td class="col-rec">
-                <span class="pill pill-good">100% Inside Our GCP</span>
-                <div class="cell-desc">Metabase VM, BigQuery, and Cloud Run stay completely inside our private GCP project.</div>
-              </td>
-              <td>
-                <span class="pill pill-warn">Leaves GCP to AWS</span>
-                <div class="cell-desc">Queries route outside our GCP perimeter through Metabase's external AWS cloud.</div>
-              </td>
-              <td>
-                <span class="pill pill-warn">Leaves GCP to AWS</span>
-                <div class="cell-desc">Queries route outside our GCP perimeter through Metabase's external AWS cloud.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">100% Inside Our GCP</span>
-                <div class="cell-desc">Stays inside our private GCP project.</div>
-              </td>
-              <td>
-                <span class="pill pill-warn">Leaves GCP to AWS</span>
-                <div class="cell-desc">Queries route through Salesforce / Tableau AWS cloud.</div>
-              </td>
-            </tr>
-            <tr data-cat="security">
-              <td><strong>Row-Level Security (RLS) &amp; SAML SSO</strong></td>
-              <td class="col-rec">
-                <span class="pill pill-neutral">Collection RBAC + Google SSO</span>
-                <div class="cell-desc">Collection-level isolation + BigQuery Policy Tag PII masking + Google SSO with 2FA.</div>
-              </td>
-              <td>
-                <span class="pill pill-neutral">Same as Free (No RLS)</span>
-                <div class="cell-desc">Starter adds zero new permission features over Free (no RLS or SAML SSO).</div>
-              </td>
-              <td>
-                <span class="pill pill-good">Included</span>
-                <div class="cell-desc">Unlocks row/column data sandboxing and SAML/JWT SSO.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">Included</span>
-                <div class="cell-desc">Unlocks row/column data sandboxing and SAML/JWT SSO.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">Included</span>
-                <div class="cell-desc">Includes row-level user filters and SAML SSO.</div>
-              </td>
-            </tr>
-
-            <!-- Category: AI & MCP -->
-            <tr class="cat-row" data-cat="ai">
-              <td colspan="6">AI Agents (Antigravity MCP, Modibot) &amp; Gemini Enterprise (ge-mcp)</td>
-            </tr>
-            <tr data-cat="ai">
-              <td><strong>Create &amp; update dashboards directly from Antigravity (MCP)</strong></td>
-              <td class="col-rec">
-                <span class="pill pill-good">100% Native SQL &amp; Grid API</span>
-                <div class="cell-desc">Antigravity creates/edits SQL cards and 24-column dashboard grids directly via REST API.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">100% Supported</span>
-                <div class="cell-desc">REST API card &amp; dashboard creation works identically to Self-Hosted.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">100% Supported</span>
-                <div class="cell-desc">REST API card &amp; dashboard creation works identically to Self-Hosted.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">100% Supported</span>
-                <div class="cell-desc">Works identically to Free Self-Hosted.</div>
-              </td>
-              <td>
-                <span class="pill pill-bad">Major Downgrade (.twb XML)</span>
-                <div class="cell-desc">No SQL card API. <code>publish-workbook</code> requires generating 10,000+ line proprietary <code>.twb</code> XML files and overwriting whole workbooks.</div>
-              </td>
-            </tr>
-            <tr data-cat="ai">
-              <td><strong>AI access to internal metadata DB (<code>database_id = 4</code>)</strong></td>
-              <td class="col-rec">
-                <span class="pill pill-good">Full SQL Access</span>
-                <div class="cell-desc">AI runs 100 to 300+ queries/mo on <code>database_id = 4</code> to check shared cards across 100+ Store dashboards in 10ms before editing.</div>
-              </td>
-              <td>
-                <span class="pill pill-bad">Locked Out</span>
-                <div class="cell-desc">Internal DB is hidden on Starter; AI loses instant cross-dashboard dependency queries and bulk SQL inspection.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">Via Usage Analytics</span>
-                <div class="cell-desc">Raw Postgres is hidden, but Pro exposes read-only Usage Analytics tables for AI metadata/audit queries.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">Full SQL Access</span>
-                <div class="cell-desc">Full access to both raw <code>database_id = 4</code> and Pro Usage Analytics.</div>
-              </td>
-              <td>
-                <span class="pill pill-bad">No SQL Inspection</span>
-                <div class="cell-desc"><code>tableau-mcp</code> only exports final CSV numbers or PNG screenshots; AI cannot read underlying SQL or formulas inside workbooks.</div>
-              </td>
-            </tr>
-            <tr data-cat="ai">
-              <td><strong>Gemini Enterprise (<code>ge-mcp</code>) &amp; <code>Modibot</code></strong></td>
-              <td class="col-rec">
-                <span class="pill pill-good">100% Internal GCP + Audited</span>
-                <div class="cell-desc"><code>ge-mcp</code> stays inside our GCP network and we can audit every API key call in <code>query_execution</code>.</div>
-              </td>
-              <td>
-                <span class="pill pill-warn">External Hop + No Key Audit</span>
-                <div class="cell-desc">Works after re-pointing, but every Gemini Enterprise query routes out to AWS and we lose Metabase-side API key logs.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">Works (External AWS Hop)</span>
-                <div class="cell-desc">Works after re-pointing and keeps API key audit logs via Pro Usage Analytics.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">100% Internal GCP + Audited</span>
-                <div class="cell-desc">Identical network path to current setup.</div>
-              </td>
-              <td>
-                <span class="pill pill-bad">Breaks Completely</span>
-                <div class="cell-desc">Both <code>ge-mcp</code> and <code>Modibot</code> are built on Metabase MCP and would have to be re-engineered from scratch.</div>
-              </td>
-            </tr>
-            <tr data-cat="ai">
-              <td><strong>AI / MCP tool permission controls</strong></td>
-              <td class="col-rec">
-                <span class="pill pill-good">Controlled via GCP &amp; Proxy</span>
-                <div class="cell-desc">Enforced via our Cloud Run <code>ge-mcp</code> proxy (Google Groups + <code>sqlglot</code>) and network firewall.</div>
-              </td>
-              <td>
-                <span class="pill pill-warn">Not Included</span>
-                <div class="cell-desc">Native MCP tool permission controls require the Pro plan.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">Included</span>
-                <div class="cell-desc">Includes built-in group-level MCP tool restrictions and AI usage analytics.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">Included</span>
-                <div class="cell-desc">Includes built-in MCP tool restrictions + GCP controls.</div>
-              </td>
-              <td>
-                <span class="pill pill-neutral">Role-Based</span>
-                <div class="cell-desc">Governed by Tableau Creator vs. Viewer seat permissions.</div>
-              </td>
-            </tr>
-
-            <!-- Category: BI Workflow & Migration -->
-            <tr class="cat-row" data-cat="workflow">
-              <td colspan="6">BI Self-Service, Billing Lock-In &amp; Migration Effort</td>
-            </tr>
-            <tr data-cat="workflow">
-              <td><strong>Self-service exploration for the 408 non-Creator users</strong></td>
-              <td class="col-rec">
-                <span class="pill pill-good">Unlimited Self-Service</span>
-                <div class="cell-desc">Every user can filter, drill through, and use the visual query builder on permitted collections at $0 extra.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">Unlimited Self-Service</span>
-                <div class="cell-desc">All seats have full Metabase capability.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">Unlimited Self-Service</span>
-                <div class="cell-desc">All seats have full Metabase capability.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">Unlimited Self-Service</span>
-                <div class="cell-desc">All seats have full Metabase capability.</div>
-              </td>
-              <td>
-                <span class="pill pill-bad">Strictly Read-Only Viewers</span>
-                <div class="cell-desc">With 0 Explorers, all 408 Viewers ($15/mo) are read-only and cannot build custom views without upgrading to Explorer ($42/mo).</div>
-              </td>
-            </tr>
-            <tr data-cat="workflow">
-              <td><strong>Migration effort from current setup</strong></td>
-              <td class="col-rec">
-                <span class="pill pill-good">0 Days (Already Live)</span>
-                <div class="cell-desc">No migration needed.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">~1 Day (1-Click Snapshot)</span>
-                <div class="cell-desc">Uses Metabase's built-in <code>Admin &gt; Settings &gt; Cloud</code> snapshot migrator + AI-assisted <code>ge-mcp</code> re-pointing.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">~1 Day (1-Click Snapshot)</span>
-                <div class="cell-desc">Uses Metabase's built-in <code>Admin &gt; Settings &gt; Cloud</code> snapshot migrator + AI-assisted <code>ge-mcp</code> re-pointing.</div>
-              </td>
-              <td>
-                <span class="pill pill-good">~1 Hour</span>
-                <div class="cell-desc">Paste Pro license token into existing self-hosted instance.</div>
-              </td>
-              <td>
-                <span class="pill pill-bad">3 to 6 Months Manual Rebuild</span>
-                <div class="cell-desc">Must manually rebuild all 100+ Store, Brand, Inventory, and FAT dashboards (1,000+ SQL cards) from scratch in Tableau Desktop.</div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- Section 3: Deep Dive Cards -->
-    <section class="section-block">
-      <div class="section-header">
-        <div>
-          <h2>3. Key decision takeaways</h2>
-          <p class="section-subtitle">Plain-language summary of the trade-offs across each path.</p>
-        </div>
-      </div>
-
-      <div class="deep-dive-grid">
-        <div class="dive-card">
-          <h3>Why Metabase Starter (~Rp 659M/yr) is a bad trade-off</h3>
-          <ul>
-            <li><strong>Same security features as Free:</strong> Starter does not add Row-Level Security, column permissions, or corporate SAML SSO.</li>
-            <li><strong>Removes our security audit logs:</strong> Starter hides the internal Postgres database (<code>database_id = 4</code>) and does not include Pro's Audit Log UI. We lose the ability to track who ran what query or exported data (which was essential for our August Komdigi report).</li>
-            <li><strong>Weakens AI &amp; Gemini Enterprise:</strong> Locks AI agents out of the internal database for cross-dashboard impact checks and routes <code>ge-mcp</code> traffic outside our GCP network.</li>
-          </ul>
+        <div class="panel-card">
+          <h3 style="margin-block-end:0.5rem;">Summary Recommendation for Executive Decision</h3>
+          <p style="margin-block-end:0.85rem;">
+            1. <strong>Approve Option 2 (Metabase Free on Google Cloud Run + Cloud SQL + Google IAP)</strong> as our immediate architecture upgrade. For <strong>~Rp 2.5M/month (~Rp 30.2M/year)</strong>, it removes manual VM maintenance, puts Google's authentication wall in front of Metabase so external attackers cannot touch the application, and preserves 100% of our 407 dashboards, audit logs, and AI tools.
+          </p>
+          <p style="margin:0;">
+            2. <strong>Keep Option 4 (Metabase Pro Cloud at ~Rp 1.39B/year)</strong> as our turnkey SaaS option if Modinity later requires automated Row-Level Security (RLS) inside shared dashboards or external vendor SOC 2 hosting, knowing we can migrate to it in 1 day without losing any capability.
+          </p>
         </div>
 
-        <div class="dive-card">
-          <h3>When to pick Metabase Pro Cloud (~Rp 1.39B/yr)</h3>
-          <ul>
-            <li><strong>Zero capability loss for Antigravity &amp; AI:</strong> Creating and updating dashboards directly from Antigravity works 100% identically via the REST API, and Pro includes built-in Usage Analytics + Audit Logs to replace raw <code>database_id = 4</code> queries.</li>
-            <li><strong>Adds true enterprise security:</strong> Unlocks Row-Level Security (data sandboxing), SAML SSO, and MCP tool permission controls, while Metabase handles all server patching automatically.</li>
-            <li><strong>1-day migration:</strong> Can be migrated in ~1 day using Metabase's built-in cloud snapshot tool. The only downside is the cost (~Rp 97.6M/mo today, growing to ~Rp 133.5M/mo).</li>
-          </ul>
+        <div class="page-pager">
+          <button class="pager-btn" data-goto="alternatives">&lt;- Previous: Lightdash &amp; Tableau</button>
+          <button class="pager-btn primary" data-goto="overview">Back to Chapter 01: Overview</button>
         </div>
+      </section>
 
-        <div class="dive-card">
-          <h3>Why Tableau (~Rp 1.69B/yr) disrupts AI &amp; operations</h3>
-          <ul>
-            <li><strong>Annual upfront payment required:</strong> Unlike Metabase, Tableau requires a 1-year upfront contract (~Rp 1.42B to Rp 1.69B paid upfront) with no monthly pay-as-you-go option.</li>
-            <li><strong>Loses SQL-native AI dashboard building:</strong> In Metabase, every chart is a SQL query that AI can create or edit surgically via API. In Tableau, dashboards are 10,000+ line desktop <code>.twb</code> XML files; <code>tableau-mcp</code> cannot read chart SQL or surgically edit a single chart on a dashboard.</li>
-            <li><strong>3 to 6 months of rebuilding:</strong> Requires our 6 analysts to manually rebuild 100+ dashboards and 1,000+ cards from scratch, while breaking <code>ge-mcp</code> and <code>Modibot</code>.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <footer class="footer-note">
-      <div>Prepared by Data &amp; Business Intelligence Team | Modinity Group</div>
-      <div>Data baseline: Live <code>modisight</code> metadata as of 16 November 2026 (414 active users, +14 net users/mo 6-month trend).</div>
-    </footer>
-
-  </main>
+    </main>
+  </div>
 
   <script>
+    // Navigation Controller (Sidebar + Mobile Tabs + Pager Buttons + Hash Routing)
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const mobileButtons = document.querySelectorAll('.mobile-tab-btn');
+    const gotoButtons = document.querySelectorAll('[data-goto]');
+    const views = document.querySelectorAll('.page-view');
+
+    function switchView(targetId, updateHash = true) {
+      views.forEach(v => {
+        v.classList.toggle('active', v.id === 'view-' + targetId);
+      });
+      navButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-target') === targetId);
+      });
+      mobileButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-target') === targetId);
+      });
+      if (updateHash) {
+        history.replaceState(null, '', '#' + targetId);
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    navButtons.forEach(btn => {
+      btn.addEventListener('click', () => switchView(btn.getAttribute('data-target')));
+    });
+
+    mobileButtons.forEach(btn => {
+      btn.addEventListener('click', () => switchView(btn.getAttribute('data-target')));
+    });
+
+    gotoButtons.forEach(btn => {
+      btn.addEventListener('click', () => switchView(btn.getAttribute('data-goto')));
+    });
+
+    // Load initial hash if present
+    const initialHash = window.location.hash.replace('#', '');
+    if (initialHash && document.getElementById('view-' + initialHash)) {
+      switchView(initialHash, false);
+    }
+
+    // 7-Option Cost Simulator Logic
     const inpUsers = document.getElementById('inp-users');
     const inpGrowth = document.getElementById('inp-growth');
     const inpCreators = document.getElementById('inp-creators');
+    const inpLd = document.getElementById('inp-ld');
     const inpFx = document.getElementById('inp-fx');
 
     const lblUsers = document.getElementById('lbl-users');
     const lblGrowth = document.getElementById('lbl-growth');
     const lblCreators = document.getElementById('lbl-creators');
+    const lblLd = document.getElementById('lbl-ld');
     const lblFx = document.getElementById('lbl-fx');
-    const lblM12Range = document.getElementById('lbl-m12-range');
-    const chartBars = document.getElementById('chart-bars');
+    const lblRange = document.getElementById('lbl-range');
+    const simBars = document.getElementById('sim-bars');
 
-    function formatIdr(idr) {
-      if (idr >= 1e9) {
-        return 'Rp ' + (idr / 1e9).toFixed(2) + 'B';
+    function fmtIdr(val) {
+      if (val >= 1e9) {
+        return 'Rp ' + (val / 1e9).toFixed(2) + 'B';
       }
-      return 'Rp ' + (idr / 1e6).toFixed(1) + 'M';
+      return 'Rp ' + (val / 1e6).toFixed(1) + 'M';
     }
 
-    function formatUsd(usd) {
-      return '$' + Math.round(usd).toLocaleString('en-US');
+    function fmtUsd(val) {
+      return '$' + Math.round(val).toLocaleString('en-US');
     }
 
-    function calcStarterMonthly(u) {
+    function calcStarter(u) {
       return 100 + Math.max(0, u - 5) * 6;
     }
 
-    function calcProMonthly(u) {
+    function calcPro(u) {
       return 575 + Math.max(0, u - 10) * 12;
     }
 
-    function calcTableauMonthly(u, creators) {
+    function calcTableau(u, creators) {
       const c = Math.min(u, creators);
       const v = Math.max(0, u - c);
       return (c * 75) + (v * 15);
     }
 
-    function updateCalculator() {
+    function runSimulator() {
       const uStart = parseInt(inpUsers.value, 10);
       const growth = parseInt(inpGrowth.value, 10);
       const creators = parseInt(inpCreators.value, 10);
+      const ldMonthly = parseInt(inpLd.value, 10);
       const fx = parseInt(inpFx.value, 10);
 
-      lblUsers.textContent = uStart + ' users';
-      lblGrowth.textContent = '+' + growth + ' / month';
-      lblCreators.textContent = creators + (creators === 1 ? ' Creator' : ' Creators');
-      lblFx.textContent = 'Rp ' + fx.toLocaleString('en-US');
-
       const uEnd = uStart + (growth * 12);
-      lblM12Range.textContent = uStart + ' to ' + uEnd + ' users';
 
-      let sumC1 = 0, sumC2 = 0, sumC3 = 0, sumC4 = 0, sumC5 = 0;
+      lblUsers.textContent = uStart + ' users';
+      lblGrowth.textContent = '+' + growth + ' / mo';
+      lblCreators.textContent = creators + (creators === 1 ? ' Creator' : ' Creators');
+      lblLd.textContent = '$' + ldMonthly.toLocaleString('en-US') + ' / mo';
+      lblFx.textContent = 'Rp ' + fx.toLocaleString('en-US');
+      lblRange.textContent = uStart + ' to ' + uEnd + ' users';
+
+      let sum1 = 0, sum2 = 0, sum3 = 0, sum4 = 0, sum5 = 0, sum6 = 0, sum7 = 0;
       for (let m = 0; m < 12; m++) {
-        const uMonth = uStart + (growth * m);
-        sumC1 += 60;
-        sumC2 += calcStarterMonthly(uMonth);
-        sumC3 += calcProMonthly(uMonth);
-        sumC4 += calcProMonthly(uMonth) + 60;
-        sumC5 += calcTableauMonthly(uMonth, creators);
+        const u = uStart + (growth * m);
+        sum1 += 60;
+        sum2 += 140;
+        sum3 += calcStarter(u);
+        sum4 += calcPro(u);
+        sum5 += calcPro(u) + 60;
+        sum6 += ldMonthly;
+        sum7 += calcTableau(u, creators);
       }
 
-      const m1C1 = 60, m12C1 = 60, flatC1 = 720;
-      const m1C2 = calcStarterMonthly(uStart), m12C2 = calcStarterMonthly(uEnd), flatC2 = m1C2 * 12;
-      const m1C3 = calcProMonthly(uStart), m12C3 = calcProMonthly(uEnd), flatC3 = m1C3 * 12;
-      const m1C4 = m1C3 + 60, m12C4 = m12C3 + 60, flatC4 = flatC3 + 720;
-      const m1C5 = calcTableauMonthly(uStart, creators), m12C5 = calcTableauMonthly(uEnd, creators), flatC5 = m1C5 * 12;
-
       const items = [
-        { idx: 1, name: '1. Free Self-Hosted', m1: m1C1, m12: m12C1, flat: flatC1, fc: sumC1, color: '#10b981' },
-        { idx: 2, name: '2. Metabase Starter', m1: m1C2, m12: m12C2, flat: flatC2, fc: sumC2, color: '#f59e0b' },
-        { idx: 3, name: '3. Metabase Pro (Cloud)', m1: m1C3, m12: m12C3, flat: flatC3, fc: sumC3, color: '#3b82f6' },
-        { idx: 4, name: '4. Metabase Pro (Self-Host)', m1: m1C4, m12: m12C4, flat: flatC4, fc: sumC4, color: '#64748b' },
-        { idx: 5, name: '5. Tableau Standard', m1: m1C5, m12: m12C5, flat: flatC5, fc: sumC5, color: '#ef4444' }
+        { id: 1, label: '1. Metabase Free (VM)', m1: 60, m12: 60, flat: 720, fc: sum1, color: '#6b7280' },
+        { id: 2, label: '2. Metabase (Cloud Run + IAP)', m1: 140, m12: 140, flat: 1680, fc: sum2, color: '#0f766e' },
+        { id: 6, label: '6. Lightdash Cloud Pro', m1: ldMonthly, m12: ldMonthly, flat: ldMonthly * 12, fc: sum6, color: '#d97706' },
+        { id: 3, label: '3. Metabase Starter (Cloud)', m1: calcStarter(uStart), m12: calcStarter(uEnd), flat: calcStarter(uStart) * 12, fc: sum3, color: '#f59e0b' },
+        { id: 4, label: '4. Metabase Pro (Cloud)', m1: calcPro(uStart), m12: calcPro(uEnd), flat: calcPro(uStart) * 12, fc: sum4, color: '#1d4ed8' },
+        { id: 5, label: '5. Metabase Pro (Self-Host)', m1: calcPro(uStart) + 60, m12: calcPro(uEnd) + 60, flat: (calcPro(uStart) + 60) * 12, fc: sum5, color: '#4b5563' },
+        { id: 7, label: '7. Tableau Cloud Standard', m1: calcTableau(uStart, creators), m12: calcTableau(uEnd, creators), flat: calcTableau(uStart, creators) * 12, fc: sum7, color: '#b91c1c' }
       ];
 
       const maxFc = Math.max(...items.map(i => i.fc), 1);
 
       items.forEach(item => {
-        document.getElementById(`c${item.idx}-yr-fc`).textContent = formatIdr(item.fc * fx) + ' / yr';
-        document.getElementById(`c${item.idx}-yr-usd`).textContent = formatUsd(item.fc) + ' / year forecasted';
-        document.getElementById(`c${item.idx}-m1`).textContent = formatIdr(item.m1 * fx);
-        document.getElementById(`c${item.idx}-m12`).textContent = formatIdr(item.m12 * fx);
-        document.getElementById(`c${item.idx}-flat`).textContent = formatIdr(item.flat * fx);
+        document.getElementById(`c${item.id}-fc`).textContent = fmtIdr(item.fc * fx) + ' / yr';
+        document.getElementById(`c${item.id}-usd`).textContent = fmtUsd(item.fc) + ' / year forecasted';
+        document.getElementById(`c${item.id}-m1`).textContent = fmtIdr(item.m1 * fx);
+        document.getElementById(`c${item.id}-m12`).textContent = fmtIdr(item.m12 * fx);
+        document.getElementById(`c${item.id}-flat`).textContent = fmtIdr(item.flat * fx);
       });
 
-      chartBars.innerHTML = items.map(item => {
-        const pct = Math.max(1.5, (item.fc / maxFc) * 100);
+      simBars.innerHTML = items.map(item => {
+        const pct = Math.max(1.8, (item.fc / maxFc) * 100);
         return `
           <div class="bar-row">
-            <div class="bar-label">${item.name}</div>
+            <div class="bar-name">${item.label}</div>
             <div class="bar-track">
-              <div class="bar-fill" style="inline-size: ${pct.toFixed(1)}%; background-color: ${item.color};"></div>
+              <div class="bar-fill" style="inline-size:${pct.toFixed(1)}%; background-color:${item.color};"></div>
             </div>
-            <div class="bar-val">${formatIdr(item.fc * fx)} <span style="color:var(--text-muted); font-weight:400; font-size:0.78rem;">(${formatUsd(item.fc)})</span></div>
+            <div class="bar-amount">${fmtIdr(item.fc * fx)} <span style="color:var(--text-muted); font-weight:400; font-size:0.74rem;">(${fmtUsd(item.fc)})</span></div>
           </div>
         `;
       }).join('');
     }
 
-    [inpUsers, inpGrowth, inpCreators, inpFx].forEach(el => {
-      el.addEventListener('input', updateCalculator);
+    [inpUsers, inpGrowth, inpCreators, inpLd, inpFx].forEach(el => {
+      el.addEventListener('input', runSimulator);
     });
-    updateCalculator();
+    runSimulator();
 
-    // Category Filter Tabs
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const tableRows = document.querySelectorAll('#comparison-table tbody tr');
+    // Matrix Topic Filter
+    const catBtns = document.querySelectorAll('[data-cat-filter]');
+    const matrixRows = document.querySelectorAll('#matrix-table tbody tr');
 
-    tabBtns.forEach(btn => {
+    catBtns.forEach(btn => {
       btn.addEventListener('click', () => {
-        tabBtns.forEach(b => b.classList.remove('active'));
+        catBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        const filter = btn.getAttribute('data-filter');
-        tableRows.forEach(row => {
-          if (filter === 'all' || row.getAttribute('data-cat') === filter) {
-            row.style.display = '';
-          } else {
-            row.style.display = 'none';
-          }
+        const filter = btn.getAttribute('data-cat-filter');
+        matrixRows.forEach(row => {
+          const rowCat = row.getAttribute('data-cat');
+          row.style.display = (filter === 'all' || rowCat === filter) ? '' : 'none';
         });
       });
     });

@@ -935,6 +935,19 @@
       background-color: #272c3a;
     }
 
+    pre.code-block {
+      background-color: #111318;
+      color: #e5e7eb;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      line-height: 1.55;
+      padding: 1rem 1.15rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-dark);
+      overflow-x: auto;
+      margin-block: 0.75rem 0;
+    }
+
     /* Responsive adjustments */
     @media (max-width: 68rem) {
       .app-shell {
@@ -973,6 +986,7 @@
       <button class="mobile-tab-btn" data-target="capability-matrix">04 7-Option Matrix</button>
       <button class="mobile-tab-btn" data-target="alternatives">05 Lightdash &amp; Tableau</button>
       <button class="mobile-tab-btn" data-target="migration-plan">06 AI &amp; Migration</button>
+      <button class="mobile-tab-btn" data-target="cloud-run-blueprint">07 Tech Blueprint</button>
     </div>
   </header>
 
@@ -1039,6 +1053,15 @@
               <span class="nav-text-wrap">
                 <span class="nav-title">AI Workflow &amp; Migration</span>
                 <span class="nav-caption">Antigravity, Gemini &amp; 1-day rollout</span>
+              </span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-btn" data-target="cloud-run-blueprint">
+              <span class="nav-num">07</span>
+              <span class="nav-text-wrap">
+                <span class="nav-title">Cloud Run Tech Blueprint</span>
+                <span class="nav-caption">Decisions &amp; runbook for DevOps/InfraSec</span>
               </span>
             </button>
           </li>
@@ -2081,7 +2104,293 @@
 
         <div class="page-pager">
           <button class="pager-btn" data-goto="alternatives">&lt;- Previous: Lightdash &amp; Tableau</button>
-          <button class="pager-btn primary" data-goto="overview">Back to Chapter 01: Overview</button>
+          <button class="pager-btn primary" data-goto="cloud-run-blueprint">Next: Chapter 07 Tech Blueprint (DevOps &amp; InfraSec) -&gt;</button>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           PAGE 07: TECHNICAL BLUEPRINT (DATA PLATFORM, DEVOPS & INFRASEC)
+           ========================================================= -->
+      <section class="page-view" id="view-cloud-run-blueprint">
+        <header class="view-header">
+          <div>
+            <span class="view-kicker">Chapter 07 / Engineering Specification (Data Platform, DevOps &amp; InfraSec)</span>
+            <h2 class="view-title">Cloud Run Migration Blueprint: Architecture Decisions &amp; Runbook</h2>
+            <p class="view-lead">
+              Technical specification assuming we proceed with <strong>Option 2 (Serverless Metabase on Google Cloud Run + Managed Cloud SQL + Global HTTPS Load Balancer)</strong>, covering multi-domain user identity (<code>@modinity.com</code>, <code>@aliatexprint.com</code>, external <code>@gmail.com</code> franchise accounts), MCP service authentication, and the 5-phase deployment runbook.
+            </p>
+          </div>
+        </header>
+
+        <!-- Section 7.1: Live User Identity & Domain Matrix -->
+        <div class="panel-card" style="margin-block-end: 2rem;">
+          <span class="verdict-badge badge-teal">1. Live User Identity &amp; Multi-Domain Baseline</span>
+          <h3 style="font-size: 1.15rem; margin-block-end: 0.4rem;">Active User Breakdown in <code>core_user</code> (414 Active Users + 4 API Keys)</h3>
+          <p style="margin-block-end: 1.15rem; max-inline-size: 76ch;">
+            Before configuring Google Cloud IAP or Cloud Armor on the Load Balancer, DevOps and InfraSec must account for all 11 email domains currently active on <code>modisight.modinity.com</code> (including secondary Google Workspace domains like <code>@aliatexprint.com</code> and external franchise owners on <code>@gmail.com</code>):
+          </p>
+
+          <div class="table-wrap">
+            <table class="comp-matrix" style="min-inline-size: 52rem;">
+              <thead>
+                <tr>
+                  <th style="inline-size: 14rem;">Email Domain</th>
+                  <th style="inline-size: 7rem;">Active Users</th>
+                  <th style="inline-size: 8rem;">Google OAuth SSO</th>
+                  <th style="inline-size: 8rem;">Password Login</th>
+                  <th style="inline-size: 13rem;">Identity Category</th>
+                  <th class="col-highlight-teal" style="inline-size: 20rem;">How Cloud Run + Google IAP Handles Access</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>@modinity.com</code></td>
+                  <td class="mono tabular"><strong>332</strong></td>
+                  <td class="mono tabular">323</td>
+                  <td class="mono tabular">9</td>
+                  <td>Primary Google Workspace Org</td>
+                  <td class="col-highlight-teal">
+                    <span class="status-pill pill-good">Domain-Wide Allow</span>
+                    <div class="cell-copy">Grant IAP role <code>roles/iap.httpsResourceAccessor</code> to <code>domain:modinity.com</code> once. Zero manual user whitelisting.</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><code>@aliatexprint.com</code></td>
+                  <td class="mono tabular"><strong>34</strong></td>
+                  <td class="mono tabular">19</td>
+                  <td class="mono tabular">15</td>
+                  <td>Secondary Domain in Modinity Google Admin Org</td>
+                  <td class="col-highlight-teal">
+                    <span class="status-pill pill-good">Domain-Wide Allow</span>
+                    <div class="cell-copy">Because <code>@aliatexprint.com</code> lives inside the same Google Workspace organization, grant <code>domain:aliatexprint.com</code> in IAP IAM once.</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><code>@buttonscarves.com</code>, <code>@nadapuspita.com</code>, <code>@zytadelia.com</code></td>
+                  <td class="mono tabular"><strong>32</strong></td>
+                  <td class="mono tabular">31</td>
+                  <td class="mono tabular">1</td>
+                  <td>Internal Brand Google Domains (21 BS, 10 NP, 1 ZD)</td>
+                  <td class="col-highlight-teal">
+                    <span class="status-pill pill-good">Domain-Wide Allow</span>
+                    <div class="cell-copy">Grant <code>domain:buttonscarves.com</code>, <code>domain:nadapuspita.com</code>, and <code>domain:zytadelia.com</code> in IAP IAM.</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><code>@gmail.com</code></td>
+                  <td class="mono tabular"><strong>9</strong></td>
+                  <td class="mono tabular">0</td>
+                  <td class="mono tabular">9</td>
+                  <td>External Franchise Store Owners</td>
+                  <td class="col-highlight-teal">
+                    <span class="status-pill pill-good">Google Group Whitelist</span>
+                    <div class="cell-copy">Google IAP natively supports <code>@gmail.com</code> accounts. Add franchise owners to a Google Group (<code>franchise-metabase-iap@modinity.com</code>) authorized in IAP, then they log into Metabase as usual.</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><code>@kpmg.com</code> (3), <code>@yahoo.com</code> (1), <code>@ascendiz.id</code> (1), <code>@atpcorpora.com</code> (1), <code>@warnamodern.id</code> (1)</td>
+                  <td class="mono tabular"><strong>7</strong></td>
+                  <td class="mono tabular">0</td>
+                  <td class="mono tabular">7</td>
+                  <td>External Auditors &amp; Partners (Non-Gmail)</td>
+                  <td class="col-highlight-teal">
+                    <span class="status-pill pill-warn">Link Google Account or WAF Mode</span>
+                    <div class="cell-copy">If strict IAP is enabled, non-Gmail users must either link their work email as a free Google Account (<code>accounts.google.com/SignUpWithoutGmail</code>) or switch to a <code>@gmail.com</code> login.</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Section 7.2: The 4 Engineering Decisions Required -->
+        <h3 style="margin-block-end: 1rem;">2. Four Architecture Decisions Required Before Deployment</h3>
+
+        <div class="arch-comparison">
+          <!-- Decision 1: Edge Auth Mode -->
+          <div class="arch-box good-arch">
+            <span class="verdict-badge badge-teal">Decision 01 / InfraSec &amp; Product Owner</span>
+            <h3>Edge Security Mode &amp; Franchise User UX</h3>
+            <p style="font-size: 0.88rem;">
+              We must choose between two edge enforcement modes on the Global HTTPS Load Balancer:
+            </p>
+            <ul class="clean-list">
+              <li>
+                <strong>Mode A: Cloud Armor WAF + Rate Limiting Only (Zero UX Change):</strong>
+                Enforces <code>sqli-v33-stable</code>, <code>lfi-v33-stable</code>, rate-limits <code>/api/session/*</code> to 20 req/min/IP, and blocks <code>POST /api/session/reset_password</code> at the edge. All 414 users (including <code>@aliatexprint.com</code>, <code>@gmail.com</code> franchise owners, and <code>@kpmg.com</code>) see the exact same single login screen as today.
+              </li>
+              <li>
+                <strong>Mode B: Cloud Armor WAF + Strict Google Cloud IAP (Maximum Zero-Day Shield):</strong>
+                Adds Google's OAuth gate before traffic reaches the container.
+                <br><em>UX Trade-offs in Mode B:</em>
+                (1) Users authenticate at Google IAP first and then Metabase once every 14 days (because Metabase OSS does not auto-consume IAP's <code>X-Goog-Authenticated-User-JWT</code> header; header SSO requires Metabase Pro).
+                (2) Staff logged into a personal Gmail in Chrome will see a Google <code>403</code> screen until they switch accounts.
+                (3) Adding a new <code>@gmail.com</code> franchise owner requires adding their email to the <code>franchise-metabase-iap@modinity.com</code> Google Group.
+              </li>
+            </ul>
+          </div>
+
+          <!-- Decision 2: MCP & Service Auth -->
+          <div class="arch-box">
+            <span class="verdict-badge badge-blue">Decision 02 / Data Platform &amp; AI Engineering</span>
+            <h3>MCP &amp; Bot Authentication (<code>ge-mcp</code>, <code>Modibot</code>, Antigravity)</h3>
+            <p style="font-size: 0.88rem;">
+              How our automated MCP servers and bots call Metabase without being blocked by edge rules:
+            </p>
+            <ul class="clean-list">
+              <li>
+                <strong>If Mode A (WAF Only) is selected:</strong>
+                <strong>0 lines of code change.</strong> Existing <code>X-API-Key: mb_...</code> headers in Antigravity (<code>metabase_mcp_impl.py</code>), <code>ge-mcp</code>, and <code>Modibot</code> work untouched.
+              </li>
+              <li>
+                <strong>If Mode B (Strict Google IAP) is selected:</strong>
+                (1) <strong>Internal Cloud Run bots (<code>ge-mcp</code> &amp; <code>Modibot</code>):</strong> Route directly to the internal Cloud Run URL (<code>https://modisight-&lt;hash&gt;-as.a.run.app</code>) over VPC using Cloud Run service-to-service IAM authentication, bypassing public IAP completely.
+                <br>(2) <strong>Local Antigravity MCP on laptops:</strong> Either configure a Load Balancer path rule on <code>/api/*</code> that permits requests carrying a valid <code>X-API-Key</code> header via Cloud Armor (0 Python changes), or add 5 lines in <code>metabase_mcp_impl.py</code> to pass <code>Proxy-Authorization: Bearer $(gcloud auth print-identity-token)</code>.
+              </li>
+            </ul>
+          </div>
+
+          <!-- Decision 3: Cloud Run Sizing -->
+          <div class="arch-box">
+            <span class="verdict-badge badge-blue">Decision 03 / DevOps Engineering</span>
+            <h3>Cloud Run Container Sizing, JVM Flags &amp; Concurrency</h3>
+            <p style="font-size: 0.88rem;">
+              Metabase is a stateful-feeling Clojure/JVM application (~30s cold boot) with an internal Quartz scheduler that fires Modinity's <strong>18 active Pulses/Subscriptions</strong>:
+            </p>
+            <ul class="clean-list">
+              <li><strong>Minimum &amp; Maximum Instances:</strong> Set <code>--min-instances=1</code> and <code>--max-instances=1</code> (or <code>2</code>). Keeping <code>min-instances=1</code> eliminates 30-second JVM cold starts, and capping at <code>1</code> avoids duplicate Quartz scheduled email pulses across multiple OSS containers.</li>
+              <li><strong>CPU Allocation:</strong> Set <code>--cpu=2 --memory=4Gi --no-cpu-throttling</code> (CPU always allocated) so background metadata syncs and scheduled subscriptions execute even when no browser request is active.</li>
+              <li><strong>JVM Memory Tuning:</strong> Pass <code>JAVA_TOOL_OPTIONS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Djava.awt.headless=true"</code> so the JVM respects the 4 GiB container cgroup limit without OOM-killing.</li>
+            </ul>
+          </div>
+
+          <!-- Decision 4: Database & VPC Connectivity -->
+          <div class="arch-box">
+            <span class="verdict-badge badge-teal">Decision 04 / Data Platform &amp; Network Security</span>
+            <h3>VPC Egress &amp; Secret Management Across 9 Databases</h3>
+            <p style="font-size: 0.88rem;">
+              Metabase connects to BigQuery (<code>db_id=2, 17</code>) plus internal PostgreSQL databases (<code>odoo</code> <code>db_id=3</code>, <code>modiair db</code> <code>db_id=10</code>, <code>dbt airflow db</code> <code>db_id=7</code>):
+            </p>
+            <ul class="clean-list">
+              <li><strong>Direct VPC Egress:</strong> Configure Cloud Run with <code>--network=&lt;modinity-vpc&gt; --subnet=&lt;subnet&gt; --vpc-egress=private-ranges-only</code> so Metabase reaches the Odoo Postgres replica and internal databases over private RFC1918 IPs without traversing the public internet.</li>
+              <li><strong>Cloud SQL Connection:</strong> Connect Metabase to the new <strong>Cloud SQL for PostgreSQL 16</strong> instance via Private IP (or Cloud SQL Auth Proxy socket) for <code>MB_DB_*</code> metadata storage.</li>
+              <li><strong>Encryption Key Continuity:</strong> Mount the existing <code>MB_ENCRYPTION_SECRET_KEY</code> from <strong>GCP Secret Manager</strong>. If this key changes or is omitted during migration, Metabase will fail to decrypt the stored connection credentials in <code>metabase_database.details</code>.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Section 7.3: Step-by-Step Technical Implementation Runbook -->
+        <div class="panel-card">
+          <span class="verdict-badge badge-teal">3. Step-by-Step Engineering Implementation Runbook (~2.5 Hours Total)</span>
+          <h3 style="font-size: 1.15rem; margin-block-end: 0.75rem;">Execution Sequence for DevOps, Data Platform &amp; InfraSec</h3>
+
+          <h4 style="margin-block: 1rem 0.35rem;">Phase 1: Provision Cloud SQL &amp; Secret Manager (DevOps, 30 mins)</h4>
+          <p style="font-size: 0.88rem; margin: 0;">
+            Create a managed Cloud SQL for PostgreSQL 16 instance with automated daily backups and Point-in-Time Recovery (PITR), and store the existing encryption secret and DB password in Secret Manager:
+          </p>
+          <pre class="code-block"># 1. Create managed Cloud SQL instance (Private IP + Automated Backups)
+gcloud sql instances create modisight-pg16 \
+  --database-version=POSTGRES_16 \
+  --tier=db-custom-2-4096 \
+  --region=asia-southeast2 \
+  --network=projects/modinity-data-dev/global/networks/default \
+  --no-assign-ip \
+  --backup-start-time=19:00 \
+  --enable-point-in-time-recovery
+
+gcloud sql databases create metabase --instance=modisight-pg16
+
+# 2. Store existing MB_ENCRYPTION_SECRET_KEY and DB password in Secret Manager
+gcloud secrets create mb-encryption-key --replication-policy=automatic
+gcloud secrets versions add mb-encryption-key --data-file=./existing_mb_encryption_key.txt
+
+gcloud secrets create mb-db-pass --replication-policy=automatic
+gcloud secrets versions add mb-db-pass --data-file=./new_cloudsql_pass.txt</pre>
+
+          <h4 style="margin-block: 1.35rem 0.35rem;">Phase 2: Dump Existing VM Postgres &amp; Restore to Cloud SQL (Data Platform, 30 mins)</h4>
+          <p style="font-size: 0.88rem; margin: 0;">
+            Take a consistent snapshot of the current Metabase PostgreSQL database on the VM and restore it into Cloud SQL. This preserves all 407 dashboards, 7,365 cards, 414 users, API keys, and historical <code>query_execution</code> audit logs:
+          </p>
+          <pre class="code-block"># 1. On current VM: stop writes and dump Metabase app DB
+pg_dump -h 127.0.0.1 -U metabase -d metabase -Fc --no-acl --no-owner -f /tmp/modisight_prod.dump
+
+# 2. Restore into Cloud SQL PG16
+pg_restore -h &lt;CLOUD_SQL_PRIVATE_IP&gt; -U metabase -d metabase --no-acl --no-owner --clean --if-exists /tmp/modisight_prod.dump
+
+# 3. Verify row counts match pre-migration baseline
+psql -h &lt;CLOUD_SQL_PRIVATE_IP&gt; -U metabase -d metabase -c "
+  SELECT
+    (SELECT COUNT(*) FROM report_dashboard WHERE archived = false) AS dashboards,
+    (SELECT COUNT(*) FROM report_card WHERE archived = false) AS cards,
+    (SELECT COUNT(*) FROM core_user WHERE is_active = true) AS active_users;
+"</pre>
+
+          <h4 style="margin-block: 1.35rem 0.35rem;">Phase 3: Deploy Stateless Metabase Container to Cloud Run (DevOps, 45 mins)</h4>
+          <p style="font-size: 0.88rem; margin: 0;">
+            Deploy the latest patched Metabase release (<code>v0.63.10+</code> or current stable tag) with ingress restricted exclusively to the Internal VPC and Cloud Load Balancer:
+          </p>
+          <pre class="code-block">gcloud run deploy modisight \
+  --image=metabase/metabase:v0.63.10 \
+  --region=asia-southeast2 \
+  --platform=managed \
+  --ingress=internal-and-cloud-load-balancing \
+  --min-instances=1 \
+  --max-instances=1 \
+  --cpu=2 \
+  --memory=4Gi \
+  --no-cpu-throttling \
+  --port=3000 \
+  --network=default \
+  --subnet=default \
+  --vpc-egress=private-ranges-only \
+  --set-env-vars="MB_JETTY_HOST=0.0.0.0,MB_JETTY_PORT=3000,MB_DB_TYPE=postgres,MB_DB_DBNAME=metabase,MB_DB_PORT=5432,MB_DB_USER=metabase,MB_DB_HOST=&lt;CLOUD_SQL_PRIVATE_IP&gt;,MB_SITE_URL=https://modisight.modinity.com,JAVA_TOOL_OPTIONS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0" \
+  --set-secrets="MB_DB_PASS=mb-db-pass:latest,MB_ENCRYPTION_SECRET_KEY=mb-encryption-key:latest"</pre>
+
+          <h4 style="margin-block: 1.35rem 0.35rem;">Phase 4: Attach Global HTTPS Load Balancer, Cloud Armor WAF &amp; IAP (InfraSec, 45 mins)</h4>
+          <p style="font-size: 0.88rem; margin: 0;">
+            Create a Serverless NEG for Cloud Run, attach the Cloud Armor security policy blocking SQLi/LFI and rate-limiting session endpoints, and configure IAP domain/group bindings:
+          </p>
+          <pre class="code-block"># 1. Create Cloud Armor Policy (Blocks CVE-2026-72898 class SQLi &amp; throttles /api/session/*)
+gcloud compute security-policies create modisight-waf-policy
+
+gcloud compute security-policies rules create 1000 \
+  --security-policy=modisight-waf-policy \
+  --expression="evaluatePreconfiguredWaf('sqli-v33-stable') || evaluatePreconfiguredWaf('lfi-v33-stable')" \
+  --action=deny-403
+
+gcloud compute security-policies rules create 2000 \
+  --security-policy=modisight-waf-policy \
+  --expression="request.path.startsWith('/api/session/')" \
+  --action=throttle \
+  --rate-limit-threshold-count=20 \
+  --rate-limit-threshold-interval-sec=60 \
+  --conform-action=allow \
+  --exceed-action=deny-429 \
+  --enforce-on-key=IP
+
+# 2. If Mode B (Google IAP) is enabled: authorize internal domains + external franchise group
+gcloud iap web add-iam-policy-binding --resource-type=backend-services --service=modisight-backend \
+  --member="domain:modinity.com" --role="roles/iap.httpsResourceAccessor"
+gcloud iap web add-iam-policy-binding --resource-type=backend-services --service=modisight-backend \
+  --member="domain:aliatexprint.com" --role="roles/iap.httpsResourceAccessor"
+gcloud iap web add-iam-policy-binding --resource-type=backend-services --service=modisight-backend \
+  --member="domain:buttonscarves.com" --role="roles/iap.httpsResourceAccessor"
+gcloud iap web add-iam-policy-binding --resource-type=backend-services --service=modisight-backend \
+  --member="domain:nadapuspita.com" --role="roles/iap.httpsResourceAccessor"
+gcloud iap web add-iam-policy-binding --resource-type=backend-services --service=modisight-backend \
+  --member="domain:zytadelia.com" --role="roles/iap.httpsResourceAccessor"
+gcloud iap web add-iam-policy-binding --resource-type=backend-services --service=modisight-backend \
+  --member="group:franchise-metabase-iap@modinity.com" --role="roles/iap.httpsResourceAccessor"</pre>
+
+          <h4 style="margin-block: 1.35rem 0.35rem;">Phase 5: Automated Weekly Patch Pipeline (DevOps CI/CD, 15 mins)</h4>
+          <p style="font-size: 0.88rem; margin: 0;">
+            Schedule a weekly GitHub Action (every Sunday at 02:00 WIB) to pull the latest minor patch on the current release line, deploy a new Cloud Run revision, verify <code>GET /api/health</code> returns <code>{"status":"ok"}</code>, and shift traffic automatically.
+          </p>
+        </div>
+
+        <div class="page-pager">
+          <button class="pager-btn" data-goto="migration-plan">&lt;- Previous: AI Workflow &amp; Migration</button>
+          <button class="pager-btn primary" data-goto="overview">Back to Chapter 01: Executive Overview</button>
         </div>
       </section>
 

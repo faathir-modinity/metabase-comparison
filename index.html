@@ -2465,6 +2465,17 @@ gcloud compute firewall-rules create allow-lb-to-modisight-vm \
     const mobileButtons = document.querySelectorAll('.mobile-tab-btn');
     const gotoButtons = document.querySelectorAll('[data-goto]');
     const views = document.querySelectorAll('.page-view');
+    const matrixToolbar = document.getElementById('matrix-toolbar');
+    const matrixTable = document.getElementById('matrix-table');
+
+    function syncMatrixToolbarHeight() {
+      if (matrixToolbar) {
+        const h = matrixToolbar.getBoundingClientRect().height;
+        if (h > 0) {
+          document.documentElement.style.setProperty('--matrix-toolbar-h', Math.ceil(h) + 'px');
+        }
+      }
+    }
 
     function switchView(targetId, updateHash = true) {
       views.forEach(v => {
@@ -2479,9 +2490,7 @@ gcloud compute firewall-rules create allow-lb-to-modisight-vm \
       if (updateHash) {
         history.replaceState(null, '', '#' + targetId);
       }
-      if (typeof syncMatrixToolbarHeight === 'function') {
-        syncMatrixToolbarHeight();
-      }
+      syncMatrixToolbarHeight();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -2588,11 +2597,16 @@ gcloud compute firewall-rules create allow-lb-to-modisight-vm \
       const maxFc = Math.max(...items.map(i => i.fc), 1);
 
       items.forEach(item => {
-        document.getElementById(`c${item.id}-fc`).textContent = fmtIdr(item.fc * fx) + ' / yr';
-        document.getElementById(`c${item.id}-usd`).textContent = fmtUsd(item.fc) + ' / year forecasted';
-        document.getElementById(`c${item.id}-m1`).textContent = fmtIdr(item.m1 * fx);
-        document.getElementById(`c${item.id}-m12`).textContent = fmtIdr(item.m12 * fx);
-        document.getElementById(`c${item.id}-flat`).textContent = fmtIdr(item.flat * fx);
+        const elFc = document.getElementById(`c${item.id}-fc`);
+        const elUsd = document.getElementById(`c${item.id}-usd`);
+        const elM1 = document.getElementById(`c${item.id}-m1`);
+        const elM12 = document.getElementById(`c${item.id}-m12`);
+        const elFlat = document.getElementById(`c${item.id}-flat`);
+        if (elFc) elFc.textContent = fmtIdr(item.fc * fx) + ' / yr';
+        if (elUsd) elUsd.textContent = fmtUsd(item.fc) + ' / year forecasted';
+        if (elM1) elM1.textContent = fmtIdr(item.m1 * fx);
+        if (elM12) elM12.textContent = fmtIdr(item.m12 * fx);
+        if (elFlat) elFlat.textContent = fmtIdr(item.flat * fx);
       });
 
       simBars.innerHTML = items.map(item => {
@@ -2662,17 +2676,6 @@ gcloud compute firewall-rules create allow-lb-to-modisight-vm \
     // Matrix Topic Filter + Sticky Header Height Sync
     const catBtns = document.querySelectorAll('[data-cat-filter]');
     const matrixRows = document.querySelectorAll('#matrix-table tbody tr');
-    const matrixToolbar = document.getElementById('matrix-toolbar');
-    const matrixTable = document.getElementById('matrix-table');
-
-    function syncMatrixToolbarHeight() {
-      if (matrixToolbar) {
-        const h = matrixToolbar.getBoundingClientRect().height;
-        if (h > 0) {
-          document.documentElement.style.setProperty('--matrix-toolbar-h', Math.ceil(h) + 'px');
-        }
-      }
-    }
 
     if (window.ResizeObserver && matrixToolbar) {
       new ResizeObserver(syncMatrixToolbarHeight).observe(matrixToolbar);

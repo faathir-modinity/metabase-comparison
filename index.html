@@ -1139,9 +1139,9 @@
         </div>
 
         <div class="callout-box">
-          <h3>The Core Executive Decision: Defend on GCP (~Rp 21.6M/yr) vs. Transfer Host Risk to SaaS (~Rp 1.39B/yr)</h3>
+          <h3>The Core Executive Decision: Defend on GCP (~Rp 21.6M/yr) vs. Transfer Host Risk to Pro SaaS (Rp 1.20B to Rp 1.39B/yr)</h3>
           <p>
-            After reviewing with <strong>DevOps</strong> and <strong>InfraSec</strong>, the decision comes down to who owns host security responsibility. If we want to defend inside our own Google Cloud, we do not need to re-platform to Cloud Run; DevOps can lock down external access on our <strong>existing GCP VM with a Load Balancer, Cloud Armor WAF, and Google IAP (~Rp 21.6M/yr)</strong>. If leadership prefers to transfer 100% of server patching and host responsibility to an external vendor, we must choose <strong>Metabase Pro Cloud (~Rp 1.39B/yr)</strong> because cheaper plans like Starter delete our security audit logs.
+            After reviewing with <strong>DevOps</strong> and <strong>InfraSec</strong>, the decision comes down to who owns host security responsibility. If we defend inside our own Google Cloud, we do not need to re-platform to Cloud Run; DevOps can lock down external access on our <strong>existing GCP VM with a Load Balancer, Cloud Armor WAF, and Google IAP (~Rp 21.6M/yr)</strong>. If leadership prefers to transfer 100% of server patching and host responsibility to an external vendor without losing current AI and audit features, we must upgrade from the previously proposed <strong>Starter Plan (Rp 567.3M in the 2027 FAT Budget sheet)</strong> to <strong>Metabase Pro Cloud (Rp 1.20B on the FAT budget curve, or ~Rp 1.39B on our live +14/mo user growth trend)</strong>.
           </p>
         </div>
 
@@ -1159,7 +1159,7 @@
               </p>
               <ul class="clean-list">
                 <li><strong>Blocks external attackers at the gate:</strong> Cloud Armor WAF blocks SQL injection payloads and Google IAP restricts external access before traffic reaches the VM.</li>
-                <li><strong>Zero migration risk:</strong> Keeps the exact stack already running today (407 dashboards, 7,365 charts, audit logs, and AI tools) with zero re-platforming.</li>
+                <li><strong>Zero migration risk &amp; full internal DB access:</strong> Keeps all 407 dashboards, 7,365 charts, and direct SQL access to Metabase's internal PostgreSQL database (used by our AI agents and audit logs).</li>
                 <li><strong>Trade-off (Internal Host Ownership):</strong> Our internal DevOps &amp; InfraSec teams remain responsible for server patching and host maintenance.</li>
               </ul>
             </div>
@@ -1170,14 +1170,14 @@
             <div>
               <span class="verdict-badge badge-blue">Option B: SaaS Risk Transfer (InfraSec Aligned)</span>
               <h3>Metabase Pro Cloud (Official Managed SaaS)</h3>
-              <div class="verdict-price">~Rp 1.39B / yr <span>(Rp 97.6M -&gt; Rp 133.5M / mo)</span></div>
+              <div class="verdict-price">Rp 1.20B to Rp 1.39B / yr <span>(FAT Sheet vs. Live Growth)</span></div>
               <p style="font-size:0.88rem;">
                 If leadership wants to transfer 100% of host security, 24/7 zero-day patching, and SOC 2 compliance responsibility to the software vendor, <strong>Metabase Pro Cloud</strong> is the only SaaS tier that keeps our audit logs and AI workflows intact.
               </p>
               <ul class="clean-list">
+                <li><strong>2027 Budget Impact:</strong> Costs <strong>Rp 1,202,688,000</strong> on the 2027 FAT Budget user curve (399 to 453 users), or <strong>~Rp 1,386,504,000</strong> if our current +14/month user growth continues (414 to 582 users).</li>
                 <li><strong>Full vendor risk transfer:</strong> Metabase Inc. owns server infrastructure, WAF rules, and 24/7 security patching SLAs.</li>
-                <li><strong>1-day migration &amp; full continuity:</strong> Built-in Cloud Migrator copies all 407 dashboards and 7,365 charts automatically, while preserving Antigravity AI, <code>ge-mcp</code>, and Audit Logs.</li>
-                <li><strong>Unlocks Row-Level Security:</strong> Lets a single dashboard automatically filter rows by brand or store manager.</li>
+                <li><strong>1-day migration &amp; full continuity:</strong> Built-in Cloud Migrator copies all 407 dashboards and 7,365 charts automatically while preserving AI workflows, Usage Analytics, and Row-Level Security.</li>
               </ul>
             </div>
           </div>
@@ -1185,14 +1185,14 @@
           <!-- Path C: Why others fail -->
           <div class="verdict-card">
             <div>
-              <span class="verdict-badge badge-warn">Why the Other Options Fall Short</span>
-              <h3>Starter, Lightdash &amp; Tableau Trade-Offs</h3>
-              <div class="verdict-price">Rp 583M to Rp 1.69B / yr</div>
+              <span class="verdict-badge badge-warn">Why Starter &amp; Other Options Fall Short</span>
+              <h3>Why Starter (Rp 567M) Is a Downgrade</h3>
+              <div class="verdict-price">Rp 567M to Rp 1.69B / yr</div>
               <p style="font-size:0.88rem;">
-                Each of the remaining options introduces a major operational or compliance penalty:
+                The <strong>Starter Plan (Rp 567.3M in our initial 2027 budget draft)</strong> and alternative BI tools introduce major operational or compliance penalties:
               </p>
               <ul class="clean-list">
-                <li><strong>Metabase Starter (~Rp 659M/yr):</strong> Fails compliance risk transfer because it <strong>deletes our <code>query_execution</code> audit logs</strong> (leaving us unable to report affected rows to Komdigi under UU PDP if an account is compromised).</li>
+                <li><strong>Metabase Starter (Rp 567.3M FAT / Rp 659.2M Live):</strong> Downgrades our current setup because Metabase Cloud locks out the internal PostgreSQL backend (<code>metabase db</code>) and only exposes Usage &amp; Audit tables on the <strong>Pro</strong> tier. On Starter, we lose AI metadata introspection and lose <code>query_execution</code> audit logs required for Komdigi UU PDP compliance.</li>
                 <li><strong>Lightdash Cloud (~Rp 583M/yr):</strong> Flat-rate pricing for unlimited users, but <strong>cannot connect to our live Odoo ERP</strong> alongside BigQuery, blocks quick custom SQL charts, and requires rebuilding all 407 dashboards.</li>
                 <li><strong>Tableau Cloud (~Rp 1.69B/yr):</strong> Requires a 1-year upfront contract, locks 408 users into read-only mode, breaks our AI tools, and requires 3 to 6 months of manual rebuilding.</li>
               </ul>
@@ -1361,19 +1361,19 @@
             </div>
 
             <div class="metric-card" style="border: 2px solid var(--accent-blue); background-color: var(--accent-blue-soft);">
-              <span class="status-pill pill-good">2. Metabase Pro Cloud (~Rp 1.39B/yr)</span>
+              <span class="status-pill pill-good">2. Metabase Pro Cloud (Rp 1.20B to Rp 1.39B/yr)</span>
               <h4 style="margin-block: 0.4rem;">Full Operational Risk Transfer + Audit Logs</h4>
               <p style="font-size: 0.84rem; margin: 0;">
                 <strong>Technical Defense:</strong> Metabase's security team patches cloud servers 24/7 as soon as fixes exist.<br>
-                <strong>Responsibility:</strong> Transfers 100% of host/patching responsibility to Metabase Inc. while keeping the <strong>Audit Logs</strong> required to answer Komdigi (UU PDP) if a user account is ever compromised.
+                <strong>Responsibility:</strong> Transfers 100% of host/patching responsibility to Metabase Inc. while keeping the <strong>Usage &amp; Audit Logs</strong> required for AI governance and Komdigi (UU PDP) compliance.
               </p>
             </div>
 
             <div class="metric-card">
-              <span class="status-pill pill-bad">3. Metabase Starter Cloud (~Rp 659M/yr)</span>
-              <h4 style="margin-block: 0.4rem;">Dangerous Compliance Blind Spot</h4>
+              <span class="status-pill pill-bad">3. Metabase Starter Cloud (Rp 567M to Rp 659M/yr)</span>
+              <h4 style="margin-block: 0.4rem;">Downgrades AI &amp; Deletes Audit Logs</h4>
               <p style="font-size: 0.84rem; margin: 0;">
-                <strong>The Trap:</strong> Under Indonesian law (UU PDP / Komdigi), Modinity remains the legal <em>Data Controller</em> even when using SaaS. Starter transfers server patching to Metabase, <strong>but deletes our <code>query_execution</code> audit log</strong>, making it impossible to prove to Komdigi what data was accessed during an incident.
+                <strong>The Trap:</strong> Starter locks out Metabase's internal PostgreSQL backend (<code>metabase db</code>) without giving us Pro's Audit tables. That breaks our AI metadata queries and <strong>deletes our <code>query_execution</code> audit log</strong>, leaving Modinity unable to answer Komdigi under UU PDP if an account is compromised.
               </p>
             </div>
           </div>
@@ -1391,13 +1391,21 @@
       <section class="page-view" id="view-cost-simulator">
         <header class="view-header">
           <div>
-            <span class="view-kicker">Chapter 03 / Financial Model</span>
+            <span class="view-kicker">Chapter 03 / Financial Model &amp; 2027 FAT Budget Alignment</span>
             <h2 class="view-title">Interactive 12-Month Cost &amp; Seat Growth Simulator</h2>
             <p class="view-lead">
-              Test how Modinity's user growth (currently <strong>414 active users</strong> growing at <strong>+14 users/month</strong>) affects our annual budget across all 7 options.
+              Switch between our <strong>2027 FAT Budget Sheet curve (399 to 453 users: Rp 567.3M Starter / Rp 1.20B Pro)</strong> and our <strong>Live Growth Trend (414 to 582 users: Rp 659.2M Starter / Rp 1.39B Pro)</strong>, or adjust the sliders directly.
             </p>
           </div>
         </header>
+
+        <div class="toolbar-row" style="margin-block-end: 1.25rem;">
+          <div class="filter-group" role="group" aria-label="Budget Scenario Presets">
+            <button class="chip-btn" id="preset-fat" type="button">Preset A: 2027 FAT Budget Sheet (399 -&gt; 453 users | Rp 567.3M Starter / Rp 1.20B Pro)</button>
+            <button class="chip-btn active" id="preset-live" type="button">Preset B: Live Growth Trend (414 -&gt; 582 users | Rp 659.2M Starter / Rp 1.39B Pro)</button>
+            <button class="chip-btn" id="preset-static380" type="button">Preset C: Static 380 Users (Rp 507.6M Starter / Rp 1.08B Pro)</button>
+          </div>
+        </div>
 
         <div class="sim-layout">
           <!-- Sliders Panel -->
@@ -1569,6 +1577,135 @@
               <div class="cost-meta-row"><span>Month 12 Eq:</span> <strong id="c7-m12">Rp 163.1M</strong></div>
               <div class="cost-meta-row"><span>1-Yr Flat (No Growth):</span> <strong id="c7-flat">Rp 1.42B</strong></div>
             </div>
+          </div>
+        </div>
+
+        <!-- 2027 FAT Tech Budget Template Alignment Table -->
+        <div class="panel-card" style="margin-block-start: 2rem;">
+          <span class="verdict-badge badge-blue">2027 Tech Budget Submission (COST CENTER: TECHNOLOGY - DATA / AKMI)</span>
+          <h3 style="font-size: 1.15rem; margin-block-end: 0.4rem;">Month-by-Month 2027 Budget Schedule (Jan-27 to Dec-27 at Rp 18,000 / USD)</h3>
+          <p style="margin-block-end: 1.15rem; max-inline-size: 78ch;">
+            Why did the initial budget draft say <strong>Rp 567,324,000</strong>? That figure came from calculating the <strong>Starter Plan</strong> across 399 to 453 users. Because Starter locks out Metabase's internal PostgreSQL backend (breaking our AI metadata introspection and deleting our <code>query_execution</code> security audit logs), upgrading to SaaS without losing current capabilities requires <strong>Metabase Pro Plan (Rp 1,202,688,000 on the exact same 399 to 453 user schedule, or ~Rp 1.39B on our live +14/month growth trend)</strong>:
+          </p>
+
+          <div class="table-wrap">
+            <table class="comp-matrix" style="min-inline-size: 82rem;">
+              <thead>
+                <tr>
+                  <th class="col-sticky" style="inline-size: 15rem;">Account / Option</th>
+                  <th>Jan-27</th>
+                  <th>Feb-27</th>
+                  <th>Mar-27</th>
+                  <th>Apr-27</th>
+                  <th>May-27</th>
+                  <th>Jun-27</th>
+                  <th>Jul-27</th>
+                  <th>Aug-27</th>
+                  <th>Sep-27</th>
+                  <th>Oct-27</th>
+                  <th>Nov-27</th>
+                  <th>Dec-27</th>
+                  <th class="col-highlight-blue">YTD 2027</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="col-sticky"><strong>Projected Active Users (FAT Sheet)</strong></td>
+                  <td class="mono tabular">399</td>
+                  <td class="mono tabular">404</td>
+                  <td class="mono tabular">409</td>
+                  <td class="mono tabular">414</td>
+                  <td class="mono tabular">419</td>
+                  <td class="mono tabular">424</td>
+                  <td class="mono tabular">429</td>
+                  <td class="mono tabular">433</td>
+                  <td class="mono tabular">438</td>
+                  <td class="mono tabular">443</td>
+                  <td class="mono tabular">448</td>
+                  <td class="mono tabular">453</td>
+                  <td class="mono tabular col-highlight-blue"><strong>399 -&gt; 453</strong></td>
+                </tr>
+                <tr>
+                  <td class="col-sticky">
+                    <span class="status-pill pill-good">Option 2: Defend on GCP</span><br>
+                    <strong>Hardened GCP VM (LB + WAF)</strong>
+                  </td>
+                  <td class="mono tabular">Rp1,800,000</td>
+                  <td class="mono tabular">Rp1,800,000</td>
+                  <td class="mono tabular">Rp1,800,000</td>
+                  <td class="mono tabular">Rp1,800,000</td>
+                  <td class="mono tabular">Rp1,800,000</td>
+                  <td class="mono tabular">Rp1,800,000</td>
+                  <td class="mono tabular">Rp1,800,000</td>
+                  <td class="mono tabular">Rp1,800,000</td>
+                  <td class="mono tabular">Rp1,800,000</td>
+                  <td class="mono tabular">Rp1,800,000</td>
+                  <td class="mono tabular">Rp1,800,000</td>
+                  <td class="mono tabular">Rp1,800,000</td>
+                  <td class="mono tabular col-highlight-teal"><strong>Rp21,600,000</strong></td>
+                </tr>
+                <tr>
+                  <td class="col-sticky">
+                    <span class="status-pill pill-bad">Option 3: Initial Draft (Downgrade)</span><br>
+                    <strong>Metabase SaaS (Starter Plan)</strong>
+                  </td>
+                  <td class="mono tabular">Rp44,352,000</td>
+                  <td class="mono tabular">Rp44,892,000</td>
+                  <td class="mono tabular">Rp45,432,000</td>
+                  <td class="mono tabular">Rp45,972,000</td>
+                  <td class="mono tabular">Rp46,512,000</td>
+                  <td class="mono tabular">Rp47,052,000</td>
+                  <td class="mono tabular">Rp47,592,000</td>
+                  <td class="mono tabular">Rp48,024,000</td>
+                  <td class="mono tabular">Rp48,564,000</td>
+                  <td class="mono tabular">Rp49,104,000</td>
+                  <td class="mono tabular">Rp49,644,000</td>
+                  <td class="mono tabular">Rp50,184,000</td>
+                  <td class="mono tabular"><strong>Rp567,324,000</strong></td>
+                </tr>
+                <tr>
+                  <td class="col-sticky">
+                    <span class="status-pill pill-good">Option 4: Full Feature SaaS</span><br>
+                    <strong>Metabase SaaS (Pro Plan - FAT Curve)</strong>
+                  </td>
+                  <td class="mono tabular">Rp94,374,000</td>
+                  <td class="mono tabular">Rp95,454,000</td>
+                  <td class="mono tabular">Rp96,534,000</td>
+                  <td class="mono tabular">Rp97,614,000</td>
+                  <td class="mono tabular">Rp98,694,000</td>
+                  <td class="mono tabular">Rp99,774,000</td>
+                  <td class="mono tabular">Rp100,854,000</td>
+                  <td class="mono tabular">Rp101,718,000</td>
+                  <td class="mono tabular">Rp102,798,000</td>
+                  <td class="mono tabular">Rp103,878,000</td>
+                  <td class="mono tabular">Rp104,958,000</td>
+                  <td class="mono tabular">Rp106,038,000</td>
+                  <td class="mono tabular col-highlight-blue"><strong>Rp1,202,688,000</strong></td>
+                </tr>
+                <tr>
+                  <td class="col-sticky">
+                    <span class="status-pill pill-warn">Option 4 (Live +14/mo Growth)</span><br>
+                    <strong>Metabase SaaS (Pro Plan - 414-&gt;582)</strong>
+                  </td>
+                  <td class="mono tabular">Rp97,614,000</td>
+                  <td class="mono tabular">Rp100,638,000</td>
+                  <td class="mono tabular">Rp103,662,000</td>
+                  <td class="mono tabular">Rp106,686,000</td>
+                  <td class="mono tabular">Rp109,710,000</td>
+                  <td class="mono tabular">Rp112,734,000</td>
+                  <td class="mono tabular">Rp115,758,000</td>
+                  <td class="mono tabular">Rp118,782,000</td>
+                  <td class="mono tabular">Rp121,806,000</td>
+                  <td class="mono tabular">Rp124,830,000</td>
+                  <td class="mono tabular">Rp127,854,000</td>
+                  <td class="mono tabular">Rp130,878,000</td>
+                  <td class="mono tabular col-highlight-blue"><strong>Rp1,370,952,000*</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="font-size: 0.78rem; color: var(--text-muted); margin-block-start: 0.65rem;">
+            *Note: Starting at 414 users in Month 1 and adding +14 users/month reaches 568 users in Month 12 (Rp 1.37B) or 582 users at the end of Month 12 (Rp 1.39B annualized).
           </div>
         </div>
 
@@ -2394,6 +2531,12 @@ gcloud compute firewall-rules create allow-lb-to-modisight-vm \
     const lblFx = document.getElementById('lbl-fx');
     const lblRange = document.getElementById('lbl-range');
     const simBars = document.getElementById('sim-bars');
+    const btnPresetFat = document.getElementById('preset-fat');
+    const btnPresetLive = document.getElementById('preset-live');
+    const btnPresetStatic380 = document.getElementById('preset-static380');
+
+    let useFatExactCurve = false;
+    const fatCurveUsers = [399, 404, 409, 414, 419, 424, 429, 433, 438, 443, 448, 453];
 
     function fmtIdr(val) {
       if (val >= 1e9) {
@@ -2427,10 +2570,10 @@ gcloud compute firewall-rules create allow-lb-to-modisight-vm \
       const ldMonthly = parseInt(inpLd.value, 10);
       const fx = parseInt(inpFx.value, 10);
 
-      const uEnd = uStart + (growth * 12);
+      const uEnd = useFatExactCurve ? 453 : (uStart + (growth * 12));
 
       lblUsers.textContent = uStart + ' users';
-      lblGrowth.textContent = '+' + growth + ' / mo';
+      lblGrowth.textContent = useFatExactCurve ? '+4.9 / mo (FAT)' : ('+' + growth + ' / mo');
       lblCreators.textContent = creators + (creators === 1 ? ' Creator' : ' Creators');
       lblLd.textContent = '$' + ldMonthly.toLocaleString('en-US') + ' / mo';
       lblFx.textContent = 'Rp ' + fx.toLocaleString('en-US');
@@ -2438,7 +2581,7 @@ gcloud compute firewall-rules create allow-lb-to-modisight-vm \
 
       let sum1 = 0, sum2 = 0, sum3 = 0, sum4 = 0, sum5 = 0, sum6 = 0, sum7 = 0;
       for (let m = 0; m < 12; m++) {
-        const u = uStart + (growth * m);
+        const u = useFatExactCurve ? fatCurveUsers[m] : (uStart + (growth * m));
         sum1 += 60;
         sum2 += 100;
         sum3 += calcStarter(u);
@@ -2482,8 +2625,53 @@ gcloud compute firewall-rules create allow-lb-to-modisight-vm \
       }).join('');
     }
 
+    function setActivePreset(activeBtn) {
+      [btnPresetFat, btnPresetLive, btnPresetStatic380].forEach(b => {
+        if (b) b.classList.toggle('active', b === activeBtn);
+      });
+    }
+
+    if (btnPresetFat) {
+      btnPresetFat.addEventListener('click', () => {
+        useFatExactCurve = true;
+        inpUsers.value = 399;
+        inpGrowth.value = 5;
+        inpFx.value = 18000;
+        setActivePreset(btnPresetFat);
+        runSimulator();
+      });
+    }
+
+    if (btnPresetLive) {
+      btnPresetLive.addEventListener('click', () => {
+        useFatExactCurve = false;
+        inpUsers.value = 414;
+        inpGrowth.value = 14;
+        inpFx.value = 18000;
+        setActivePreset(btnPresetLive);
+        runSimulator();
+      });
+    }
+
+    if (btnPresetStatic380) {
+      btnPresetStatic380.addEventListener('click', () => {
+        useFatExactCurve = false;
+        inpUsers.value = 380;
+        inpGrowth.value = 0;
+        inpFx.value = 18000;
+        setActivePreset(btnPresetStatic380);
+        runSimulator();
+      });
+    }
+
     [inpUsers, inpGrowth, inpCreators, inpLd, inpFx].forEach(el => {
-      el.addEventListener('input', runSimulator);
+      el.addEventListener('input', () => {
+        if (el === inpUsers || el === inpGrowth) {
+          useFatExactCurve = false;
+          setActivePreset(null);
+        }
+        runSimulator();
+      });
     });
     runSimulator();
 

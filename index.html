@@ -806,6 +806,40 @@
       inset-block-start: 0;
       z-index: 5;
       border-block-end: 2px solid var(--border-strong);
+      box-shadow: 0 2px 4px rgba(20, 23, 31, 0.05);
+    }
+
+    /* Sticky Filter Bar + Sticky Table Header on Page 04 (7-Option Matrix) */
+    .matrix-sticky-toolbar {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 25;
+      background-color: var(--bg-canvas);
+      padding-block: 0.7rem;
+      margin-block-end: 0;
+      border-block-end: 1px solid var(--border-strong);
+    }
+
+    .matrix-table-wrap {
+      overflow: visible;
+      border-start-start-radius: 0;
+      border-start-end-radius: 0;
+    }
+
+    #matrix-table {
+      min-inline-size: 0;
+      inline-size: 100%;
+      table-layout: fixed;
+    }
+
+    #matrix-table thead th {
+      position: sticky;
+      inset-block-start: var(--matrix-toolbar-h, 3.45rem);
+      z-index: 20;
+    }
+
+    #matrix-table thead th.col-sticky {
+      z-index: 21;
     }
 
     table.comp-matrix th.col-sticky,
@@ -964,6 +998,17 @@
       }
       .bar-row {
         grid-template-columns: 10rem minmax(0, 1fr) 8.5rem;
+      }
+      .matrix-table-wrap {
+        overflow: auto;
+        max-block-size: calc(100dvh - 10rem);
+      }
+      #matrix-table {
+        min-inline-size: 72rem;
+        table-layout: auto;
+      }
+      #matrix-table thead th {
+        inset-block-start: 0;
       }
     }
   </style>
@@ -1729,7 +1774,7 @@
           </div>
         </header>
 
-        <div class="toolbar-row">
+        <div class="toolbar-row matrix-sticky-toolbar" id="matrix-toolbar">
           <div class="filter-group" role="tablist">
             <button class="chip-btn active" data-cat-filter="all">Show All Topics</button>
             <button class="chip-btn" data-cat-filter="security">Security, Risk Transfer &amp; Audit</button>
@@ -1738,7 +1783,7 @@
           </div>
         </div>
 
-        <div class="table-wrap">
+        <div class="table-wrap matrix-table-wrap">
           <table class="comp-matrix" id="matrix-table">
             <thead>
               <tr>
@@ -2496,6 +2541,9 @@ gcloud compute firewall-rules create allow-lb-to-modisight-vm \
       if (updateHash) {
         history.replaceState(null, '', '#' + targetId);
       }
+      if (typeof syncMatrixToolbarHeight === 'function') {
+        syncMatrixToolbarHeight();
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -2675,9 +2723,26 @@ gcloud compute firewall-rules create allow-lb-to-modisight-vm \
     });
     runSimulator();
 
-    // Matrix Topic Filter
+    // Matrix Topic Filter + Sticky Header Height Sync
     const catBtns = document.querySelectorAll('[data-cat-filter]');
     const matrixRows = document.querySelectorAll('#matrix-table tbody tr');
+    const matrixToolbar = document.getElementById('matrix-toolbar');
+    const matrixTable = document.getElementById('matrix-table');
+
+    function syncMatrixToolbarHeight() {
+      if (matrixToolbar) {
+        const h = matrixToolbar.getBoundingClientRect().height;
+        if (h > 0) {
+          document.documentElement.style.setProperty('--matrix-toolbar-h', Math.ceil(h) + 'px');
+        }
+      }
+    }
+
+    if (window.ResizeObserver && matrixToolbar) {
+      new ResizeObserver(syncMatrixToolbarHeight).observe(matrixToolbar);
+    }
+    window.addEventListener('resize', syncMatrixToolbarHeight);
+    syncMatrixToolbarHeight();
 
     catBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -2688,6 +2753,15 @@ gcloud compute firewall-rules create allow-lb-to-modisight-vm \
           const rowCat = row.getAttribute('data-cat');
           row.style.display = (filter === 'all' || rowCat === filter) ? '' : 'none';
         });
+        syncMatrixToolbarHeight();
+        if (matrixTable && matrixToolbar) {
+          const rect = matrixTable.getBoundingClientRect();
+          const toolbarH = matrixToolbar.getBoundingClientRect().height;
+          if (rect.top < toolbarH) {
+            const targetTop = window.scrollY + rect.top - toolbarH;
+            window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+          }
+        }
       });
     });
   </script>

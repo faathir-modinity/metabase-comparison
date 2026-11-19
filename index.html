@@ -365,14 +365,14 @@
     }
 
     .view-header {
-      margin-block-end: 2rem;
-      padding-block-end: 1.5rem;
+      margin-block-end: 1.35rem;
+      padding-block-end: 1rem;
       border-block-end: 1px solid var(--border-hairline);
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: flex-end;
-      gap: 1rem;
+      gap: 0.75rem;
     }
 
     .view-kicker {
@@ -382,28 +382,28 @@
       letter-spacing: 0.07em;
       color: var(--accent-primary);
       font-weight: 600;
-      margin-block-end: 0.4rem;
+      margin-block-end: 0.35rem;
       display: block;
     }
 
     .view-title {
-      font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.1rem);
+      font-size: clamp(1.4rem, 1.05rem + 1.4vw, 1.95rem);
       font-weight: 700;
-      margin-block-end: 0.5rem;
+      margin-block-end: 0.4rem;
     }
 
     .view-lead {
-      font-size: 1.02rem;
+      font-size: 0.96rem;
       color: var(--text-body);
-      max-inline-size: 72ch;
+      max-inline-size: 70ch;
       margin: 0;
     }
 
     .bento-metrics {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr));
-      gap: 1rem;
-      margin-block-end: 2rem;
+      gap: 0.9rem;
+      margin-block-end: 1.4rem;
     }
 
     .metric-card {
@@ -749,10 +749,49 @@
       color: var(--status-bad-text);
     }
 
-    .flow-node strong {
+    .flow-node > strong:first-child {
       display: block;
-      margin-block-end: 0.15rem;
+      margin-block-end: 0.2rem;
       color: inherit;
+    }
+
+    .collapsible-card summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: safe center;
+      gap: 1rem;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text-ink);
+    }
+
+    .collapsible-card summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .collapsible-card summary::after {
+      content: '+ Expand';
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent-primary);
+      background-color: var(--accent-primary-soft);
+      border: 1px solid var(--accent-primary-border);
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    .collapsible-card[open] summary::after {
+      content: '- Hide';
+    }
+
+    .collapsible-card[open] summary {
+      margin-block-end: 1rem;
+      padding-block-end: 0.85rem;
+      border-block-end: 1px solid var(--border-hairline);
     }
 
     .toolbar-row {
@@ -1135,230 +1174,199 @@
       <section class="page-view active" id="view-overview">
         <header class="view-header">
           <div>
-            <span class="view-kicker">Chapter 01 / Executive Summary (In Plain English)</span>
-            <h2 class="view-title">Moving to Metabase Pro for Rp 55.1M/Month Instead of Rp 97.4M+</h2>
+            <span class="view-kicker">Chapter 01 / Executive Summary</span>
+            <h2 class="view-title">Cut Our Metabase Pro Bill by 49.6% (Rp 55.1M/mo)</h2>
             <p class="view-lead">
-              We are moving to <strong>Metabase Pro Cloud on a month-to-month plan</strong> ($575/month for the first 10 people + $12/month for each extra person). Cutting <strong>61 inactive accounts</strong> and moving <strong>123 stores + 12 external brand partners (135 logins)</strong> to our already-tested Free Portal brings paid seats down to <strong>217 people</strong> and saves <strong>Rp 679.1M per year (49.6%)</strong>.
+              Monthly Metabase Pro Cloud ($575 for 10 seats + $12/extra seat). Removing <strong>61 idle logins</strong> and moving <strong>135 store &amp; partner viewers</strong> to our Free Portal drops paid seats from <strong>413 to 217</strong> and saves <strong>Rp 679.1M/year</strong>.
             </p>
           </div>
         </header>
 
         <div class="bento-metrics">
           <div class="metric-card">
-            <div class="metric-label">Accounts Today</div>
+            <div class="metric-label">Current Accounts</div>
             <div class="metric-val">413</div>
-            <div class="metric-note">Costs Rp 97.4M/mo today, growing to Rp 1.37B/yr if unchecked</div>
+            <div class="metric-note">Rp 97.4M/mo today (Rp 1.37B/yr if unchecked)</div>
           </div>
           <div class="metric-card">
-            <div class="metric-label">Step 1: Cut Inactive</div>
+            <div class="metric-label">Step 1: Cut Idle</div>
             <div class="metric-val">-61</div>
-            <div class="metric-note">No login for &gt;30 days (all 14 ExCo &amp; 5 new hires stay safe)</div>
+            <div class="metric-note">&gt;30d inactive (14 ExCo &amp; 4 new hires safe)</div>
           </div>
           <div class="metric-card">
             <div class="metric-label">Step 2: Free Portal</div>
             <div class="metric-val">-135</div>
-            <div class="metric-note">123 active stores + 12 active external brand partners at $0/viewer</div>
+            <div class="metric-note">123 stores + 12 external partners at $0</div>
           </div>
           <div class="metric-card" style="border-color:var(--status-good-border); background-color:var(--status-good-bg);">
             <div class="metric-label" style="color:var(--status-good-text);">Target Paid Seats</div>
             <div class="metric-val" style="color:var(--status-good-text);">217</div>
-            <div class="metric-note" style="color:var(--status-good-text);">Month 1: Rp 55.1M/mo ($3,059) | Year 1 forecast (217 to 239 seats): Rp 689.3M/yr</div>
+            <div class="metric-note" style="color:var(--status-good-text);">Rp 55.1M/mo ($3,059) | Rp 689.3M/yr forecast</div>
           </div>
         </div>
 
-        <div class="callout-box">
-          <h3>Immediate Saving Today + Optional Next-Step Upside</h3>
-          <p>
-            When our old self-hosted server had $0 per-user fees, we gave full logins to interns who left, KPMG accounts that never logged in, <strong>123 active retail/franchise stores</strong>, and <strong>12 external brand partners</strong> that only ever view <strong>1 assigned sales dashboard</strong>. Moving all 135 store and external partner logins to our <strong>Cloud Run + Google IAP Guest Embed Portal</strong> (live POC already tested) drops Month 1 Pro spend to <strong>Rp 55.1M/month</strong> while keeping full Pro licenses for all <strong>217 HQ staff &amp; ExCo</strong>. As a <strong>Next Step</strong> (not taken yet), <strong>31 pure single-dashboard HQ viewers</strong> stay on Pro licenses today and represent another potential <strong>Rp 80.4M/year</strong> upside later.
-          </p>
-        </div>
-
-        <h3 style="margin-block-end: 1rem;">How We Go From 413 Accounts Down to 217 Paid Seats</h3>
+        <h3 style="margin-block-end: 0.85rem;">How 413 Accounts Drop to 217 Paid Seats</h3>
 
         <div class="verdict-grid">
           <div class="verdict-card">
             <div>
-              <span class="verdict-badge badge-bad">If We Convert Everyone As-Is</span>
-              <h3>413 Paid Seats (Growing to 567)</h3>
-              <div class="verdict-price">Rp 97.4M / mo <span>Month 1 (Rp 1.37B / yr at +14/mo growth)</span></div>
-              <p style="font-size:0.88rem;">
-                Moving every current account without cleanup means paying $12/month for unused logins, every shop counter, and external partners:
-              </p>
+              <span class="verdict-badge badge-bad">Do Nothing (As-Is)</span>
+              <h3>413 Seats (Growing to 567)</h3>
+              <div class="verdict-price">Rp 97.4M / mo <span>Rp 1.37B / yr (+14/mo growth)</span></div>
               <ul class="clean-list">
-                <li><strong>Pays for 61 unused accounts:</strong> Includes former interns, 3 KPMG accounts untouched for 8 months, duplicate accounts, and staff who stopped logging in months ago.</li>
-                <li><strong>Pays $12/month for 135 single-screen viewers:</strong> Charges Rp 349.9M/year for 123 stores and 12 external brand partners that only look at 1 assigned dashboard.</li>
-                <li><strong>Keeps snowballing every month:</strong> Adding new hires and new stores without cleanup pushes Month 12 up to Rp 130.7M/month.</li>
+                <li><strong>Pays $12/mo for 61 idle logins:</strong> Former interns, untouched KPMG accounts, and inactive staff.</li>
+                <li><strong>Pays Rp 349.9M/yr for 135 viewers:</strong> Every store counter and external partner takes a full Pro seat.</li>
+                <li><strong>Snowballs monthly:</strong> New hires and store openings push Month 12 to Rp 130.7M/mo.</li>
               </ul>
             </div>
           </div>
 
           <div class="verdict-card highlight-blue">
             <div>
-              <span class="verdict-badge badge-blue">Step 1 Only: Cut Inactive (&gt;30 Days)</span>
-              <h3>352 Paid Seats (-61 Unused Logins)</h3>
-              <div class="verdict-price">Rp 84.2M / mo <span>Month 1 (Rp 1.04B / yr at +2/mo growth)</span></div>
-              <p style="font-size:0.88rem;">
-                Before migrating, we turn off the 61 accounts that have not logged in for more than 1 month, and keep turning off 30-day idle accounts before each monthly bill:
-              </p>
+              <span class="verdict-badge badge-blue">Step 1 Only: Cut &gt;30d Idle</span>
+              <h3>352 Paid Seats (-61 Unused)</h3>
+              <div class="verdict-price">Rp 84.2M / mo <span>Rp 1.04B / yr (+2/mo growth)</span></div>
               <ul class="clean-list">
-                <li><strong>ExCo is 100% exempt:</strong> All 14 ExCo members stay active permanently (including the 4 who log in less than once a month, costing just Rp 864k/mo total).</li>
-                <li><strong>New hires get 14 days:</strong> The 5 brand-new staff/store accounts created in the last 2 weeks stay untouched while onboarding.</li>
-                <li><strong>Saves Rp 329.2M/year:</strong> Cuts 24% off the unoptimized Rp 1.37B/yr forecast immediately on Day 1, and anyone who needs access back can be turned back on in 1 click.</li>
+                <li><strong>ExCo &amp; new hires stay protected:</strong> All 14 ExCo members and 4 recent hires stay active permanently.</li>
+                <li><strong>1-click reactivation anytime:</strong> Deactivated staff keep zero disruption to charts or dashboards.</li>
+                <li><strong>Immediate Day-1 saving:</strong> Cuts Rp 329.2M/year (-24%) before touching any store workflow.</li>
               </ul>
             </div>
           </div>
 
           <div class="verdict-card highlight-teal">
             <div>
-              <span class="verdict-badge badge-teal">Recommended Now: Step 1 + Store &amp; Partner Portal</span>
+              <span class="verdict-badge badge-teal">Recommended: Step 1 + Free Portal</span>
               <h3>217 Paid Seats (-61 Idle &amp; -135 Portal)</h3>
-              <div class="verdict-price">Rp 55.1M / mo <span>Month 1 (Rp 689.3M / yr at +2/mo; Rp 660.7M flat)</span></div>
-              <p style="font-size:0.88rem;">
-                Immediately move <strong>123 stores + 12 external brand partners</strong> to our Cloud Run + Google IAP Guest Embed Portal at <strong>$0/viewer</strong>:
-              </p>
+              <div class="verdict-price">Rp 55.1M / mo <span>Rp 689.3M / yr (Rp 660.7M flat)</span></div>
               <ul class="clean-list">
-                <li><strong>$0/viewer Guest Embeds (with Pro polish):</strong> Guest Embeds work on all plans at $0/viewer; Pro also removes the "Powered by Metabase" badge and lets us control Excel/CSV downloads.</li>
-                <li><strong>Saves Rp 349.9M/year immediately:</strong> Removes 123 stores (-Rp 318.8M/yr) + 12 external partners (-Rp 31.1M/yr), and new stores cost <strong>Rp 0 extra</strong> (get written confirmation from Metabase Sales for Own Retail).</li>
-                <li><strong>Saves Rp 679.1M/year total (-49.6%):</strong> Compared against the Rp 1.37B/yr unoptimized forecast, while keeping full Pro seats for all <strong>217 HQ staff &amp; ExCo</strong> (including the 31 1-dashboard HQ users kept on Pro for now).</li>
+                <li><strong>135 single-screen viewers at $0:</strong> 123 stores (-Rp 318.8M/yr) + 12 external partners (-Rp 31.1M/yr).</li>
+                <li><strong>Verified live on Cloud Run + IAP:</strong> Filters and Excel/CSV exports work; future stores cost Rp 0 extra.</li>
+                <li><strong>Saves Rp 679.1M/year (-49.6%):</strong> Full Pro seats kept for all 217 active HQ staff and ExCo.</li>
               </ul>
             </div>
           </div>
         </div>
 
-        <div class="callout-box" style="border-inline-start-color: var(--accent-blue); background-color: #f8fafc;">
-          <span class="verdict-badge badge-blue">Next Step / Future Upside (Not Cut Today)</span>
-          <h3>Potential Further Saving: 31 Pure Single-Dashboard HQ Viewers (-Rp 80.4M/Year)</h3>
+        <div class="callout-box" style="border-inline-start-color: var(--accent-blue); background-color: #f8fafc; margin-block-end: 0;">
+          <span class="verdict-badge badge-blue" style="margin-block-end:0.45rem;">Next Step Upside (Kept on Pro Today)</span>
+          <h3>31 Single-Dashboard HQ Staff = Extra Rp 80.4M/Year Potential Saving</h3>
           <p>
-            Auditing the last 60 days of activity among our <strong>217 kept HQ/ExCo seats</strong> found <strong>31 non-ExCo staff</strong> who only opened <strong>1 dashboard</strong> (0 SQL/ad-hoc queries, 0 created charts, 0 card drill-ins, 0 email alerts): <strong>8</strong> in Product Development (<code>Product Lifetime Sales Dashboard</code>), <strong>4</strong> in ADP (<code>ADP MRP</code>), <strong>4</strong> in FAT (<code>FAT Sales</code> / <code>AP Journal</code>), <strong>3</strong> in Marketing (<code>Marketing Sales</code>), <strong>2</strong> in Ops, <strong>2</strong> in Merchandising Production, and <strong>8</strong> individual roles. <strong>We are keeping full Metabase Pro seats for all 31 right now</strong> so HQ teams stay flexible without Metabase licensing risk; if approved later, moving them drops paid seats from <strong>217 to 186 (Rp 48.4M/mo)</strong>.
+            Our 60-day audit found <strong>31 non-ExCo HQ viewers</strong> who only opened 1 dashboard (0 SQL, 0 created cards, 0 alerts: Product Dev 8, ADP 4, FAT 4, Marketing 3, Ops 2, Merch Prod 2, others 8). <strong>We keep all 31 on full Pro seats today</strong>; moving them later after Metabase Sales confirmation lowers paid seats from <strong>217 to 186 (Rp 48.4M/mo)</strong>.
           </p>
         </div>
 
         <div class="page-pager">
           <span></span>
-          <button class="pager-btn primary" type="button" data-goto="store-portal">Next: How the Free Store &amp; Partner Portal Works -&gt;</button>
+          <button class="pager-btn primary" type="button" data-goto="store-portal">Next: How the Free Portal Works -&gt;</button>
         </div>
       </section>
 
-      <!-- CHAPTER 02: PLAIN-ENGLISH GUIDE TO THE FREE STORE & PARTNER PORTAL -->
+      <!-- CHAPTER 02: FREE STORE & PARTNER PORTAL -->
       <section class="page-view" id="view-store-portal">
         <header class="view-header">
           <div>
-            <span class="view-kicker">Chapter 02 / How Step 2 Saves Rp 349.9M/Year Immediately</span>
-            <h2 class="view-title">How the Free Store &amp; Partner Portal Works (POC Already Tested)</h2>
+            <span class="view-kicker">Chapter 02 / Free Store &amp; Partner Portal (Rp 349.9M/Yr Saved)</span>
+            <h2 class="view-title">Free Store &amp; Partner Portal (Live Cloud Run POC Verified)</h2>
             <p class="view-lead">
-              Why pay $12/month for <strong>123 store logins + 12 external brand partners (135 accounts)</strong> when every single one only opens one assigned dashboard? We already deployed and tested a working Cloud Run + Google Login POC showing each outlet and partner only their own dashboard for <strong>Rp 0</strong>.
+              <strong>123 stores + 12 external brand partners (135 logins)</strong> only view one assigned sales dashboard each. Our deployed Cloud Run + Google IAP POC already serves each outlet and partner only its own dashboard at <strong>$0/viewer</strong>.
             </p>
           </div>
         </header>
 
         <div class="arch-comparison">
           <div class="arch-box">
-            <span class="verdict-badge badge-bad">Current Setup ($1,620/mo = Rp 349.9M/yr)</span>
-            <h3>135 Full Paid Seats Just to View 1 Screen Each</h3>
-            <p style="font-size:0.88rem;">
-              Live usage logs confirm what our 77 Own Retail stores, 46 Franchise stores, and 12 active External Brand Partners actually do:
-            </p>
+            <span class="verdict-badge badge-bad">Today: $1,620/mo (Rp 349.9M/yr)</span>
+            <h3>135 Paid Seats for 1 Screen Each</h3>
             <div class="flow-steps">
               <div class="flow-node expose-node">
-                <strong>1. Every Store &amp; Partner Holds a $12/Month Login</strong>
-                Accounts like <code>bs.pim3@modinity.com</code>, <code>bj.medan@modinity.com</code>, and partner logins (<code>bima@warnamodern.id</code>) would each cost <strong>$12/month (Rp 216,000/month)</strong> on Metabase Pro.
+                <strong>1. $12/Month Per Store &amp; Partner Login</strong>
+                Store logins (<code>bs.pim3@...</code>, <code>bj.medan@...</code>) and partners (<code>bima@warnamodern.id</code>) each cost <strong>$12/mo (Rp 216k/mo)</strong> on Pro.
               </div>
               <div class="flow-node expose-node">
-                <strong>2. Strictly View-Only on 1 Assigned Dashboard</strong>
-                All 12 active external partners literally have permission to only 1 collection/dashboard and run <code>0</code> ad-hoc queries. Stores spend <code>98.7%</code> of runs on their 1 store sales screen.
+                <strong>2. Strictly Single-Dashboard Viewers</strong>
+                All 12 partners only have read access to 1 dashboard (<code>0</code> SQL queries). Stores spend <code>98.7%</code> of runs on their store screen.
               </div>
               <div class="flow-node">
-                <strong>3. Every New Store or Partner Raises Our Monthly Bill</strong>
-                If Modinity opens 25 new stores or adds brand partners next year, our Metabase bill automatically jumps by another $300+/month.
+                <strong>3. Bill Grows With Every New Outlet</strong>
+                Opening 25 new stores next year adds another <strong>$300/month</strong> automatically if left on paid seats.
               </div>
             </div>
           </div>
 
           <div class="arch-box good-arch">
-            <span class="verdict-badge badge-teal">New Setup With Guest Embeds ($0/mo | POC Tested Live)</span>
-            <h3>One Modinity Portal With Verified Google Login &amp; Isolation</h3>
-            <p style="font-size:0.88rem;">
-              Tested live on Cloud Run with Google IAP (`store-portal-poc`): Guest Embeds work on every Metabase plan at <strong>$0/viewer</strong>, while <strong>Metabase Pro</strong> removes the Metabase banner and lets us control Excel/CSV exports:
-            </p>
+            <span class="verdict-badge badge-teal">Portal Setup: $0/Viewer (POC Verified)</span>
+            <h3>One Portal With Google Login &amp; Strict Isolation</h3>
             <div class="flow-steps">
               <div class="flow-node shield-node">
-                <strong>1. Stores &amp; Partners Sign In With Google (Cloud IAP)</strong>
-                They open <code>stores.modinity.com</code> and sign in with Google. Cloud Run verifies Google's cryptographic token on every request and checks our server allowlist.
+                <strong>1. Sign In With Google (Cloud IAP)</strong>
+                Users open <code>stores.modinity.com</code> via Google Login. Cloud Run checks Google's signed identity token against our allowlist.
               </div>
               <div class="flow-node shield-node">
-                <strong>2. Server Locks Them to Their Own Dashboard + Keeps Filters</strong>
-                Each email can only open its assigned dashboard (we verified in the POC that attempting another store's ID returns <strong>HTTP 403 Forbidden</strong>). Date, Brand, Category, and Staff filters + Excel/CSV exports keep working.
+                <strong>2. Server-Locked Dashboard + Working Filters</strong>
+                Each email only loads its assigned dashboard (cross-store tampering blocked with <strong>HTTP 403</strong> in POC). Filters and Excel/CSV exports keep working.
               </div>
               <div class="flow-node shield-node">
-                <strong>3. Zero Per-Viewer Cost Today and Forever</strong>
-                Moving <strong>123 stores + 12 external brand partners (135 seats)</strong> cuts <strong>-$1,620/mo (Rp 349.9M/yr)</strong> immediately, and future store openings cost <strong>Rp 0 extra</strong>.
+                <strong>3. Zero Per-Viewer Cost Forever</strong>
+                Moving all <strong>135 accounts</strong> cuts <strong>-$1,620/mo (Rp 349.9M/yr)</strong> immediately; future stores cost <strong>Rp 0 extra</strong>.
               </div>
             </div>
           </div>
         </div>
 
-        <h3 style="margin-block-end: 1rem;">Security, Live Usage Proof &amp; Licensing Check</h3>
-        <div class="verdict-grid">
+        <div class="verdict-grid" style="margin-block-end:0;">
           <div class="metric-card">
-            <span class="status-pill pill-good">POC Proven Security</span>
-            <h4 style="margin-block:0.4rem;">Is This Safe From External Attackers?</h4>
+            <span class="status-pill pill-good">Security Verified</span>
+            <h4 style="margin-block:0.5rem 0.35rem;">Blocked at Google's Edge (POC Tested)</h4>
             <p style="font-size:0.84rem; margin:0;">
-              <strong>Yes.</strong> Cloud Run + Google IAP blocks unauthenticated users at Google's edge, never trusts IDs from the browser, signs 10-minute expiring Metabase tokens on the server, and moving Metabase to <strong>Pro Cloud</strong> closes self-hosted patch lag (lesson from Aug 2026 MB-0813).
+              Cloud IAP blocks non-allowlisted users before traffic hits our app, rejects URL dashboard ID tampering (<strong>HTTP 403</strong>), and signs 10-minute server tokens. Moving Metabase to Pro Cloud also closes self-hosted patch lag.
             </p>
           </div>
 
           <div class="metric-card">
-            <span class="status-pill pill-good">Live 30-Day Proof (238,007 Runs)</span>
-            <h4 style="margin-block:0.4rem;">What Do Stores &amp; Partners Keep vs. Lose?</h4>
+            <span class="status-pill pill-good">30-Day Audit (238k Runs)</span>
+            <h4 style="margin-block:0.5rem 0.35rem;">Same Daily Workflow, Zero Ad-Hoc Loss</h4>
             <p style="font-size:0.84rem; margin:0;">
-              <strong>Keep:</strong> Viewing dashboards + filters (<code>98.7%</code> of activity) and Excel/CSV downloads (<code>2,625</code> exports/mo). <strong>Zero loss:</strong> <code>0</code> ad-hoc SQL queries and <code>0</code> email subscriptions exist on stores or partners. <strong>Trade-off:</strong> Chart click-to-drill menus go away (<code>0.14%</code>), and visit logs come from Cloud Run/IAP access logs.
+              <strong>Keeps:</strong> Dashboards, filters (<code>98.7%</code>), and <code>2,625</code> monthly Excel/CSV exports. <strong>Zero loss:</strong> <code>0</code> SQL queries or email alerts exist on stores/partners. <strong>Trade-off:</strong> No click-to-drill charts (<code>0.14%</code>).
             </p>
           </div>
 
           <div class="metric-card">
             <span class="status-pill pill-warn">Licensing Scope</span>
-            <h4 style="margin-block:0.4rem;">Why External Partners + Stores Now, HQ Later?</h4>
+            <h4 style="margin-block:0.5rem 0.35rem;">Stores &amp; Partners Now, HQ Later</h4>
             <p style="font-size:0.84rem; margin:0;">
-              The <strong>46 Franchise (<code>FC</code>)</strong> + <strong>12 External Partners</strong> (58 total) are 100% third parties (zero licensing risk). Confirm the <strong>77 Own Retail</strong> stores with Metabase Sales in writing, and keep the <strong>31 single-dashboard HQ staff</strong> on paid Pro seats for now to avoid internal-seat pushback.
-            </p>
-          </div>
-
-          <div class="metric-card">
-            <span class="status-pill pill-good">Already Tested Live</span>
-            <h4 style="margin-block:0.4rem;">How Did Our 4-Email Cloud Run POC Go?</h4>
-            <p style="font-size:0.84rem; margin:0;">
-              <strong>Passed end-to-end.</strong> Deployed <code>store-portal-poc</code> on Cloud Run (<code>asia-southeast2</code>) behind Google IAP: Admin accounts switched freely between <code>BJ PIM 3 (#220)</code> and <code>BS Plaza Indonesia (#239)</code>, while locked store logins got <strong>HTTP 403</strong> if trying the other store.
+              <strong>46 Franchise + 12 External Partners</strong> (58) are third parties. Get written confirmation from Metabase Sales for <strong>77 Own Retail stores</strong>, and keep the <strong>31 1-dash HQ staff</strong> on Pro seats today.
             </p>
           </div>
         </div>
 
         <div class="page-pager">
           <button class="pager-btn" type="button" data-goto="overview">&lt;- Previous: The 217-Seat Plan</button>
-          <button class="pager-btn primary" type="button" data-goto="user-directory">Next: View All 413 Users by Name -&gt;</button>
+          <button class="pager-btn primary" type="button" data-goto="user-directory">Next: All 413 Users -&gt;</button>
         </div>
       </section>
       <!-- CHAPTER 03: FULL 413-USER DIRECTORY (WITH REAL NAMES & EMAILS) -->
       <section class="page-view" id="view-user-directory">
         <header class="view-header">
           <div>
-            <span class="view-kicker">Chapter 03 / Live Account-by-Account Audit (19 Nov 2026)</span>
-            <h2 class="view-title">All 413 Current Users: Who Stays, Who Moves &amp; Who Gets Cut</h2>
+            <span class="view-kicker">Chapter 03 / User Directory (413 Accounts)</span>
+            <h2 class="view-title">All 413 Accounts: Cut, Portal, or Keep</h2>
             <p class="view-lead">
-              Every active account on <code>modisight.modinity.com</code> listed by name and email. Filter below to inspect the <strong>61 inactive accounts to turn off</strong>, the <strong>135 store &amp; external brand partner accounts moving to the Free Store &amp; Partner Portal</strong>, and the <strong>217 people keeping paid seats</strong> (including all 14 ExCo members and the 31 single-dashboard HQ viewers we are keeping on Pro today as a Next-Step option).
+              Filter by decision (<strong>61 cut</strong>, <strong>135 Free Portal</strong>, <strong>217 paid</strong> including <strong>31 1-dash HQ kept on Pro today</strong>) or search by name, email, or team.
             </p>
           </div>
         </header>
 
         <div class="toolbar-row sticky-toolbar" id="user-toolbar">
           <div class="filter-group" role="group" aria-label="Filter user directory by action">
-            <button class="chip-btn active" type="button" data-u-filter="all">All Accounts (413)</button>
-            <button class="chip-btn" type="button" data-u-filter="cut_all">Cut: Inactive &gt;30d (61)</button>
-            <button class="chip-btn" type="button" data-u-filter="cut_60">Idle &gt;60d / Never (38)</button>
-            <button class="chip-btn" type="button" data-u-filter="cut_30">Idle 31 to 60d (23)</button>
-            <button class="chip-btn" type="button" data-u-filter="portal">Move to Free Portal (135)</button>
-            <button class="chip-btn" type="button" data-u-filter="keep">Keep Paid Seat (217)</button>
-            <button class="chip-btn" type="button" data-u-filter="next_hq_1d">Next-Step Upside: 1-Dash HQ Kept Today (31)</button>
-            <button class="chip-btn" type="button" data-u-filter="exco">ExCo Exempt (14)</button>
+            <button class="chip-btn active" type="button" data-u-filter="all">All (413)</button>
+            <button class="chip-btn" type="button" data-u-filter="cut_all">Cut &gt;30d (61)</button>
+            <button class="chip-btn" type="button" data-u-filter="cut_60">Idle &gt;60d (38)</button>
+            <button class="chip-btn" type="button" data-u-filter="cut_30">Idle 31-60d (23)</button>
+            <button class="chip-btn" type="button" data-u-filter="portal">Free Portal (135)</button>
+            <button class="chip-btn" type="button" data-u-filter="keep">Keep Paid (217)</button>
+            <button class="chip-btn" type="button" data-u-filter="next_hq_1d">Next Step: 1-Dash HQ (31)</button>
+            <button class="chip-btn" type="button" data-u-filter="exco">ExCo (14)</button>
           </div>
           <div style="display:flex; align-items:safe center; gap:0.65rem; flex:1 1 16rem; justify-content:flex-end;">
             <label for="inp-user-search" class="visually-hidden">Search by name, email, or team</label>
@@ -1394,134 +1402,127 @@
       <section class="page-view" id="view-cost-simulator">
         <header class="view-header">
           <div>
-            <span class="view-kicker">Chapter 04 / Interactive Month-to-Month Cost Calculator</span>
-            <h2 class="view-title">Test Any Cutoff Rule &amp; See Our Exact Monthly Bill</h2>
+            <span class="view-kicker">Chapter 04 / Bill Calculator</span>
+            <h2 class="view-title">Monthly Bill Simulator (217-Seat Plan)</h2>
             <p class="view-lead">
-              The calculator starts on our <strong>Recommended 217-Seat Plan (Rp 55.1M/month)</strong>. Click any preset button or toggle the sliders to test keeping stores paid, shifting external partners, or testing the Next-Step 31 single-dashboard HQ saving.
+              Select a preset or adjust cutoff, Portal scope, and optional Next-Step savings below.
             </p>
           </div>
         </header>
 
-        <div class="toolbar-row" style="margin-block-end: 1.25rem;">
+        <div class="toolbar-row" style="margin-block-end: 1rem;">
           <div class="filter-group" role="group" aria-label="Budget scenario presets">
-            <button class="chip-btn active" id="preset-rec217" type="button">Recommended Plan: Cut &gt;30d + Free Store &amp; Partner Portal (217 seats | Rp 55.1M/mo)</button>
-            <button class="chip-btn" id="preset-30d" type="button">Step 1 Only: Cut &gt;30d Idle, Keep Store &amp; Partner Logins (352 seats | Rp 84.2M/mo)</button>
-            <button class="chip-btn" id="preset-60d" type="button">Cut &gt;60d Idle Only, Keep Store &amp; Partner Logins (375 seats | Rp 89.2M/mo)</button>
-            <button class="chip-btn" id="preset-fat" type="button">2027 Finance Budget Sheet (399 -&gt; 453 seats | Rp 1.20B/yr)</button>
-            <button class="chip-btn" id="preset-drift" type="button">Do Nothing: Convert All + Unchecked Growth (413 -&gt; 567 | Rp 1.37B/yr)</button>
+            <button class="chip-btn active" id="preset-rec217" type="button">Recommended: 217 seats (Rp 55.1M/mo)</button>
+            <button class="chip-btn" id="preset-30d" type="button">Step 1 Only: 352 seats (Rp 84.2M/mo)</button>
+            <button class="chip-btn" id="preset-60d" type="button">Cut &gt;60d Only: 375 seats (Rp 89.2M/mo)</button>
+            <button class="chip-btn" id="preset-fat" type="button">2027 FAT Sheet (Rp 1.20B/yr)</button>
+            <button class="chip-btn" id="preset-drift" type="button">Do Nothing: 413-&gt;567 (Rp 1.37B/yr)</button>
           </div>
         </div>
 
         <div class="sim-layout">
           <div class="panel-card">
-            <h3 style="font-size:1.02rem; margin-block-end:1rem;">Adjust Plan Rules</h3>
+            <h3 style="font-size:1rem; margin-block-end:0.85rem;">Plan Controls</h3>
 
             <div class="slider-group">
               <div class="slider-head">
-                <label for="sel-stores">Who Moves to the Free Cloud Run + Google IAP Portal?</label>
+                <label for="sel-stores">Free Portal Scope ($0/viewer)</label>
               </div>
               <select class="select-input" id="sel-stores">
-                <option value="all" selected>Recommended: All 123 Stores + 12 External Partners (135 seats | $0/viewer)</option>
-                <option value="stores_only">Move 123 Stores Only (Keep 12 External Partners Paid)</option>
-                <option value="fc_ext">Move 46 Franchise Stores + 12 External Partners Only (58 seats)</option>
-                <option value="none">Keep All Stores &amp; Partners as Paid Metabase Logins ($12/mo each)</option>
+                <option value="all" selected>All 123 Stores + 12 Partners (135 seats)</option>
+                <option value="stores_only">123 Stores Only (Keep 12 Partners Paid)</option>
+                <option value="fc_ext">46 Franchise + 12 Partners Only (58 seats)</option>
+                <option value="none">None (Keep All 135 Paid)</option>
               </select>
-              <div class="slider-hint">Moving all 135 saves $1,620/month (Rp 349.9M/year): 123 stores (Rp 318.8M/yr) + 12 external partners (Rp 31.1M/yr).</div>
+              <div class="slider-hint">All 135 = -$1,620/mo (123 stores Rp 318.8M/yr + 12 partners Rp 31.1M/yr).</div>
             </div>
 
             <div class="slider-group">
               <div class="slider-head">
-                <label for="inp-cutoff">Turn Off Users Who Have Not Logged In For:</label>
+                <label for="inp-cutoff">Idle Account Cutoff</label>
                 <span class="slider-readout" id="lbl-cutoff">&gt; 30 days (1 mo)</span>
               </div>
               <input type="range" id="inp-cutoff" min="14" max="125" step="1" value="30">
-              <div class="slider-hint">30 days = 1 month; 60 days = 2 months; 125 = never turn off anyone.</div>
+              <div class="slider-hint">30d = 1 mo; 60d = 2 mo; 125 = never cut.</div>
             </div>
 
             <div class="slider-group">
-              <div style="font-size:0.86rem; font-weight:600; margin-block-end:0.55rem;">Protected Groups &amp; Extra Savings</div>
+              <div style="font-size:0.84rem; font-weight:600; margin-block-end:0.5rem;">Exemptions &amp; Optional Upside</div>
               <label class="check-row" for="chk-exco">
                 <input type="checkbox" id="chk-exco" checked>
-                <span><strong>Always Keep ExCo Active (14 people)</strong><br><span style="font-size:0.76rem; color:var(--text-muted);">Never turn off ExCo accounts even if they log in rarely (+Rp 864k/mo).</span></span>
+                <span><strong>Keep ExCo Active (14)</strong> <span style="font-size:0.75rem; color:var(--text-muted);">Never auto-cut</span></span>
               </label>
               <label class="check-row" for="chk-grace">
                 <input type="checkbox" id="chk-grace" checked>
-                <span><strong>Give New Hires 14 Days to Log In First</strong><br><span style="font-size:0.76rem; color:var(--text-muted);">Protects brand-new staff added in the past 2 weeks while onboarding.</span></span>
+                <span><strong>14-Day New-Hire Grace</strong> <span style="font-size:0.75rem; color:var(--text-muted);">Onboarding protection</span></span>
               </label>
               <label class="check-row" for="chk-digest">
                 <input type="checkbox" id="chk-digest">
-                <span><strong>Optional: Switch 1x/Month Viewers to Email Reports (-26 seats)</strong><br><span style="font-size:0.76rem; color:var(--text-muted);">Sends scheduled email summaries ($0/mo) to HQ staff who only check once a month.</span></span>
+                <span><strong>Email Digests Only (-26)</strong> <span style="font-size:0.75rem; color:var(--text-muted);">For 1x/mo HQ viewers</span></span>
               </label>
               <label class="check-row" for="chk-next-hq">
                 <input type="checkbox" id="chk-next-hq">
-                <span><strong>Next Step (Kept on Pro Today): Move 31 Single-Dashboard HQ Staff (-31 seats / -Rp 80.4M/yr)</strong><br><span style="font-size:0.76rem; color:var(--text-muted);">60-day audit found 31 internal HQ viewers who only ever opened 1 dashboard (0 SQL, 0 cards, 0 drill-ins). Kept on Pro right now; toggle to preview Phase 2 upside (186 seats | Rp 48.4M/mo) after Metabase Sales confirmation.</span></span>
+                <span><strong>Next Step: 31 Single-Dash HQ (-31 / -Rp 80.4M/yr)</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">Kept on Pro today; preview 186 seats (Rp 48.4M/mo).</span></span>
               </label>
             </div>
 
             <div class="slider-group">
               <div class="slider-head">
-                <label for="inp-growth">New Paid Users Added per Month (Net)</label>
+                <label for="inp-growth">Net New Seats / Month</label>
                 <span class="slider-readout" id="lbl-growth">+2 / mo</span>
               </div>
               <input type="range" id="inp-growth" min="0" max="16" step="1" value="2">
-              <div class="slider-hint">With monthly cleanup active, real active staff only grew by +2 people/month across 2026.</div>
             </div>
 
             <div class="slider-group">
               <div class="slider-head">
-                <label for="inp-fx">USD Exchange Rate</label>
+                <label for="inp-fx">USD / IDR Rate</label>
                 <span class="slider-readout" id="lbl-fx">Rp 18,000</span>
               </div>
               <input type="range" id="inp-fx" min="15500" max="20000" step="250" value="18000">
-              <div class="slider-hint">Budget assumption: 1 USD = Rp 18,000.</div>
             </div>
           </div>
 
           <div class="panel-card">
-            <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.5rem; margin-block-end:1rem;">
-              <h3 style="font-size:1.02rem; margin:0;">Your Selected Plan (<span id="lbl-range">217 to 239 paid seats</span>)</h3>
-              <span class="mono" style="font-size:0.75rem; color:var(--text-muted);">$575 base (10 people) + $12/person/mo</span>
+            <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.5rem; margin-block-end:0.9rem;">
+              <h3 style="font-size:1rem; margin:0;">Selected Plan (<span id="lbl-range">217 to 239 paid seats</span>)</h3>
+              <span class="mono" style="font-size:0.75rem; color:var(--text-muted);">$575 base (10 seats) + $12/seat</span>
             </div>
 
-            <div class="bento-metrics" style="margin-block-end:1.25rem;">
-              <div class="metric-card" style="padding:0.95rem 1rem;">
-                <div class="metric-label">Paid Seats Left</div>
-                <div class="metric-val" id="kpi-kept" style="font-size:1.45rem;">217</div>
-                <div class="metric-note" id="kpi-cut">196 seats removed (-47.5%)</div>
+            <div class="bento-metrics" style="margin-block-end:1.1rem;">
+              <div class="metric-card" style="padding:0.85rem 0.95rem;">
+                <div class="metric-label">Paid Seats</div>
+                <div class="metric-val" id="kpi-kept" style="font-size:1.4rem;">217</div>
+                <div class="metric-note" id="kpi-cut">196 removed (-47.5%)</div>
               </div>
-              <div class="metric-card" style="padding:0.95rem 1rem;">
-                <div class="metric-label">Monthly Bill (Now)</div>
-                <div class="metric-val" id="kpi-m1" style="font-size:1.45rem;">Rp 55.1M</div>
+              <div class="metric-card" style="padding:0.85rem 0.95rem;">
+                <div class="metric-label">Month 1 Bill</div>
+                <div class="metric-val" id="kpi-m1" style="font-size:1.4rem;">Rp 55.1M</div>
                 <div class="metric-note" id="kpi-m1-usd">$3,059 / month</div>
               </div>
-              <div class="metric-card" style="padding:0.95rem 1rem;">
-                <div class="metric-label">Full 12-Month Total</div>
-                <div class="metric-val" id="kpi-yr" style="font-size:1.45rem;">Rp 689.3M</div>
+              <div class="metric-card" style="padding:0.85rem 0.95rem;">
+                <div class="metric-label">12-Month Total</div>
+                <div class="metric-val" id="kpi-yr" style="font-size:1.4rem;">Rp 689.3M</div>
                 <div class="metric-note" id="kpi-yr-usd">$38,292 / year</div>
               </div>
-              <div class="metric-card" style="padding:0.95rem 1rem; border-color:var(--status-good-border); background-color:var(--status-good-bg);">
-                <div class="metric-label" style="color:var(--status-good-text);">Yearly Money Saved</div>
-                <div class="metric-val" id="kpi-save" style="font-size:1.45rem; color:var(--status-good-text);">Rp 679.1M</div>
-                <div class="metric-note" id="kpi-save-pct" style="color:var(--status-good-text);">49.6% cheaper than doing nothing</div>
+              <div class="metric-card" style="padding:0.85rem 0.95rem; border-color:var(--status-good-border); background-color:var(--status-good-bg);">
+                <div class="metric-label" style="color:var(--status-good-text);">Saved vs. Drift</div>
+                <div class="metric-val" id="kpi-save" style="font-size:1.4rem; color:var(--status-good-text);">Rp 679.1M</div>
+                <div class="metric-note" id="kpi-save-pct" style="color:var(--status-good-text);">49.6% cheaper</div>
               </div>
             </div>
 
-            <h4 style="font-size:0.9rem; margin-block-end:0.65rem;">12-Month Total Cost Comparison</h4>
+            <h4 style="font-size:0.88rem; margin-block-end:0.55rem;">12-Month Spend Comparison</h4>
             <div id="sim-bars"></div>
 
-            <div style="margin-block-start:1.15rem; padding:0.85rem 1rem; background:var(--bg-subtle); border-radius:var(--radius-sm); font-size:0.82rem; color:var(--text-body);">
-              <strong>Why paying monthly works in our favor:</strong> Whenever we turn off inactive accounts or move stores to the Free Store Portal, our very next monthly bill drops right away. We are never locked into paying a full year upfront for seats we stop needing.
+            <div style="margin-block-start:1rem; padding:0.75rem 0.95rem; background:var(--bg-subtle); border-radius:var(--radius-sm); font-size:0.8rem; color:var(--text-body);">
+              <strong>Monthly billing advantage:</strong> Seat removals lower the very next monthly invoice without annual lock-in.
             </div>
           </div>
         </div>
 
-        <div class="panel-card">
-          <span class="verdict-badge badge-teal">Month-by-Month 2027 Budget Table (Jan-27 to Dec-27)</span>
-          <h3 style="font-size: 1.15rem; margin-block-end: 0.4rem;">Monthly Invoices Across 2027</h3>
-          <p style="margin-block-end: 1.15rem; max-inline-size: 78ch;">
-            Compare doing nothing, the previous 2027 Finance budget sheet, cutting inactive accounts only, and our <strong>Recommended 217-Seat Plan</strong>:
-          </p>
-
+        <details class="panel-card collapsible-card">
+          <summary>View Full 12-Month 2027 Invoice Schedule (Jan to Dec 2027)</summary>
           <div class="table-wrap">
             <table class="comp-matrix" style="min-inline-size: 82rem;">
               <caption class="visually-hidden">Month by month 2027 Metabase Pro invoice comparison from January to December 2027</caption>
@@ -1546,11 +1547,11 @@
               <tbody id="schedule-tbody"></tbody>
             </table>
           </div>
-        </div>
+        </details>
 
         <div class="page-pager">
           <button class="pager-btn" type="button" data-goto="user-directory">&lt;- Previous: All 413 Users</button>
-          <button class="pager-btn primary" type="button" data-goto="rollout-plan">Next: Step-by-Step Rollout &amp; Teams -&gt;</button>
+          <button class="pager-btn primary" type="button" data-goto="rollout-plan">Next: Rollout &amp; Teams -&gt;</button>
         </div>
       </section>
 
@@ -1558,43 +1559,40 @@
       <section class="page-view" id="view-rollout-plan">
         <header class="view-header">
           <div>
-            <span class="view-kicker">Chapter 05 / Simple Execution Plan &amp; Team Summary</span>
-            <h2 class="view-title">How We Roll This Out Smoothly (Without Disrupting Anyone)</h2>
+            <span class="view-kicker">Chapter 05 / Rollout &amp; Teams</span>
+            <h2 class="view-title">Execution Plan &amp; 22-Team Breakdown</h2>
             <p class="view-lead">
-              A straightforward sequence to clean up unused accounts first, move smoothly to Metabase Pro Cloud, switch stores to the Free Store Portal, and keep our monthly bill lean automatically.
+              Clean up idle seats, migrate to Metabase Pro Cloud, expand the verified Portal, and keep monthly billing lean.
             </p>
           </div>
         </header>
 
         <div class="arch-comparison">
           <div class="arch-box good-arch">
-            <span class="verdict-badge badge-teal">Week 1: Clean Up, Confirm &amp; Move to Metabase Pro</span>
-            <h3>Immediate Drop From 413 to 352 Seats (Cloud Run POC Verified)</h3>
+            <span class="verdict-badge badge-teal">Week 1: Cleanup &amp; Pro Migration (413 -&gt; 352)</span>
+            <h3>Cut Idle Seats &amp; Confirm Store Scope</h3>
             <ul class="clean-list" style="margin-block-start:0.85rem;">
-              <li><strong>1. Point 5 Automated Tech Alert Emails to a Team Inbox (15 mins):</strong> Five inactive Tech staff only get automated email alerts. Sending those emails straight to a shared team address means they need zero paid seats.</li>
-              <li><strong>2. Turn Off the 61 Inactive Accounts (15 mins):</strong> Deactivate non-ExCo accounts that have not logged in for over 30 days (keeping all 14 ExCo members and 4 brand-new hires untouched). Zero charts or dashboards are lost.</li>
-              <li><strong>3. Live Cloud Run + IAP POC Already Verified:</strong> Our 4-email Cloud Run POC (<code>store-portal-poc</code> in <code>asia-southeast2</code> behind Google IAP) already passed live RBAC testing (admin multi-store switch = 200 OK; cross-store ID tampering blocked with 403). Next: send written confirmation request to Metabase Sales covering all 123 stores + 12 external brand partners (135 total).</li>
-              <li><strong>4. One-Click Move to Metabase Pro Cloud (1 day):</strong> Copy all 407 dashboards, 7,365 charts, and AI bot keys directly into Metabase Pro Cloud for Usage Analytics, download controls, SSO, and Pro support.</li>
+              <li><strong>1. Shared Tech Alert Inbox (15 mins):</strong> Route automated Tech alerts to a shared inbox (0 paid seats).</li>
+              <li><strong>2. Deactivate 61 Idle Logins (15 mins):</strong> Cut &gt;30d inactive accounts (all 14 ExCo and 4 new hires untouched).</li>
+              <li><strong>3. POC Verified / Sales Sign-Off:</strong> Cloud Run + IAP POC already passed live tests (HTTP 403 isolation verified). Get written sign-off from Metabase Sales for 77 Own Retail stores.</li>
+              <li><strong>4. Migrate to Metabase Pro Cloud (1 day):</strong> Move all dashboards, charts, and AI keys onto Pro Cloud.</li>
             </ul>
           </div>
 
           <div class="arch-box good-arch">
-            <span class="verdict-badge badge-blue">Week 2 to 3 &amp; Next Step: Reach 217 Paid Seats</span>
-            <h3>Launch Free Store &amp; Partner Portal (Keep 31 Single-Dash HQ Staff on Pro Today)</h3>
+            <span class="verdict-badge badge-blue">Week 2-3 &amp; Phase 2: Reach 217 Paid Seats</span>
+            <h3>Launch Store + Partner Portal (Keep 31 HQ on Pro Now)</h3>
             <ul class="clean-list" style="margin-block-start:0.85rem;">
-              <li><strong>5. Scale Cloud Run Portal for 123 Stores + 12 External Partners (2 to 3 days):</strong> Protect the wrapper behind Google IAP, map each authorized email to its assigned store or partner dashboard, and serve 10-minute expiring guest embeds with working filters and Excel/CSV downloads at $0 per viewer.</li>
-              <li><strong>6. Turn Off 135 Paid Store &amp; External Partner Logins:</strong> Deactivate the 123 store logins and 12 active external partner seats in Metabase so our monthly bill drops immediately to <strong>Rp 55.1M/month (217 paid seats)</strong>.</li>
-              <li><strong>7. Automatic Monthly Cleanup + Next-Step Upside:</strong> Keep the 31 pure single-dashboard HQ viewers on full Pro seats for now while running monthly 30-day inactivity sweeps. Later, if approved by Metabase Sales, moving those 31 HQ single-dashboard viewers into the portal is a ready Phase 2 saving of another <strong>-Rp 80.4M/yr</strong> (down to 186 paid seats).</li>
+              <li><strong>5. Scale Cloud Run Portal for 135 Logins (2-3 days):</strong> Load all 123 store + 12 external partner emails behind Google IAP with 10-min expiring embed tokens.</li>
+              <li><strong>6. Deactivate 135 Paid Store &amp; Partner Logins:</strong> Drop paid Pro seats immediately to <strong>217 (Rp 55.1M/month)</strong>.</li>
+              <li><strong>7. Monthly Cleanup + Phase 2 Upside:</strong> Auto-sweep &gt;30d idle logins before billing day. Keep the <strong>31 1-dash HQ viewers</strong> on Pro today (ready <strong>-Rp 80.4M/yr</strong> Phase 2 upside if approved later).</li>
             </ul>
           </div>
         </div>
 
         <div class="panel-card">
-          <span class="verdict-badge badge-teal">Team-by-Team Summary (All 22 Groups = 413 Accounts)</span>
-          <h3 style="font-size: 1.15rem; margin-block-end: 0.4rem;">Where Every Seat Goes Across Departments &amp; Stores</h3>
-          <p style="margin-block-end: 1rem; max-inline-size: 76ch;">
-            Summary of current seats, how many are cut as inactive (&gt;30d), how many move to the Free Store Portal, and how many remain as paid Metabase Pro seats:
-          </p>
+          <span class="verdict-badge badge-teal">22-Team Breakdown (413 Accounts)</span>
+          <h3 style="font-size: 1.1rem; margin-block-end: 0.75rem;">Seat Allocation by Department &amp; Store Group</h3>
           <div class="table-wrap">
             <table class="comp-matrix" style="min-inline-size: 56rem;">
               <caption class="visually-hidden">Summary of all 22 teams showing current seats, inactive cuts, store portal transfers, and final paid seats</caption>

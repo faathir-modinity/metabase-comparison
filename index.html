@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Executive Summary | Metabase Pro Seat &amp; Cost Optimization</title>
+  <title>The 229-Seat Plan (Rp 57.7M/mo) | Metabase Pro Cost Optimization</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -610,18 +610,28 @@
       cursor: pointer;
     }
 
-    .select-input {
-      inline-size: 100%;
+    .select-input,
+    .search-input {
       min-block-size: 2.35rem;
-      padding: 0.45rem 0.65rem;
+      padding: 0.45rem 0.75rem;
       font-family: var(--font-sans);
-      font-size: 0.84rem;
+      font-size: 0.85rem;
       font-weight: 500;
       color: var(--text-ink);
       background-color: var(--bg-surface);
       border: 1px solid var(--border-strong);
       border-radius: var(--radius-sm);
+    }
+
+    .select-input {
+      inline-size: 100%;
       cursor: pointer;
+    }
+
+    .search-input {
+      min-inline-size: 16rem;
+      flex: 1 1 16rem;
+      max-inline-size: 24rem;
     }
 
     .check-row {
@@ -654,7 +664,7 @@
 
     .bar-row {
       display: grid;
-      grid-template-columns: 15rem minmax(0, 1fr) 12rem;
+      grid-template-columns: 15.5rem minmax(0, 1fr) 12rem;
       align-items: safe center;
       gap: 0.85rem;
       padding-block: 0.55rem;
@@ -693,80 +703,6 @@
       font-variant-numeric: tabular-nums;
     }
 
-    .cost-cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr));
-      gap: 1rem;
-    }
-
-    .cost-card {
-      background-color: var(--bg-surface);
-      border: 1px solid var(--border-hairline);
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-      box-shadow: var(--shadow-subtle);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .cost-card.rec-border {
-      border: 2px solid var(--accent-primary);
-    }
-
-    .cost-card.pro-border {
-      border: 2px solid var(--accent-blue);
-    }
-
-    .cost-card h4 {
-      font-size: 0.98rem;
-      margin-block: 0.35rem 0.2rem;
-      text-wrap: wrap;
-    }
-
-    .cost-formula {
-      font-family: var(--font-mono);
-      font-size: 0.73rem;
-      color: var(--text-muted);
-      margin-block-end: 0.75rem;
-    }
-
-    .cost-yr-big {
-      font-family: var(--font-mono);
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--text-ink);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .cost-yr-usd {
-      font-family: var(--font-mono);
-      font-size: 0.76rem;
-      color: var(--text-muted);
-      margin-block-end: 0.85rem;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .cost-meta-table {
-      border-block-start: 1px solid var(--border-hairline);
-      padding-block-start: 0.65rem;
-      font-size: 0.79rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-
-    .cost-meta-row {
-      display: flex;
-      justify-content: space-between;
-      color: var(--text-body);
-    }
-
-    .cost-meta-row strong {
-      font-family: var(--font-mono);
-      font-variant-numeric: tabular-nums;
-    }
-
     .arch-comparison {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
@@ -786,6 +722,39 @@
       border: 2px solid var(--accent-primary);
     }
 
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-block: 1.15rem 0;
+    }
+
+    .flow-node {
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-hairline);
+      background-color: var(--bg-canvas);
+      font-size: 0.86rem;
+    }
+
+    .flow-node.shield-node {
+      background-color: var(--status-good-bg);
+      border-color: var(--status-good-border);
+      color: var(--status-good-text);
+    }
+
+    .flow-node.expose-node {
+      background-color: var(--status-bad-bg);
+      border-color: var(--status-bad-border);
+      color: var(--status-bad-text);
+    }
+
+    .flow-node strong {
+      display: block;
+      margin-block-end: 0.15rem;
+      color: inherit;
+    }
+
     .toolbar-row {
       display: flex;
       flex-wrap: wrap;
@@ -798,19 +767,18 @@
     .filter-group {
       display: flex;
       flex-wrap: wrap;
-      flex-wrap: balance;
       gap: 0.4rem;
     }
 
     .chip-btn {
       min-block-size: 2.25rem;
-      padding: 0.45rem 0.85rem;
+      padding: 0.45rem 0.8rem;
       border-radius: var(--radius-sm);
       border: 1px solid var(--border-strong);
       background-color: var(--bg-surface);
       color: var(--text-body);
       font-family: var(--font-sans);
-      font-size: 0.8rem;
+      font-size: 0.79rem;
       font-weight: 600;
       cursor: pointer;
       transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
@@ -844,7 +812,7 @@
 
     table.comp-matrix th,
     table.comp-matrix td {
-      padding: 0.8rem 0.9rem;
+      padding: 0.75rem 0.85rem;
       border-block-end: 1px solid var(--border-hairline);
       border-inline-end: 1px solid var(--border-hairline);
       vertical-align: top;
@@ -866,7 +834,7 @@
       box-shadow: 0 2px 4px rgba(20, 23, 31, 0.05);
     }
 
-    .matrix-sticky-toolbar {
+    .sticky-toolbar {
       position: sticky;
       inset-block-start: 0;
       z-index: 25;
@@ -875,23 +843,23 @@
       margin-block-end: 0;
     }
 
-    .matrix-table-wrap {
+    .sticky-table-wrap {
       overflow: visible;
     }
 
-    #dept-table {
+    .sticky-header-table {
       min-inline-size: 0;
       inline-size: 100%;
     }
 
-    #dept-table thead th {
+    #user-table thead th {
       position: sticky;
-      inset-block-start: var(--matrix-toolbar-h, 3.45rem);
+      inset-block-start: var(--user-toolbar-h, 4rem);
       z-index: 20;
       border-block-start: 1px solid var(--border-hairline);
     }
 
-    #dept-table thead th.col-sticky {
+    #user-table thead th.col-sticky {
       z-index: 21;
     }
 
@@ -935,7 +903,7 @@
       font-weight: 600;
       padding: 0.14rem 0.48rem;
       border-radius: var(--radius-sm);
-      margin-block-end: 0.25rem;
+      margin-block-end: 0.2rem;
       border: 1px solid transparent;
     }
 
@@ -943,6 +911,12 @@
       background-color: var(--status-good-bg);
       color: var(--status-good-text);
       border-color: var(--status-good-border);
+    }
+
+    .pill-blue {
+      background-color: var(--accent-blue-soft);
+      color: var(--accent-blue);
+      border-color: var(--accent-blue-border);
     }
 
     .pill-warn {
@@ -1012,19 +986,6 @@
       background-color: #272c3a;
     }
 
-    pre.code-block {
-      background-color: #111318;
-      color: #e5e7eb;
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      line-height: 1.55;
-      padding: 1rem 1.15rem;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-dark);
-      overflow-x: auto;
-      margin-block: 0.75rem 0;
-    }
-
     @media (max-width: 68rem) {
       .app-shell {
         grid-template-columns: 1fr;
@@ -1041,14 +1002,14 @@
       .bar-row {
         grid-template-columns: 10.5rem minmax(0, 1fr) 9rem;
       }
-      .matrix-table-wrap {
+      .sticky-table-wrap {
         overflow: auto;
-        max-block-size: calc(100dvh - 10rem);
+        max-block-size: calc(100dvh - 11rem);
       }
-      #dept-table {
-        min-inline-size: 64rem;
+      #user-table {
+        min-inline-size: 62rem;
       }
-      #dept-table thead th {
+      #user-table thead th {
         inset-block-start: 0;
       }
     }
@@ -1061,16 +1022,16 @@
     <div class="mobile-bar-top">
       <div>
         <span class="brand-eyebrow" style="margin:0;">Modinity Data &amp; BI</span>
-        <strong style="font-size:0.95rem;">Metabase Pro Seat Optimization</strong>
+        <strong style="font-size:0.95rem;">Metabase Pro: 229-Seat Plan</strong>
       </div>
-      <span class="mono" style="font-size:0.75rem; color:#9ca3af;">413 -&gt; 352 Seats</span>
+      <span class="mono" style="font-size:0.75rem; color:#5eead4;">Rp 57.7M / mo</span>
     </div>
     <nav class="mobile-tabs" aria-label="Mobile chapters">
-      <button class="mobile-tab-btn active" type="button" data-target="overview" aria-current="page">01 Executive Summary</button>
-      <button class="mobile-tab-btn" type="button" data-target="user-audit">02 User Activity Audit</button>
-      <button class="mobile-tab-btn" type="button" data-target="cost-optimizer">03 Monthly Cost Optimizer</button>
-      <button class="mobile-tab-btn" type="button" data-target="department-matrix">04 Department Breakdown</button>
-      <button class="mobile-tab-btn" type="button" data-target="governance-plan">05 Migration &amp; Governance</button>
+      <button class="mobile-tab-btn active" type="button" data-target="overview" aria-current="page">01 The 229-Seat Plan</button>
+      <button class="mobile-tab-btn" type="button" data-target="store-portal">02 Free Store Portal</button>
+      <button class="mobile-tab-btn" type="button" data-target="user-directory">03 All 413 Users (Names)</button>
+      <button class="mobile-tab-btn" type="button" data-target="cost-simulator">04 Monthly Bill Calculator</button>
+      <button class="mobile-tab-btn" type="button" data-target="rollout-plan">05 Simple Rollout Steps</button>
     </nav>
   </header>
 
@@ -1079,55 +1040,55 @@
       <div>
         <div class="brand-block">
           <span class="brand-eyebrow">Modinity Group</span>
-          <h1 class="brand-title">Metabase Pro Migration</h1>
-          <p class="brand-sub">Seat Optimization &amp; Monthly Billing Plan</p>
+          <h1 class="brand-title">Metabase Pro Plan</h1>
+          <p class="brand-sub">Cutting Paid Seats from 413 to 229 (Monthly Billing)</p>
         </div>
 
-        <div class="nav-section-label">Optimization Chapters</div>
+        <div class="nav-section-label">Plan Chapters</div>
         <nav aria-label="Primary chapters">
           <ul class="nav-list" role="list">
             <li>
               <button class="nav-btn active" type="button" data-target="overview" aria-current="page">
                 <span class="nav-num">01</span>
                 <span class="nav-text-wrap">
-                  <span class="nav-title">Executive Summary</span>
-                  <span class="nav-caption">Savings verdict &amp; 30d vs. 60d cutoffs</span>
+                  <span class="nav-title">The 229-Seat Plan</span>
+                  <span class="nav-caption">How we cut our bill nearly in half</span>
                 </span>
               </button>
             </li>
             <li>
-              <button class="nav-btn" type="button" data-target="user-audit">
+              <button class="nav-btn" type="button" data-target="store-portal">
                 <span class="nav-num">02</span>
                 <span class="nav-text-wrap">
-                  <span class="nav-title">Current User Audit</span>
-                  <span class="nav-caption">413 seats, MAU trend &amp; ExCo status</span>
+                  <span class="nav-title">Free Store Portal</span>
+                  <span class="nav-caption">Why 123 stores cost $0 on Pro</span>
                 </span>
               </button>
             </li>
             <li>
-              <button class="nav-btn" type="button" data-target="cost-optimizer">
+              <button class="nav-btn" type="button" data-target="user-directory">
                 <span class="nav-num">03</span>
                 <span class="nav-text-wrap">
-                  <span class="nav-title">Monthly Cost Optimizer</span>
-                  <span class="nav-caption">Interactive cutoff &amp; 2027 billing model</span>
+                  <span class="nav-title">All 413 Users (By Name)</span>
+                  <span class="nav-caption">Who stays, who moves &amp; who gets cut</span>
                 </span>
               </button>
             </li>
             <li>
-              <button class="nav-btn" type="button" data-target="department-matrix">
+              <button class="nav-btn" type="button" data-target="cost-simulator">
                 <span class="nav-num">04</span>
                 <span class="nav-text-wrap">
-                  <span class="nav-title">Department Matrix</span>
-                  <span class="nav-caption">Seat cuts across all 22 teams &amp; stores</span>
+                  <span class="nav-title">Monthly Bill Calculator</span>
+                  <span class="nav-caption">Interactive sliders &amp; 2027 budget</span>
                 </span>
               </button>
             </li>
             <li>
-              <button class="nav-btn" type="button" data-target="governance-plan">
+              <button class="nav-btn" type="button" data-target="rollout-plan">
                 <span class="nav-num">05</span>
                 <span class="nav-text-wrap">
-                  <span class="nav-title">Rollout &amp; Governance</span>
-                  <span class="nav-caption">Pre-migration cleanup &amp; monthly cron</span>
+                  <span class="nav-title">Rollout &amp; Team Summary</span>
+                  <span class="nav-caption">Step-by-step launch &amp; 22 teams</span>
                 </span>
               </button>
             </li>
@@ -1136,125 +1097,125 @@
       </div>
 
       <div class="sidebar-meta">
-        <div style="font-weight:600; color:#ffffff; margin-block-end:0.4rem;">Metabase Pro (Monthly Plan)</div>
+        <div style="font-weight:600; color:#ffffff; margin-block-end:0.4rem;">Recommended Target State</div>
         <div class="sidebar-meta-row">
-          <span>Base Fee (10 seats)</span>
-          <span class="sidebar-meta-val">$575 / mo</span>
-        </div>
-        <div class="sidebar-meta-row">
-          <span>Extra Active Seat</span>
-          <span class="sidebar-meta-val">$12 / mo</span>
-        </div>
-        <div class="sidebar-meta-row">
-          <span>Current Seats (19 Nov)</span>
+          <span>Accounts Today</span>
           <span class="sidebar-meta-val">413</span>
         </div>
         <div class="sidebar-meta-row">
-          <span>Active &lt;=30 Days</span>
-          <span class="sidebar-meta-val">343 (83.1%)</span>
+          <span>1. Cut Idle (&gt;30d)</span>
+          <span class="sidebar-meta-val">-61</span>
         </div>
         <div class="sidebar-meta-row">
-          <span>Recommended Day-1</span>
-          <span class="sidebar-meta-val">352 seats</span>
+          <span>2. Free Store Portal</span>
+          <span class="sidebar-meta-val">-123</span>
         </div>
         <div class="sidebar-meta-row">
-          <span>Budget FX Rate</span>
-          <span class="sidebar-meta-val">Rp 18,000</span>
+          <span>Paid Seats Left</span>
+          <span class="sidebar-meta-val" style="color:#5eead4;">229 seats</span>
+        </div>
+        <div class="sidebar-meta-row">
+          <span>New Monthly Bill</span>
+          <span class="sidebar-meta-val" style="color:#5eead4;">Rp 57.7M</span>
+        </div>
+        <div class="sidebar-meta-row">
+          <span>Annual Savings</span>
+          <span class="sidebar-meta-val" style="color:#5eead4;">Rp 648.0M</span>
         </div>
       </div>
     </aside>
 
     <main class="main-stage" id="main-content" tabindex="-1">
 
-      <!-- CHAPTER 01: EXECUTIVE SUMMARY -->
+      <!-- CHAPTER 01: THE RECOMMENDED 229-SEAT PLAN -->
       <section class="page-view active" id="view-overview">
         <header class="view-header">
           <div>
-            <span class="view-kicker">Chapter 01 / Executive Mandate &amp; Savings Summary</span>
-            <h2 class="view-title">Moving to Metabase Pro Cloud: How Many Seats Can We Cut?</h2>
+            <span class="view-kicker">Chapter 01 / Executive Summary (In Plain English)</span>
+            <h2 class="view-title">Moving to Metabase Pro for Rp 57.7M/Month Instead of Rp 97.4M+</h2>
             <p class="view-lead">
-              Platform selection is settled: Modinity is moving from self-hosted Metabase to <strong>Metabase Pro Cloud on monthly billing</strong> ($575/month base for 10 seats + $12/seat/month). Auditing all 413 live accounts shows how pruning idle seats (while exempting ExCo) cuts annual cost by <strong>Rp 270M to Rp 329M/year</strong> immediately, with an optional Phase 2 path to save <strong>Rp 648M/year</strong>.
+              We are moving to <strong>Metabase Pro Cloud on a month-to-month plan</strong> ($575/month for the first 10 people + $12/month for each extra person). Instead of paying for all 413 accounts, we can cut paid seats down to <strong>229 people</strong> and save <strong>Rp 648.0M per year (47.4%)</strong> without anyone losing the reports they need.
             </p>
           </div>
         </header>
 
         <div class="bento-metrics">
           <div class="metric-card">
-            <div class="metric-label">Current Provisioned Seats</div>
+            <div class="metric-label">Accounts Today</div>
             <div class="metric-val">413</div>
-            <div class="metric-note">Rp 97.4M/mo ($5,411/mo) today; 5 programmatic API keys cost $0</div>
+            <div class="metric-note">Costs Rp 97.4M/mo today, growing to Rp 1.37B/yr if unchecked</div>
           </div>
           <div class="metric-card">
-            <div class="metric-label">Active Within 30 Days</div>
-            <div class="metric-val">343</div>
-            <div class="metric-note">83.1% of seats (281 logged in within the past 7 days)</div>
+            <div class="metric-label">Step 1: Cut Inactive</div>
+            <div class="metric-val">-61</div>
+            <div class="metric-note">No login for &gt;30 days (all 14 ExCo &amp; 5 new hires stay safe)</div>
           </div>
           <div class="metric-card">
-            <div class="metric-label">Idle &gt;30d / &gt;60d</div>
-            <div class="metric-val">70 / 46</div>
-            <div class="metric-note">Includes 4 ExCo (&gt;30d) and 5 brand-new hires (&lt;14d old)</div>
+            <div class="metric-label">Step 2: Free Store View</div>
+            <div class="metric-val">-123</div>
+            <div class="metric-note">Move 123 store outlets to Pro's free embedded dashboard page</div>
           </div>
-          <div class="metric-card">
-            <div class="metric-label">Real Net MAU Growth</div>
-            <div class="metric-val">+2 / mo</div>
-            <div class="metric-note">Feb to Nov 2026 MAU stayed 310 to 329; +14/mo was unpruned drift</div>
+          <div class="metric-card" style="border-color:var(--status-good-border); background-color:var(--status-good-bg);">
+            <div class="metric-label" style="color:var(--status-good-text);">Target Paid Seats</div>
+            <div class="metric-val" style="color:var(--status-good-text);">229</div>
+            <div class="metric-note" style="color:var(--status-good-text);">Rp 57.7M/mo ($3,203/mo) or Rp 720.4M/yr forecasted</div>
           </div>
         </div>
 
         <div class="callout-box">
-          <h3>Why Unoptimized Pro Cloud Looked So Expensive: Dormant Seat Drift (+14/mo) vs. Real Active Growth (+2/mo)</h3>
+          <h3>Why Converting All 413 Accounts Wastes Nearly Rp 650 Million a Year</h3>
           <p>
-            Converting all 413 accounts unchecked costs <strong>Rp 97.4M/month</strong> today and balloons to <strong>Rp 1.37B/year</strong> (413 to 567 seats) if we keep adding ~14 gross accounts per month without offboarding. However, 10 months of live <code>login_history</code> (Feb to Nov 2026) prove that Modinity's true Monthly Active Users only moved from <strong>310 to 329 (+2 net users/month)</strong>. Roughly 85% of historical seat growth came from former interns, rolled-off KPMG consultants, duplicate logins, and one-off accounts that were never deactivated because self-hosted seats were free.
+            When our old self-hosted server had $0 per-user fees, we gave individual Metabase logins to everyone: interns who later left, external KPMG consultants who never logged in, and <strong>134 individual retail and franchise stores</strong> that only ever open <strong>one single store sales screen</strong>. On Metabase Pro, paying $12/month (Rp 216,000/month) for inactive accounts and view-only shop logins doubles our bill unnecessarily. Cleaning up both brings Metabase Pro right down to <strong>Rp 57.7M/month (Rp 720.4M/year)</strong>, which is close to our original Starter draft budget while giving us full Pro security, audit logs, and AI support.
           </p>
         </div>
 
-        <h3 style="margin-block-end: 1rem;">Three Seat Optimization Tiers on Monthly Billing (at Rp 18,000 / USD)</h3>
+        <h3 style="margin-block-end: 1rem;">How We Go From 413 Accounts Down to 229 Paid Seats</h3>
 
         <div class="verdict-grid">
           <div class="verdict-card">
             <div>
-              <span class="verdict-badge badge-blue">Policy 1A: 2-Month Idle Cutoff (&gt;60 Days)</span>
-              <h3>375 Day-1 Seats (Cuts 38 Dormant Seats)</h3>
-              <div class="verdict-price">Rp 89.2M / mo <span>(Rp 1.10B / yr forecasted)</span></div>
+              <span class="verdict-badge badge-bad">If We Convert Everyone As-Is</span>
+              <h3>413 Paid Seats (Growing to 567)</h3>
+              <div class="verdict-price">Rp 97.4M / mo <span>(Rp 1.37B / yr forecasted)</span></div>
               <p style="font-size:0.88rem;">
-                Deactivates all non-ExCo accounts with no login for more than 60 days, while protecting <strong>all 14 ExCo members</strong> and giving <strong>5 brand-new hires (&lt;14 days old)</strong> an onboarding grace window.
+                Moving every current account without cleanup means paying $12/month for dozens of unused logins and every single shop counter:
               </p>
               <ul class="clean-list">
-                <li><strong>Day-1 savings:</strong> Drops Month 1 invoice from $5,411 to <strong>$4,955/mo</strong> (-Rp 8.2M/mo immediately).</li>
-                <li><strong>12-month impact (with monthly auto-prune):</strong> Caps seat growth at real MAU (+2/mo, 375 to 397 seats) for <strong>Rp 1,098.8M/yr</strong>, saving <strong>Rp 269.6M/yr (-19.7%)</strong> vs. unoptimized drift (Rp 1.37B).</li>
-                <li><strong>Trade-off on monthly billing:</strong> Pays an extra $12 for a second month of zero logins before deactivating an idle seat.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="verdict-card highlight-teal">
-            <div>
-              <span class="verdict-badge badge-teal">Policy 1B: Recommended 1-Month Cutoff (&gt;30 Days)</span>
-              <h3>352 Day-1 Seats (Cuts 61 Idle Seats)</h3>
-              <div class="verdict-price">Rp 84.2M / mo <span>(Rp 1.04B / yr forecasted)</span></div>
-              <p style="font-size:0.88rem;">
-                Deactivates non-ExCo accounts idle &gt;30 days before migration and runs an automated check before each monthly billing cycle, keeping <strong>all 14 ExCo seats</strong> and <strong>5 new joiners</strong> active.
-              </p>
-              <ul class="clean-list">
-                <li><strong>Day-1 savings:</strong> Drops Month 1 invoice to <strong>$4,679/mo</strong> (-$732/mo or <strong>-Rp 13.2M/mo</strong> from Day 1; 347 seats / Rp 83.1M/mo if strict without 14d grace).</li>
-                <li><strong>12-month impact:</strong> Forecasted at <strong>Rp 1,039.2M/yr</strong> (352 to 374 seats), saving <strong>Rp 329.2M/yr (-24.1%)</strong> vs. unchecked drift and <strong>Rp 163.5M/yr</strong> vs. the 2027 FAT Pro budget curve (Rp 1.20B).</li>
-                <li><strong>Zero disruption:</strong> Modinity already ran a 30-day rule on Metabase Cloud in July 2024; deactivated Google SSO accounts preserve all dashboards and reactivate in 1 click.</li>
+                <li><strong>Pays for 61 unused accounts:</strong> Includes former interns, 3 KPMG accounts untouched for 8 months, duplicate accounts, and staff who stopped logging in months ago.</li>
+                <li><strong>Pays $12/month per store:</strong> Charges Rp 318.8M/year just so 123 active stores can view 1 fixed store dashboard each.</li>
+                <li><strong>Keeps snowballing every month:</strong> Adding new hires and new stores without cleanup pushes Month 12 up to Rp 130.7M/month.</li>
               </ul>
             </div>
           </div>
 
           <div class="verdict-card highlight-blue">
             <div>
-              <span class="verdict-badge badge-warn">Optional Phase 2: Store Guest Embeds</span>
-              <h3>229 Seats (Cuts 61 Idle + 123 Store Logins)</h3>
-              <div class="verdict-price">Rp 57.7M / mo <span>(Rp 720.4M / yr forecasted)</span></div>
+              <span class="verdict-badge badge-blue">Step 1 Only: Cut Inactive (&gt;30 Days)</span>
+              <h3>352 Paid Seats (-61 Unused Logins)</h3>
+              <div class="verdict-price">Rp 84.2M / mo <span>(Rp 1.04B / yr forecasted)</span></div>
               <p style="font-size:0.88rem;">
-                Why do 352 active seats still cost Rp 84.2M/mo? Because <strong>123 of those 352 kept seats (34.9%) are Retail &amp; Franchise Store outlets</strong> that only view 1 fixed store dashboard each.
+                Before migrating, we turn off the 61 accounts that have not logged in for more than 1 month, and keep turning off 30-day idle accounts before each monthly bill:
               </p>
               <ul class="clean-list">
-                <li><strong>Included free in Metabase Pro:</strong> Pro includes white-labeled <strong>Signed Guest Embeds (JWT)</strong> for unlimited viewers at <strong>$0/seat</strong>.</li>
-                <li><strong>Massive Phase 2 upside:</strong> Serving each store's dashboard via a lightweight Google-login Cloud Run wrapper removes 123 store seats (-$1,476/mo = <strong>-Rp 318.8M/yr</strong>).</li>
-                <li><strong>Brings Pro near Starter budget:</strong> Drops total Pro spend to <strong>$3,203/mo (Rp 720.4M/yr)</strong>, saving <strong>Rp 648.0M/yr (-47.4%)</strong>.</li>
+                <li><strong>ExCo is 100% exempt:</strong> All 14 ExCo members stay active permanently (including the 4 who log in less than once a month, costing just Rp 864k/mo total).</li>
+                <li><strong>New hires get 14 days:</strong> The 5 brand-new staff/store accounts created in the last 2 weeks stay untouched while onboarding.</li>
+                <li><strong>Saves Rp 329.2M/year:</strong> Cuts 24% off the unoptimized trajectory immediately on Day 1, and anyone who needs access back can be turned back on in 1 click.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="verdict-card highlight-teal">
+            <div>
+              <span class="verdict-badge badge-teal">Recommended Plan: Step 1 + Free Store Portal</span>
+              <h3>229 Paid Seats (-61 Idle &amp; -123 Stores)</h3>
+              <div class="verdict-price">Rp 57.7M / mo <span>(Rp 720.4M / yr forecasted)</span></div>
+              <p style="font-size:0.88rem;">
+                We combine Step 1 with Metabase Pro's built-in <strong>Free Embedded Dashboards</strong> so our 123 active retail and franchise stores view their store dashboard at <strong>$0 per store</strong>:
+              </p>
+              <ul class="clean-list">
+                <li><strong>Included free in Metabase Pro:</strong> Pro lets us display a store's dashboard inside a simple Modinity web page for unlimited viewers at <strong>$0/month</strong>.</li>
+                <li><strong>Saves another Rp 318.8M/year:</strong> Removes all 123 active store logins (-$1,476/mo), plus every new store Modinity opens in 2027 costs <strong>Rp 0 extra</strong>.</li>
+                <li><strong>Saves Rp 648.0M/year total (-47.4%):</strong> Keeps full paid Metabase Pro logins for all <strong>229 active HQ staff, analysts, ExCo, and brand partners</strong>.</li>
               </ul>
             </div>
           </div>
@@ -1262,238 +1223,227 @@
 
         <div class="page-pager">
           <span></span>
-          <button class="pager-btn primary" type="button" data-goto="user-audit">Next: Current User &amp; Activity Audit -&gt;</button>
+          <button class="pager-btn primary" type="button" data-goto="store-portal">Next: How the Free Store Portal Works -&gt;</button>
         </div>
       </section>
 
-      <!-- CHAPTER 02: CURRENT USER & ACTIVITY AUDIT -->
-      <section class="page-view" id="view-user-audit">
+      <!-- CHAPTER 02: PLAIN-ENGLISH GUIDE TO THE FREE STORE PORTAL -->
+      <section class="page-view" id="view-store-portal">
         <header class="view-header">
           <div>
-            <span class="view-kicker">Chapter 02 / Live PostgreSQL Audit (19 Nov 2026)</span>
-            <h2 class="view-title">Anatomy of Modinity's 413 Provisioned Metabase Seats</h2>
+            <span class="view-kicker">Chapter 02 / How Step 2 Saves Rp 318.8M/Year</span>
+            <h2 class="view-title">How the Free Store Portal Works (In Everyday Terms)</h2>
             <p class="view-lead">
-              Cross-checking <code>core_user</code>, <code>login_history</code>, <code>query_execution</code>, and <code>pulse</code> on <code>modisight.modinity.com</code> confirms exact login recency, ExCo status, and three operational edge cases to handle cleanly.
+              Why are we paying $12/month for 123 separate shop logins when each shop only looks at one fixed sales screen? Here is how Metabase Pro lets all stores see their live numbers for <strong>Rp 0 per store</strong>.
             </p>
           </div>
         </header>
 
         <div class="arch-comparison">
-          <div class="panel-card">
-            <span class="verdict-badge badge-teal">1. Login Recency Distribution (413 Personal Seats)</span>
-            <h3 style="font-size:1.12rem; margin-block-end:0.4rem;">83.1% Active in 30 Days; 16.9% Idle or Unactivated</h3>
-            <p style="font-size:0.86rem; margin-block-end:1rem;">
-              We verified <code>last_login</code> against <code>query_execution</code>: <strong>zero users</strong> had active persistent-cookie queries within 30 or 60 days while showing an older login timestamp, so <code>last_login</code> is 100% reliable for seat pruning.
+          <div class="arch-box">
+            <span class="verdict-badge badge-bad">How Stores Use Metabase Today ($1,476/mo = Rp 318.8M/yr)</span>
+            <h3>123 Full Paid Seats Just to Look at 1 Screen</h3>
+            <p style="font-size:0.88rem;">
+              Checking our live activity logs over the past 30 days shows exactly what our 77 Own Retail stores and 46 Franchise stores actually do:
             </p>
-            <div class="table-wrap">
-              <table class="comp-matrix" style="min-inline-size: 32rem;">
-                <caption class="visually-hidden">Login recency breakdown across 413 active personal seats</caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Recency Cohort</th>
-                    <th scope="col">Total Seats</th>
-                    <th scope="col">ExCo Seats</th>
-                    <th scope="col">Policy Action (30d / 60d)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">0 to 7 days (Weekly Active)</th>
-                    <td class="mono tabular"><strong>281</strong> (68.0%)</td>
-                    <td class="mono tabular">5</td>
-                    <td><span class="status-pill pill-good">Keep Active</span></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">8 to 14 days (Bi-Weekly)</th>
-                    <td class="mono tabular"><strong>26</strong> (6.3%)</td>
-                    <td class="mono tabular">3</td>
-                    <td><span class="status-pill pill-good">Keep Active</span></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">15 to 30 days (Monthly)</th>
-                    <td class="mono tabular"><strong>36</strong> (8.7%)</td>
-                    <td class="mono tabular">2</td>
-                    <td><span class="status-pill pill-good">Keep Active</span></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">31 to 60 days (Idle 1 to 2 Mo)</th>
-                    <td class="mono tabular"><strong>24</strong> (5.8%)</td>
-                    <td class="mono tabular">1 (41d)</td>
-                    <td><span class="status-pill pill-warn">Cut 23 at 30d / Keep at 60d</span></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">61 to 90 days (Idle 2 to 3 Mo)</th>
-                    <td class="mono tabular"><strong>12</strong> (2.9%)</td>
-                    <td class="mono tabular">3 (77 to 81d)</td>
-                    <td><span class="status-pill pill-bad">Cut 9 Non-ExCo (Both)</span></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">90+ days (Idle up to 548d)</th>
-                    <td class="mono tabular"><strong>23</strong> (5.6%)</td>
-                    <td class="mono tabular">0</td>
-                    <td><span class="status-pill pill-bad">Cut All 23 (Both)</span></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Never Logged In (&gt;14d old)</th>
-                    <td class="mono tabular"><strong>6</strong> (1.5%)</td>
-                    <td class="mono tabular">0</td>
-                    <td><span class="status-pill pill-bad">Cut All 6 (Joined 73 to 349d ago)</span></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">New Joiners (&lt;=14d old, 0 logins)</th>
-                    <td class="mono tabular"><strong>5</strong> (1.2%)</td>
-                    <td class="mono tabular">0</td>
-                    <td><span class="status-pill pill-good">Protect (14d Onboarding Grace)</span></td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="flow-steps">
+              <div class="flow-node expose-node">
+                <strong>1. Every Shop Has Its Own Paid User Account</strong>
+                Accounts like <code>bs.pim3@modinity.com</code> or <code>bj.medan@modinity.com</code> log straight into Metabase. Metabase Pro bills <strong>$12/month (Rp 216,000/month)</strong> for every single one.
+              </div>
+              <div class="flow-node expose-node">
+                <strong>2. Each Shop Only Views Its Own Store Sales Dashboard</strong>
+                Stores never write queries, build new charts, or browse HQ folders. They simply check daily store sales, targets, and cashier numbers on their 1 assigned dashboard.
+              </div>
+              <div class="flow-node">
+                <strong>3. Every New Store Opening Raises Our Monthly Bill</strong>
+                If Modinity opens 25 new stores across brands next year, our Metabase bill automatically jumps by another $300/month (Rp 64.8M/year).
+              </div>
             </div>
           </div>
 
-          <div class="panel-card">
-            <span class="verdict-badge badge-blue">2. 10-Month Seat Drift vs. Real MAU (Feb to Nov 2026)</span>
-            <h3 style="font-size:1.12rem; margin-block-end:0.4rem;">Monthly Active Logins Plateaud at ~310 to 330 Users</h3>
-            <p style="font-size:0.86rem; margin-block-end:1rem;">
-              Notice what happened after August's 43-account cleanup: provisioned seats immediately crept back up from 380 to 413 (+33 seats in 3 months), while actual monthly active users barely moved (326 to 329).
+          <div class="arch-box good-arch">
+            <span class="verdict-badge badge-teal">New Setup on Metabase Pro ($0/mo for Unlimited Stores)</span>
+            <h3>One Simple Modinity Store Link Powered by Metabase Pro</h3>
+            <p style="font-size:0.88rem;">
+              Metabase Pro includes a feature called <strong>Guest Embeds</strong> (free embedded dashboards with no Metabase logo and no per-viewer fee):
             </p>
-            <div class="table-wrap">
-              <table class="comp-matrix" style="min-inline-size: 32rem;">
-                <caption class="visually-hidden">Monthly provisioned seats versus actual monthly active logins from February to November 2026</caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Month</th>
-                    <th scope="col">Provisioned Seats</th>
-                    <th scope="col">Actual MAU (Logins)</th>
-                    <th scope="col">Idle Seat Overhead</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><th scope="row" class="mono">2026-02</th><td class="mono tabular">383</td><td class="mono tabular"><strong>310</strong></td><td class="mono tabular">73 (19.1%)</td></tr>
-                  <tr><th scope="row" class="mono">2026-03</th><td class="mono tabular">388</td><td class="mono tabular"><strong>287</strong></td><td class="mono tabular">101 (26.0%)</td></tr>
-                  <tr><th scope="row" class="mono">2026-04</th><td class="mono tabular">386</td><td class="mono tabular"><strong>296</strong></td><td class="mono tabular">90 (23.3%)</td></tr>
-                  <tr><th scope="row" class="mono">2026-05</th><td class="mono tabular">393</td><td class="mono tabular"><strong>291</strong></td><td class="mono tabular">102 (26.0%)</td></tr>
-                  <tr><th scope="row" class="mono">2026-06</th><td class="mono tabular">403</td><td class="mono tabular"><strong>304</strong></td><td class="mono tabular">99 (24.6%)</td></tr>
-                  <tr><th scope="row" class="mono">2026-07</th><td class="mono tabular">410</td><td class="mono tabular"><strong>321</strong></td><td class="mono tabular">89 (21.7%)</td></tr>
-                  <tr><th scope="row" class="mono">2026-08*</th><td class="mono tabular">380</td><td class="mono tabular"><strong>326</strong></td><td class="mono tabular">54 (14.2%)</td></tr>
-                  <tr><th scope="row" class="mono">2026-09</th><td class="mono tabular">386</td><td class="mono tabular"><strong>319</strong></td><td class="mono tabular">67 (17.4%)</td></tr>
-                  <tr><th scope="row" class="mono">2026-10</th><td class="mono tabular">395</td><td class="mono tabular"><strong>330</strong></td><td class="mono tabular">65 (16.5%)</td></tr>
-                  <tr><th scope="row" class="mono">2026-11 (MTD)</th><td class="mono tabular">413</td><td class="mono tabular"><strong>329</strong></td><td class="mono tabular">84 (20.3%)</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <div style="font-size:0.76rem; color:var(--text-muted); margin-block-start:0.5rem;">
-              *August 2026 reflects the one-time post-incident cleanup of 43 dormant accounts. Automated monthly pruning keeps this overhead permanently near zero.
+            <div class="flow-steps">
+              <div class="flow-node shield-node">
+                <strong>1. Store Staff Sign In at a Simple Modinity Web Page</strong>
+                The store opens <code>stores.modinity.com</code> and signs in with its existing store Google email (or franchise login). No Metabase account is needed.
+              </div>
+              <div class="flow-node shield-node">
+                <strong>2. They See Only Their Own Store's Live Dashboard + Filters</strong>
+                Our web page automatically locks the dashboard to that exact store so Store A can never see Store B's numbers. Store managers can still pick Date Ranges, Categories, and Cashiers just like today.
+              </div>
+              <div class="flow-node shield-node">
+                <strong>3. Zero Per-Store Cost Today and Forever</strong>
+                Whether we have 123 stores today or 250 stores next year, Metabase Pro charges <strong>$0 extra</strong> for embedded dashboard viewers.
+              </div>
             </div>
           </div>
         </div>
 
-        <h3 style="margin-block-end: 1rem;">ExCo Protection &amp; Three Operational Safeguards Caught in the Audit</h3>
+        <h3 style="margin-block-end: 1rem;">Common Questions From Business &amp; Store Operations</h3>
         <div class="verdict-grid">
           <div class="metric-card">
-            <span class="status-pill pill-good">Safeguard 1 / ExCo Exemption (14 Seats)</span>
-            <h4 style="margin-block:0.4rem;">Costs Only $48/mo (Rp 864k/mo)</h4>
+            <span class="status-pill pill-good">Security &amp; Privacy</span>
+            <h4 style="margin-block:0.4rem;">Is This a Public Link Anyone Can Guess?</h4>
             <p style="font-size:0.84rem; margin:0;">
-              Of the 14 members in the <code>ExCo</code> permission group, 10 logged in within the past 30 days, 1 is at 41 days, and 3 are at 77 to 81 days. Exempting the entire <code>ExCo</code> group preserves instant executive access for just 4 extra seats ($48/month) under a 30-day rule.
+              <strong>No.</strong> Unlike public links, this page requires signing in first, and each viewing pass expires automatically in minutes. Franchise owners and store staff can only ever see the exact store assigned to their email address.
             </p>
           </div>
 
           <div class="metric-card">
-            <span class="status-pill pill-good">Safeguard 2 / 14-Day New-Hire Grace</span>
-            <h4 style="margin-block:0.4rem;">Protects 5 Accounts Added Nov 10 to 12</h4>
+            <span class="status-pill pill-good">Daily Store Experience</span>
+            <h4 style="margin-block:0.4rem;">Can Stores Still Filter by Date &amp; Product?</h4>
             <p style="font-size:0.84rem; margin:0;">
-              Among the 11 accounts that have never logged in, 6 are stale (created 73 to 349 days ago, including 2 KPMG consultants and 3 store accounts), while <strong>5 were created 7 to 9 days ago</strong> (4 ADP staff + 1 new Karawang outlet). Adding <code>date_joined &lt; NOW() - 14d</code> prevents cutting new joiners mid-onboarding.
+              <strong>Yes.</strong> Date pickers, brand/category filters, and sales-person dropdowns stay interactive on the page. The only difference is stores no longer see complex Metabase menus they never used anyway.
             </p>
           </div>
 
           <div class="metric-card">
-            <span class="status-pill pill-good">Safeguard 3 / Email Pulses &amp; Dashboards</span>
-            <h4 style="margin-block:0.4rem;">5 Tech Alert Recipients &amp; 5 Dashboards</h4>
+            <span class="status-pill pill-good">Effort &amp; Timing</span>
+            <h4 style="margin-block:0.4rem;">Does This Delay Moving to Metabase Pro?</h4>
             <p style="font-size:0.84rem; margin:0;">
-              Five idle <code>Tech</code> accounts (&gt;30d) only receive automated reconciliation emails (<code>Sync Sales Qty Shopify vs Odoo</code>, <code>Transfer Order Monitoring</code>). Metabase Pro lets subscriptions email external/group addresses directly at $0/seat, and deactivating an account never deletes the 5 dashboards created by idle users.
+              <strong>Not at all.</strong> Because we pay month-to-month, we can move to Metabase Pro on Day 1 with 352 seats (after cutting the 61 inactive users), spend ~2 to 3 days setting up the Store Portal, and turn off the 123 store seats before Month 2's bill.
             </p>
           </div>
         </div>
 
         <div class="page-pager">
-          <button class="pager-btn" type="button" data-goto="overview">&lt;- Previous: Executive Summary</button>
-          <button class="pager-btn primary" type="button" data-goto="cost-optimizer">Next: Interactive Monthly Cost Optimizer -&gt;</button>
+          <button class="pager-btn" type="button" data-goto="overview">&lt;- Previous: The 229-Seat Plan</button>
+          <button class="pager-btn primary" type="button" data-goto="user-directory">Next: View All 413 Users by Name -&gt;</button>
         </div>
       </section>
-      <!-- CHAPTER 03: INTERACTIVE MONTHLY COST & SEAT OPTIMIZER -->
-      <section class="page-view" id="view-cost-optimizer">
+      <!-- CHAPTER 03: FULL 413-USER DIRECTORY (WITH REAL NAMES & EMAILS) -->
+      <section class="page-view" id="view-user-directory">
         <header class="view-header">
           <div>
-            <span class="view-kicker">Chapter 03 / Interactive Metabase Pro Monthly Billing Model</span>
-            <h2 class="view-title">Seat Cutoff &amp; 12-Month Monthly Billing Optimizer</h2>
+            <span class="view-kicker">Chapter 03 / Live Account-by-Account Audit (19 Nov 2026)</span>
+            <h2 class="view-title">All 413 Current Users: Who Stays, Who Moves &amp; Who Gets Cut</h2>
             <p class="view-lead">
-              Adjust the inactivity cutoff window, ExCo &amp; new-hire protections, and optional Phase 2 levers below. Seat counts recompute live against all <strong>413 real accounts</strong> on <code>modisight.modinity.com</code>.
+              Every active account on <code>modisight.modinity.com</code> listed by name and email. Filter below to inspect the <strong>61 inactive accounts to turn off</strong>, the <strong>123 store accounts moving to the Free Store Portal</strong>, and the <strong>229 people keeping paid seats</strong> (including all 14 ExCo members).
+            </p>
+          </div>
+        </header>
+
+        <div class="toolbar-row sticky-toolbar" id="user-toolbar">
+          <div class="filter-group" role="group" aria-label="Filter user directory by action">
+            <button class="chip-btn active" type="button" data-u-filter="all">All Accounts (413)</button>
+            <button class="chip-btn" type="button" data-u-filter="cut_all">Cut: Inactive &gt;30d (61)</button>
+            <button class="chip-btn" type="button" data-u-filter="cut_60">Idle &gt;60d / Never (38)</button>
+            <button class="chip-btn" type="button" data-u-filter="cut_30">Idle 31 to 60d (23)</button>
+            <button class="chip-btn" type="button" data-u-filter="portal">Move to Free Store Portal (123)</button>
+            <button class="chip-btn" type="button" data-u-filter="keep">Keep Paid Seat (229)</button>
+            <button class="chip-btn" type="button" data-u-filter="exco">ExCo Exempt (14)</button>
+          </div>
+          <div style="display:flex; align-items:safe center; gap:0.65rem; flex:1 1 16rem; justify-content:flex-end;">
+            <label for="inp-user-search" class="visually-hidden">Search by name, email, or team</label>
+            <input type="search" id="inp-user-search" class="search-input" placeholder="Search name, email, store, or team...">
+            <span class="mono" id="lbl-user-count" style="font-size:0.78rem; color:var(--text-muted); white-space:nowrap;">413 shown</span>
+          </div>
+        </div>
+
+        <div class="table-wrap sticky-table-wrap">
+          <table class="comp-matrix sticky-header-table" id="user-table">
+            <caption class="visually-hidden">Complete directory of 413 Metabase users with email, team, last login, and recommended optimization action</caption>
+            <thead>
+              <tr>
+                <th scope="col" class="col-sticky" style="inline-size:19%;">Name</th>
+                <th scope="col" style="inline-size:21%;">Email Address</th>
+                <th scope="col" style="inline-size:18%;">Team / Store Group</th>
+                <th scope="col" style="inline-size:12%;">Last Login</th>
+                <th scope="col" style="inline-size:9%;">30d Activity</th>
+                <th scope="col" style="inline-size:21%;">Recommended Plan Action</th>
+              </tr>
+            </thead>
+            <tbody id="user-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="page-pager">
+          <button class="pager-btn" type="button" data-goto="store-portal">&lt;- Previous: Free Store Portal</button>
+          <button class="pager-btn primary" type="button" data-goto="cost-simulator">Next: Monthly Bill Calculator -&gt;</button>
+        </div>
+      </section>
+
+      <!-- CHAPTER 04: INTERACTIVE MONTHLY BILL CALCULATOR -->
+      <section class="page-view" id="view-cost-simulator">
+        <header class="view-header">
+          <div>
+            <span class="view-kicker">Chapter 04 / Interactive Month-to-Month Cost Calculator</span>
+            <h2 class="view-title">Test Any Cutoff Rule &amp; See Our Exact Monthly Bill</h2>
+            <p class="view-lead">
+              The calculator starts on our <strong>Recommended 229-Seat Plan (Rp 57.7M/month)</strong>. Click any preset button or adjust the sliders to test a 2-month cutoff, keeping stores as paid logins, or changing the USD exchange rate.
             </p>
           </div>
         </header>
 
         <div class="toolbar-row" style="margin-block-end: 1.25rem;">
-          <div class="filter-group" role="group" aria-label="Optimization Scenario Presets">
-            <button class="chip-btn" id="preset-drift" type="button">Unoptimized Drift (413 -&gt; 567 | Rp 1.37B/yr)</button>
-            <button class="chip-btn" id="preset-fat" type="button">2027 FAT Pro Curve (399 -&gt; 453 | Rp 1.20B/yr)</button>
-            <button class="chip-btn" id="preset-60d" type="button">Policy 1A: 60-Day Cutoff + ExCo (375 -&gt; 397 | Rp 1.10B/yr)</button>
-            <button class="chip-btn active" id="preset-30d" type="button">Policy 1B (Rec): 30-Day Cutoff + ExCo (352 -&gt; 374 | Rp 1.04B/yr)</button>
-            <button class="chip-btn" id="preset-phase2" type="button">Phase 2: 30d + Store Guest Embeds (229 -&gt; 251 | Rp 720.4M/yr)</button>
+          <div class="filter-group" role="group" aria-label="Budget scenario presets">
+            <button class="chip-btn active" id="preset-rec229" type="button">Recommended Plan: Cut &gt;30d + Free Store Portal (229 seats | Rp 57.7M/mo)</button>
+            <button class="chip-btn" id="preset-30d" type="button">Step 1 Only: Cut &gt;30d Idle, Keep Store Logins (352 seats | Rp 84.2M/mo)</button>
+            <button class="chip-btn" id="preset-60d" type="button">Cut &gt;60d Idle Only, Keep Store Logins (375 seats | Rp 89.2M/mo)</button>
+            <button class="chip-btn" id="preset-fat" type="button">2027 Finance Budget Sheet (399 -&gt; 453 seats | Rp 1.20B/yr)</button>
+            <button class="chip-btn" id="preset-drift" type="button">Do Nothing: Convert All + Unchecked Growth (413 -&gt; 567 | Rp 1.37B/yr)</button>
           </div>
         </div>
 
         <div class="sim-layout">
           <div class="panel-card">
-            <h3 style="font-size:1.02rem; margin-block-end:1rem;">Optimization Policy Controls</h3>
+            <h3 style="font-size:1.02rem; margin-block-end:1rem;">Adjust Plan Rules</h3>
 
             <div class="slider-group">
               <div class="slider-head">
-                <label for="inp-cutoff">Idle Login Cutoff Threshold</label>
+                <label for="sel-stores">How Should Store Outlets View Dashboards?</label>
+              </div>
+              <select class="select-input" id="sel-stores">
+                <option value="all" selected>Recommended: Move All 123 Active Stores to Free Store Portal ($0/store)</option>
+                <option value="own">Move 77 Own Retail Stores Only (Keep 46 Franchise Stores Paid)</option>
+                <option value="none">Keep All Stores as Paid Metabase Logins ($12/mo per store)</option>
+              </select>
+              <div class="slider-hint">Moving all stores saves $1,476/month (Rp 318.8M/year) using Pro's built-in free embeds.</div>
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-head">
+                <label for="inp-cutoff">Turn Off Users Who Have Not Logged In For:</label>
                 <span class="slider-readout" id="lbl-cutoff">&gt; 30 days (1 mo)</span>
               </div>
               <input type="range" id="inp-cutoff" min="14" max="125" step="1" value="30">
-              <div class="slider-hint">Slide to 125 to simulate no inactivity cutoff (keeps all 413 seats).</div>
+              <div class="slider-hint">30 days = 1 month; 60 days = 2 months; 125 = never turn off anyone.</div>
             </div>
 
             <div class="slider-group">
-              <div style="font-size:0.86rem; font-weight:600; margin-block-end:0.55rem;">Safety Exemptions &amp; Phase 2 Levers</div>
+              <div style="font-size:0.86rem; font-weight:600; margin-block-end:0.55rem;">Protected Groups &amp; Extra Savings</div>
               <label class="check-row" for="chk-exco">
                 <input type="checkbox" id="chk-exco" checked>
-                <span><strong>Protect ExCo Group (14 seats)</strong><br><span style="font-size:0.76rem; color:var(--text-muted);">Preserves 4 ExCo seats idle &gt;30d (3 idle &gt;60d); costs +$36 to $48/mo.</span></span>
+                <span><strong>Always Keep ExCo Active (14 people)</strong><br><span style="font-size:0.76rem; color:var(--text-muted);">Never turn off ExCo accounts even if they log in rarely (+Rp 864k/mo).</span></span>
               </label>
               <label class="check-row" for="chk-grace">
                 <input type="checkbox" id="chk-grace" checked>
-                <span><strong>14-Day Grace for New Joiners (5 seats)</strong><br><span style="font-size:0.76rem; color:var(--text-muted);">Protects accounts created within the past 14 days during onboarding.</span></span>
+                <span><strong>Give New Hires 14 Days to Log In First</strong><br><span style="font-size:0.76rem; color:var(--text-muted);">Protects brand-new staff added in the past 2 weeks while onboarding.</span></span>
               </label>
               <label class="check-row" for="chk-digest">
                 <input type="checkbox" id="chk-digest">
-                <span><strong>Move 1x/Mo HQ Viewers to Email Digest / Modibot (-26 seats)</strong><br><span style="font-size:0.76rem; color:var(--text-muted);">Replaces single-login/month HQ seats with $0 scheduled email Pulses.</span></span>
+                <span><strong>Optional: Switch 1x/Month Viewers to Email Reports (-26 seats)</strong><br><span style="font-size:0.76rem; color:var(--text-muted);">Sends scheduled email summaries ($0/mo) to HQ staff who only check once a month.</span></span>
               </label>
             </div>
 
             <div class="slider-group">
               <div class="slider-head">
-                <label for="sel-stores">Store Outlet Accounts (134 Total)</label>
-              </div>
-              <select class="select-input" id="sel-stores">
-                <option value="none" selected>Keep Active Store Logins ($12/mo per store)</option>
-                <option value="own">Phase 2A: Move Own Retail Stores to Guest Embeds ($0/viewer)</option>
-                <option value="all">Phase 2B: Move All Own + Franchise Stores to Guest Embeds ($0/viewer)</option>
-              </select>
-              <div class="slider-hint">Pro includes white-labeled JWT Guest Embeds at $0 per viewer.</div>
-            </div>
-
-            <div class="slider-group">
-              <div class="slider-head">
-                <label for="inp-growth">Net Monthly Seat Growth After Cleanup</label>
+                <label for="inp-growth">New Paid Users Added per Month (Net)</label>
                 <span class="slider-readout" id="lbl-growth">+2 / mo</span>
               </div>
               <input type="range" id="inp-growth" min="0" max="16" step="1" value="2">
-              <div class="slider-hint">Real Feb to Nov 2026 MAU growth is +2/mo (vs. +14/mo unpruned drift).</div>
+              <div class="slider-hint">With monthly cleanup active, real active staff only grew by +2 people/month across 2026.</div>
             </div>
 
             <div class="slider-group">
               <div class="slider-head">
-                <label for="inp-fx">Exchange Rate (IDR per 1 USD)</label>
+                <label for="inp-fx">USD Exchange Rate</label>
                 <span class="slider-readout" id="lbl-fx">Rp 18,000</span>
               </div>
               <input type="range" id="inp-fx" min="15500" max="20000" step="250" value="18000">
@@ -1503,55 +1453,55 @@
 
           <div class="panel-card">
             <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.5rem; margin-block-end:1rem;">
-              <h3 style="font-size:1.02rem; margin:0;">Live Seat &amp; Monthly Billing Result (<span id="lbl-range">352 to 374 seats</span>)</h3>
-              <span class="mono" style="font-size:0.75rem; color:var(--text-muted);">$575 base (10u) + $12/seat/mo</span>
+              <h3 style="font-size:1.02rem; margin:0;">Your Selected Plan (<span id="lbl-range">229 to 251 paid seats</span>)</h3>
+              <span class="mono" style="font-size:0.75rem; color:var(--text-muted);">$575 base (10 people) + $12/person/mo</span>
             </div>
 
             <div class="bento-metrics" style="margin-block-end:1.25rem;">
               <div class="metric-card" style="padding:0.95rem 1rem;">
-                <div class="metric-label">Day-1 Seats Kept</div>
-                <div class="metric-val" id="kpi-kept" style="font-size:1.45rem;">352</div>
-                <div class="metric-note" id="kpi-cut">61 seats cut (-14.8%)</div>
+                <div class="metric-label">Paid Seats Left</div>
+                <div class="metric-val" id="kpi-kept" style="font-size:1.45rem;">229</div>
+                <div class="metric-note" id="kpi-cut">184 seats removed (-44.6%)</div>
               </div>
               <div class="metric-card" style="padding:0.95rem 1rem;">
-                <div class="metric-label">Month 1 Invoice</div>
-                <div class="metric-val" id="kpi-m1" style="font-size:1.45rem;">Rp 84.2M</div>
-                <div class="metric-note" id="kpi-m1-usd">$4,679 / month</div>
+                <div class="metric-label">Monthly Bill (Now)</div>
+                <div class="metric-val" id="kpi-m1" style="font-size:1.45rem;">Rp 57.7M</div>
+                <div class="metric-note" id="kpi-m1-usd">$3,203 / month</div>
               </div>
               <div class="metric-card" style="padding:0.95rem 1rem;">
-                <div class="metric-label">12-Month Spend</div>
-                <div class="metric-val" id="kpi-yr" style="font-size:1.45rem;">Rp 1.04B</div>
-                <div class="metric-note" id="kpi-yr-usd">$57,732 / year</div>
+                <div class="metric-label">Full 12-Month Total</div>
+                <div class="metric-val" id="kpi-yr" style="font-size:1.45rem;">Rp 720.4M</div>
+                <div class="metric-note" id="kpi-yr-usd">$40,020 / year</div>
               </div>
               <div class="metric-card" style="padding:0.95rem 1rem; border-color:var(--status-good-border); background-color:var(--status-good-bg);">
-                <div class="metric-label" style="color:var(--status-good-text);">Saved vs. Drift</div>
-                <div class="metric-val" id="kpi-save" style="font-size:1.45rem; color:var(--status-good-text);">Rp 329.2M</div>
-                <div class="metric-note" id="kpi-save-pct" style="color:var(--status-good-text);">24.1% lower than Rp 1.37B</div>
+                <div class="metric-label" style="color:var(--status-good-text);">Yearly Money Saved</div>
+                <div class="metric-val" id="kpi-save" style="font-size:1.45rem; color:var(--status-good-text);">Rp 648.0M</div>
+                <div class="metric-note" id="kpi-save-pct" style="color:var(--status-good-text);">47.4% cheaper than doing nothing</div>
               </div>
             </div>
 
-            <h4 style="font-size:0.9rem; margin-block-end:0.65rem;">12-Month Cumulative Spend Benchmark</h4>
+            <h4 style="font-size:0.9rem; margin-block-end:0.65rem;">12-Month Total Cost Comparison</h4>
             <div id="sim-bars"></div>
 
             <div style="margin-block-start:1.15rem; padding:0.85rem 1rem; background:var(--bg-subtle); border-radius:var(--radius-sm); font-size:0.82rem; color:var(--text-body);">
-              <strong>Why ongoing monthly auto-deactivation matters as much as the Day-1 cut:</strong> Without a monthly cleanup cron, adding ~14 new staff/store accounts per month pushes monthly billing from Rp 97.4M in Jan to Rp 130.7M by Dec. Running a monthly 30-day check before each billing cycle keeps billable seats locked to real active usage (~+2 net/mo).
+              <strong>Why paying monthly works in our favor:</strong> Whenever we turn off inactive accounts or move stores to the Free Store Portal, our very next monthly bill drops right away. We are never locked into paying a full year upfront for seats we stop needing.
             </div>
           </div>
         </div>
 
         <div class="panel-card">
-          <span class="verdict-badge badge-blue">2027 Monthly Billing Schedule (Jan-27 to Dec-27)</span>
-          <h3 style="font-size: 1.15rem; margin-block-end: 0.4rem;">Month-by-Month Metabase Pro Invoice Comparison</h3>
+          <span class="verdict-badge badge-teal">Month-by-Month 2027 Budget Table (Jan-27 to Dec-27)</span>
+          <h3 style="font-size: 1.15rem; margin-block-end: 0.4rem;">Monthly Invoices Across 2027</h3>
           <p style="margin-block-end: 1.15rem; max-inline-size: 78ch;">
-            Comparing unchecked seat drift, the 2027 FAT Budget sheet curve (399 to 453 seats), the 60-day and 30-day ExCo-protected policies, and your currently selected simulator policy:
+            Compare doing nothing, the previous 2027 Finance budget sheet, cutting inactive accounts only, and our <strong>Recommended 229-Seat Plan</strong>:
           </p>
 
           <div class="table-wrap">
             <table class="comp-matrix" style="min-inline-size: 82rem;">
-              <caption class="visually-hidden">Month by month 2027 Metabase Pro billing comparison from January to December 2027</caption>
+              <caption class="visually-hidden">Month by month 2027 Metabase Pro invoice comparison from January to December 2027</caption>
               <thead>
                 <tr>
-                  <th scope="col" class="col-sticky" style="inline-size: 16rem;">Policy / Scenario</th>
+                  <th scope="col" class="col-sticky" style="inline-size: 16.5rem;">Plan Option</th>
                   <th scope="col">Jan-27</th>
                   <th scope="col">Feb-27</th>
                   <th scope="col">Mar-27</th>
@@ -1564,7 +1514,7 @@
                   <th scope="col">Oct-27</th>
                   <th scope="col">Nov-27</th>
                   <th scope="col">Dec-27</th>
-                  <th scope="col" class="col-highlight-teal">YTD 2027</th>
+                  <th scope="col" class="col-highlight-teal">Full Year 2027</th>
                 </tr>
               </thead>
               <tbody id="schedule-tbody"></tbody>
@@ -1573,149 +1523,108 @@
         </div>
 
         <div class="page-pager">
-          <button class="pager-btn" type="button" data-goto="user-audit">&lt;- Previous: Current User Audit</button>
-          <button class="pager-btn primary" type="button" data-goto="department-matrix">Next: Department &amp; Store Breakdown -&gt;</button>
+          <button class="pager-btn" type="button" data-goto="user-directory">&lt;- Previous: All 413 Users</button>
+          <button class="pager-btn primary" type="button" data-goto="rollout-plan">Next: Step-by-Step Rollout &amp; Teams -&gt;</button>
         </div>
       </section>
 
-      <!-- CHAPTER 04: DEPARTMENT & STORE SEAT MATRIX -->
-      <section class="page-view" id="view-department-matrix">
+      <!-- CHAPTER 05: STEP-BY-STEP ROLLOUT & TEAM BREAKDOWN -->
+      <section class="page-view" id="view-rollout-plan">
         <header class="view-header">
           <div>
-            <span class="view-kicker">Chapter 04 / Seat Allocation Across 22 Permission Groups</span>
-            <h2 class="view-title">Department, Store &amp; Partner Seat Breakdown (Sum = 413)</h2>
+            <span class="view-kicker">Chapter 05 / Simple Execution Plan &amp; Team Summary</span>
+            <h2 class="view-title">How We Roll This Out Smoothly (Without Disrupting Anyone)</h2>
             <p class="view-lead">
-              Every active personal account mapped to its primary business group, showing exact seats cut under the 60-day and 30-day policies (with ExCo &amp; 14-day new-hire protections active).
-            </p>
-          </div>
-        </header>
-
-        <div class="toolbar-row matrix-sticky-toolbar" id="matrix-toolbar">
-          <div class="filter-group" role="group" aria-label="Filter departments by segment">
-            <button class="chip-btn active" type="button" data-seg-filter="all">All Segments (413)</button>
-            <button class="chip-btn" type="button" data-seg-filter="hq">HQ, Brands &amp; ADP (249)</button>
-            <button class="chip-btn" type="button" data-seg-filter="store">Retail &amp; Franchise Stores (134)</button>
-            <button class="chip-btn" type="button" data-seg-filter="exco">ExCo Protected (14)</button>
-            <button class="chip-btn" type="button" data-seg-filter="external">External Partners &amp; KPMG (16)</button>
-          </div>
-        </div>
-
-        <div class="table-wrap matrix-table-wrap">
-          <table class="comp-matrix" id="dept-table">
-            <caption class="visually-hidden">Seat breakdown by department and store segment showing active seats, idle cuts, and monthly spend</caption>
-            <thead>
-              <tr>
-                <th scope="col" class="col-sticky" style="inline-size:21%;">Department / Segment</th>
-                <th scope="col" style="inline-size:8%;">Current Seats</th>
-                <th scope="col" style="inline-size:9%;">Active &lt;=30d</th>
-                <th scope="col" style="inline-size:9%;">Cut @ 60d</th>
-                <th scope="col" class="col-highlight-teal" style="inline-size:11%;">Cut @ 30d (Rec)</th>
-                <th scope="col" class="col-highlight-teal" style="inline-size:11%;">Kept @ 30d</th>
-                <th scope="col" style="inline-size:11%;">Marginal Cost (@ $12)</th>
-                <th scope="col" style="inline-size:20%;">Audit Findings &amp; Action Notes</th>
-              </tr>
-            </thead>
-            <tbody id="dept-tbody"></tbody>
-          </table>
-        </div>
-
-        <div class="page-pager">
-          <button class="pager-btn" type="button" data-goto="cost-optimizer">&lt;- Previous: Monthly Cost Optimizer</button>
-          <button class="pager-btn primary" type="button" data-goto="governance-plan">Next: Rollout &amp; Governance Playbook -&gt;</button>
-        </div>
-      </section>
-
-      <!-- CHAPTER 05: MIGRATION CLEANUP & MONTHLY GOVERNANCE PLAYBOOK -->
-      <section class="page-view" id="view-governance-plan">
-        <header class="view-header">
-          <div>
-            <span class="view-kicker">Chapter 05 / Implementation &amp; Ongoing Cost Control</span>
-            <h2 class="view-title">Pre-Migration Cleanup &amp; Monthly Billing Governance</h2>
-            <p class="view-lead">
-              Four concrete steps so our very first Metabase Pro Cloud monthly invoice starts at <strong>352 optimized seats ($4,679/mo)</strong> instead of 413 ($5,411/mo), and stays lean every month thereafter.
+              A straightforward sequence to clean up unused accounts first, move smoothly to Metabase Pro Cloud, switch stores to the Free Store Portal, and keep our monthly bill lean automatically.
             </p>
           </div>
         </header>
 
         <div class="arch-comparison">
           <div class="arch-box good-arch">
-            <span class="verdict-badge badge-teal">Phase 1 / Execute Before Clicking "Migrate to Cloud" (Day 0)</span>
-            <h3>1-Hour Pre-Migration Seat Cleanup Checklist</h3>
+            <span class="verdict-badge badge-teal">Week 1: Clean Up &amp; Move to Metabase Pro</span>
+            <h3>Immediate Drop From 413 to 352 Seats</h3>
             <ul class="clean-list" style="margin-block-start:0.85rem;">
-              <li><strong>Step 1 (Re-route 5 Tech Alert Pulses):</strong> Update <code>Sync Sales Qty Shopify vs Odoo</code>, <code>Transfer Order Monitoring</code>, and <code>[Automated] Oracle Data Migration Tracker</code> to send directly to an external/group email alias (such as <code>tech-alerts@modinity.com</code>) so recipients do not consume $12/mo seats.</li>
-              <li><strong>Step 2 (Assign Groups to 4 Active Unassigned Users):</strong> Move the 4 active <code>All Users Only</code> accounts (2 store accounts, 1 staff, 1 new hire) into their proper permission groups for Least Privilege RBAC.</li>
-              <li><strong>Step 3 (Deactivate 61 Idle Non-ExCo Accounts):</strong> Soft-deactivate (<code>is_active = false</code>) the 61 personal accounts with no login in &gt;30 days and <code>date_joined &lt; NOW() - 14 days</code>, keeping all <strong>14 ExCo</strong> seats and <strong>5 new joiners</strong> untouched.</li>
-              <li><strong>Step 4 (Run Built-in Cloud Migrator):</strong> Trigger <code>Admin -&gt; Settings -&gt; Cloud</code>. Only the 352 active seats become billable on Month 1; all 407 dashboards, 7,365 charts, and 5 free programmatic API keys carry over intact.</li>
+              <li><strong>1. Point 5 Automated Tech Alert Emails to a Team Inbox (15 mins):</strong> Five inactive Tech staff only get automated email alerts. Sending those emails straight to a shared team address means they need zero paid seats.</li>
+              <li><strong>2. Turn Off the 61 Inactive Accounts (15 mins):</strong> Deactivate non-ExCo accounts that have not logged in for over 30 days (keeping all 14 ExCo members and 5 brand-new hires untouched). Zero charts or dashboards are lost.</li>
+              <li><strong>3. One-Click Move to Metabase Pro Cloud (1 day):</strong> Use Metabase's built-in migration button to copy all 407 dashboards, 7,365 charts, and AI bot keys directly into Metabase Pro Cloud.</li>
             </ul>
           </div>
 
-          <div class="arch-box">
-            <span class="verdict-badge badge-blue">Ongoing Hygiene / Automated Monthly Billing Guardrail</span>
-            <h3>How We Prevent Seat Drift on Monthly Billing</h3>
+          <div class="arch-box good-arch">
+            <span class="verdict-badge badge-blue">Week 2 to 3 &amp; Monthly Routine: Reach 229 Seats</span>
+            <h3>Launch Free Store Portal &amp; Monthly Housekeeping</h3>
             <ul class="clean-list" style="margin-block-start:0.85rem;">
-              <li><strong>Automated 28th-of-Month Seat Audit:</strong> Run a lightweight scheduled script (Airflow DAG on <code>modibt</code>) 48 hours before each monthly billing cycle using Metabase Pro's Usage Analytics API (<code>/api/user</code>) to auto-deactivate non-ExCo accounts idle &gt;30 days.</li>
-              <li><strong>Frictionless 1-Click Reactivation:</strong> Because Metabase deactivation is non-destructive, any returning employee simply pings BI/IT (or logs in via Google SSO + Pro SCIM group rules) to restore their exact account in seconds.</li>
-              <li><strong>Enable SCIM / Google Group Sync on Pro:</strong> Metabase Pro includes SCIM provisioning, so HR/IT offboarding in Google Workspace automatically revokes the $12/mo Metabase seat the same day an employee leaves.</li>
-              <li><strong>Q1 2027 Phase 2 Option (Store Guest Embeds):</strong> If leadership wants to cut monthly billing further from <strong>Rp 84.2M/mo to Rp 57.7M/mo</strong>, pilot a lightweight Cloud Run store viewer using Pro's included JWT Guest Embeds ($0/viewer) for the 123 store accounts.</li>
+              <li><strong>4. Launch <code>stores.modinity.com</code> for All 123 Stores (2 to 3 days):</strong> Give Own Retail and Franchise stores one clean login page showing their exact store sales dashboard (with working date and product filters) at $0 per store.</li>
+              <li><strong>5. Turn Off the 123 Paid Store Logins:</strong> Once stores confirm the new link works, deactivate the 123 store seats in Metabase so our monthly bill drops right down to <strong>Rp 57.7M/month (229 paid seats)</strong>.</li>
+              <li><strong>6. Automatic Monthly Cleanup Before Billing Day:</strong> Two days before each monthly bill, an automatic check turns off any non-ExCo account unused for 30+ days. Anyone who ever needs back in is restored in 1 click.</li>
             </ul>
           </div>
         </div>
 
         <div class="panel-card">
-          <span class="verdict-badge badge-teal">Reference SQL / Automated Monthly Seat Pruning Query</span>
-          <h3 style="font-size: 1.12rem; margin-block-end: 0.5rem;">Exact Candidate Query Used for This Audit (30-Day Cutoff + ExCo &amp; 14-Day Grace)</h3>
-          <pre class="code-block">-- Returns the exact 61 non-ExCo seats eligible for soft deactivation via DELETE /api/user/:id
-SELECT
-  u.id,
-  u.email,
-  u.date_joined,
-  u.last_login,
-  ROUND(EXTRACT(EPOCH FROM (NOW() - u.last_login)) / 86400.0, 1) AS days_idle
-FROM core_user u
-WHERE u.is_active = TRUE
-  AND u.type = 'personal'
-  AND u.date_joined &lt; NOW() - INTERVAL '14 days'               -- 14-day onboarding grace (protects 5 new joiners)
-  AND (u.last_login IS NULL OR u.last_login &lt; NOW() - INTERVAL '30 days')
-  AND NOT EXISTS (                                             -- Exempts all 14 ExCo members
-    SELECT 1
-    FROM permissions_group_membership pgm
-    JOIN permissions_group pg ON pg.id = pgm.group_id
-    WHERE pgm.user_id = u.id AND pg.name = 'ExCo'
-  )
-ORDER BY u.last_login NULLS FIRST;</pre>
+          <span class="verdict-badge badge-teal">Team-by-Team Summary (All 22 Groups = 413 Accounts)</span>
+          <h3 style="font-size: 1.15rem; margin-block-end: 0.4rem;">Where Every Seat Goes Across Departments &amp; Stores</h3>
+          <p style="margin-block-end: 1rem; max-inline-size: 76ch;">
+            Summary of current seats, how many are cut as inactive (&gt;30d), how many move to the Free Store Portal, and how many remain as paid Metabase Pro seats:
+          </p>
+          <div class="table-wrap">
+            <table class="comp-matrix" style="min-inline-size: 56rem;">
+              <caption class="visually-hidden">Summary of all 22 teams showing current seats, inactive cuts, store portal transfers, and final paid seats</caption>
+              <thead>
+                <tr>
+                  <th scope="col" class="col-sticky" style="inline-size:26%;">Team / Store Segment</th>
+                  <th scope="col" style="inline-size:11%;">Today</th>
+                  <th scope="col" style="inline-size:14%;">Step 1: Cut Idle</th>
+                  <th scope="col" style="inline-size:17%;">Step 2: Free Portal</th>
+                  <th scope="col" class="col-highlight-teal" style="inline-size:14%;">Final Paid Seats</th>
+                  <th scope="col" style="inline-size:18%;">Monthly Seat Cost</th>
+                </tr>
+              </thead>
+              <tbody id="dept-tbody"></tbody>
+            </table>
+          </div>
         </div>
 
         <div class="page-pager">
-          <button class="pager-btn" type="button" data-goto="department-matrix">&lt;- Previous: Department Breakdown</button>
-          <button class="pager-btn primary" type="button" data-goto="overview">Back to Chapter 01: Executive Summary</button>
+          <button class="pager-btn" type="button" data-goto="cost-simulator">&lt;- Previous: Monthly Bill Calculator</button>
+          <button class="pager-btn primary" type="button" data-goto="overview">Back to Chapter 01: The 229-Seat Plan</button>
         </div>
       </section>
 
     </main>
   </div>
   <script>
-    const AUDIT_DATA = {"depts":[["Own Retail Store Outlets","store_own","store","76 active in 30d; each store views 1 outlet dashboard. Candidate for Phase 2 Guest Embeds ($0/viewer)."],["Finance, Accounting, and Tax","hq","hq","Core month-end close, AP/AR aging, and EOM inventory tie-out users; 3 former interns/staff idle >60d."],["Franchise Store Outlets (FC)","store_fc","store","46 active franchise store accounts (`[FC *]`); 3 dormant outlets idle 69 to 232 days."],["ADP: Manufacture and Warehouse","hq","hq","22 active production/warehouse users + 4 brand-new joiners (<8d old) protected by 14d onboarding grace."],["Ops","hq","hq","High daily engagement across store operations; only 2 event/ops accounts idle >30d."],["Merchandising Sales","hq","hq","100% active within 30 days (28 of 28 seats); heaviest daily dashboard consumers."],["Marketing","hq","hq","21 of 23 active within 30 days; 2 accounts idle 30.1d and 121.2d."],["External Partners & KPMG","external","external","12 active brand partners; all 3 KPMG consultant accounts have been unused for 239 days."],["Ops: E-Commerce","hq","hq","100% active within 30 days (14 of 14 seats) checking Shopify & marketplace fulfillment."],["ExCo (Executive Committee)","exco","exco","Protected by policy: 10 active <=30d, 1 idle 41d, 3 idle 77 to 81d (+$48/mo total exemption cost)."],["Merchandising Production","hq","hq","8 active PO/WIP tracker users; 4 accounts (incl. former intern) idle 38 to 111 days."],["Tech","hq","hq","Highest idle ratio: 8 of 12 accounts idle >30d (5 receive automated email Pulses that need no paid seat)."],["Unassigned (All Users Only)","hq","hq","No group beyond All Users: 7 shared/legacy accounts idle >30d (`data@`, `misovi@`, `training@`, duplicates)."],["Product Development","hq","hq","9 active <=30d; 2 accounts idle 31 to 43 days."],["Malaysia","hq","hq","2 active (`MSB`); 3 accounts idle >73 days (1 never logged in)."],["Customer Service","hq","hq","100% active within 30 days (4 of 4 seats)."],["Administrators","hq","hq","100% active BI/Data Platform administrators (3 of 3 seats)."],["Data Analyst (BI)","hq","hq","100% active dashboard & model authors (3 of 3 seats)."],["ADP: Finance, Accounting, Tax","hq","hq","2 active <=30d; 1 account idle 45 days."],["HR","hq","hq","Both HR accounts idle 92 days and 548 days (0 active in 30d)."],["ADP: Sales and Marketing","hq","hq","100% active within 30 days (2 of 2 seats)."],["Purchasing","hq","hq","100% active within 30 days (1 of 1 seat)."]],"users":[[0.7,577.2,18,16],[0.1,577.1,23,16],[0.2,577.1,47,16],[92.2,577.0,0,12],[2.1,565.9,3,1],[0.3,563.2,147,1],[0.2,563.2,17,1],[1.2,563.2,19,1],[0.3,563.2,14,1],[0.2,563.2,66,1],[1.1,563.2,11,1],[0.2,563.2,14,1],[76.2,563.2,0,1],[0.3,563.2,14,1],[0.0,563.2,17,1],[0.1,563.1,20,5],[0.2,562.2,3,10],[0.3,561.2,51,8],[0.1,559.1,2,1],[0.0,555.3,5,1],[10.1,555.2,1,9],[0.9,555.2,17,6],[1.2,555.2,18,6],[1.1,555.2,7,6],[0.2,555.2,6,6],[1.2,555.2,7,6],[2.0,555.2,7,6],[20.3,555.2,1,6],[20.3,555.2,2,6],[8.0,555.2,8,6],[1.3,555.2,15,3],[1.1,555.0,13,1],[0.2,554.9,27,6],[0.4,554.9,42,4],[1.1,554.9,20,4],[1.1,554.9,4,4],[0.0,554.9,24,4],[1.0,554.9,19,4],[0.0,554.9,11,4],[1.0,554.9,16,4],[0.0,554.9,14,4],[10.1,554.9,3,4],[15.1,554.9,1,4],[1.0,554.9,1,4],[2.0,554.9,9,15],[113.0,554.1,0,1],[22.0,554.1,1,21],[79.2,554.0,0,1],[0.2,554.0,24,8],[3.2,554.0,10,8],[0.7,553.9,20,8],[0.3,553.9,19,5],[1.2,553.2,20,10],[44.2,553.2,0,10],[3.3,553.2,2,10],[8.0,553.2,4,10],[8.0,553.2,3,10],[0.0,553.2,22,5],[548.1,553.2,0,19],[1.2,552.3,12,9],[3.2,552.3,4,13],[15.9,552.3,1,13],[17.0,552.3,1,13],[3.2,552.2,7,13],[80.6,552.2,0,11],[42.1,552.2,0,11],[7.0,552.2,5,11],[22.1,552.2,1,11],[22.0,549.2,3,13],[17.0,549.2,2,13],[1.2,548.0,11,5],[0.2,548.0,21,5],[0.2,548.0,19,5],[0.2,548.0,19,5],[0.3,548.0,34,5],[8.0,548.0,9,5],[0.9,548.0,21,5],[1.0,547.3,1,9],[79.2,547.3,0,9],[21.0,547.3,2,9],[1.3,547.3,15,9],[80.7,547.3,0,9],[77.2,547.3,0,9],[2.4,546.9,2,1],[2.1,546.9,28,1],[0.0,542.0,44,3],[2.2,540.3,5,1],[31.2,538.2,0,13],[0.0,538.2,18,5],[0.2,535.1,27,5],[9.2,535.1,6,4],[6.2,534.0,6,1],[6.2,533.2,9,1],[107.1,532.9,0,1],[35.1,527.0,0,3],[1.2,525.0,9,6],[0.1,521.0,8,4],[7.0,520.1,1,20],[0.0,520.1,5,20],[3.8,518.2,9,1],[153.9,517.0,0,11],[54.7,516.9,0,11],[0.1,514.0,15,5],[14.0,506.9,1,1],[1.1,506.2,11,6],[14.2,500.1,8,1],[0.2,499.2,15,5],[0.1,490.0,9,10],[0.2,486.2,16,8],[6.1,485.1,4,1],[8.0,484.1,7,4],[34.2,483.1,0,3],[175.2,482.0,0,11],[0.2,479.2,22,8],[43.1,475.9,0,13],[0.2,448.2,20,17],[28.1,447.9,1,4],[29.1,447.9,1,4],[0.2,437.2,12,6],[0.9,435.2,16,5],[54.2,435.1,0,3],[2.1,434.0,7,1],[1.2,430.0,18,4],[2.3,427.0,8,13],[0.8,423.1,21,8],[0.1,420.9,3,1],[1.0,416.2,13,6],[0.1,415.9,5,1],[1.3,412.1,21,4],[0.1,409.1,16,8],[17.0,402.2,1,1],[92.2,402.2,0,19],[0.3,402.1,48,9],[1.1,380.2,104,9],[9.0,380.2,3,9],[20.3,379.0,1,11],[1.1,373.6,1,11],[20.0,371.3,2,3],[1.0,363.2,13,6],[0.3,360.1,38,0],[1.0,353.1,10,5],[0.9,352.0,5,1],[17.3,352.0,1,1],[0.2,350.1,18,8],[0.2,348.9,10,0],[1.9,348.9,10,2],[-1,348.9,0,0],[1.0,348.9,24,0],[16.2,348.9,5,0],[2.3,348.9,3,0],[0.3,348.9,33,0],[0.2,348.9,43,2],[1.8,348.9,12,0],[0.9,348.0,21,0],[0.2,348.0,38,2],[17.0,348.0,1,0],[0.3,348.0,26,2],[10.1,348.0,5,0],[1.2,348.0,26,2],[0.3,348.0,34,2],[1.0,348.0,19,2],[1.2,348.0,45,0],[1.2,348.0,14,2],[0.3,348.0,54,2],[0.3,348.0,38,2],[0.1,348.0,34,2],[4.1,348.0,14,0],[0.3,348.0,30,2],[1.3,348.0,22,0],[0.3,348.0,34,2],[0.1,348.0,41,0],[0.3,348.0,31,2],[0.0,346.0,28,2],[3.1,346.0,16,2],[6.9,345.2,3,1],[12.2,345.2,2,0],[3.2,345.2,9,0],[8.1,345.0,8,15],[0.7,344.1,6,0],[9.0,343.1,2,6],[341.0,341.0,0,12],[0.0,338.2,126,3],[16.9,336.2,1,6],[0.2,335.9,45,0],[0.2,335.7,40,0],[0.2,332.1,25,5],[1.2,321.3,19,0],[9.3,321.3,2,0],[2.2,321.3,19,0],[16.7,321.3,8,0],[3.1,321.3,4,0],[0.2,321.3,36,0],[33.1,321.3,0,0],[0.1,321.3,31,0],[3.2,321.3,4,0],[1.1,321.3,16,0],[68.9,321.3,0,2],[0.3,321.3,55,2],[0.0,321.3,61,2],[0.0,321.3,35,0],[0.1,321.3,97,0],[3.0,321.3,7,0],[0.3,321.3,33,0],[3.1,321.3,16,0],[0.2,321.3,34,0],[0.3,321.3,31,0],[1.2,321.3,53,0],[-1,321.3,0,0],[0.2,321.3,24,0],[2.2,321.3,21,0],[0.1,321.3,33,0],[1.0,321.3,23,0],[0.0,321.3,62,0],[0.3,321.3,38,0],[1.1,321.3,16,0],[2.2,321.3,12,0],[0.2,321.3,33,0],[-1,321.3,0,0],[0.2,321.3,15,0],[0.3,321.3,29,0],[1.1,321.3,2,2],[1.2,321.3,8,2],[0.3,321.3,33,2],[40.0,321.3,0,2],[0.1,321.3,16,2],[4.3,321.3,7,2],[0.1,321.3,34,2],[0.2,321.3,90,2],[3.2,321.3,10,2],[1.3,321.3,39,2],[0.3,321.3,31,2],[0.1,321.3,35,2],[0.0,321.3,40,2],[2.9,321.3,24,2],[0.3,321.3,38,2],[0.5,321.3,4,2],[0.1,321.3,40,2],[1.2,321.3,7,2],[0.3,321.3,68,2],[8.1,321.2,4,0],[1.3,321.2,27,0],[1.0,321.2,23,0],[7.1,321.2,7,0],[1.1,321.2,38,0],[0.3,321.2,33,0],[113.2,321.2,0,0],[0.2,321.2,30,0],[0.8,321.2,9,0],[76.8,321.2,0,0],[0.3,321.2,31,0],[232.3,321.2,0,2],[2.2,321.2,18,2],[0.1,321.2,22,2],[36.8,321.2,0,2],[1.2,321.2,4,2],[193.0,321.2,0,2],[14.2,321.2,2,2],[0.1,321.2,4,2],[0.3,321.2,38,2],[0.2,321.1,24,0],[2.3,321.0,24,2],[4.0,321.0,20,0],[2.0,320.2,23,2],[1.1,318.1,32,6],[9.2,317.2,3,4],[0.3,317.2,8,4],[1.0,317.2,13,13],[29.2,317.2,1,4],[1.9,314.1,5,0],[1.3,311.2,5,15],[10.1,308.1,2,1],[0.2,306.9,34,0],[220.2,304.0,0,3],[260.3,301.3,0,11],[6.0,301.1,8,1],[23.0,300.9,2,9],[3.0,300.0,20,2],[1.0,296.7,7,1],[9.2,296.1,5,1],[3.0,294.9,21,0],[0.3,294.9,37,0],[0.5,293.0,14,3],[3.1,292.9,10,0],[3.0,291.0,8,1],[0.3,291.0,30,0],[287.2,287.2,0,12],[0.1,283.2,45,7],[1.2,283.2,18,7],[16.8,283.2,2,7],[0.7,283.2,21,7],[10.1,283.2,7,7],[0.3,282.9,25,5],[1.2,282.9,15,7],[1.1,282.9,19,7],[0.3,282.3,10,1],[0.3,281.3,7,14],[126.2,280.0,0,14],[17.1,279.9,2,7],[17.9,279.9,1,7],[13.2,279.9,2,7],[0.1,279.0,9,1],[263.2,274.2,0,12],[37.9,272.1,0,10],[6.3,260.3,5,2],[2.2,251.1,23,0],[-1,239.2,0,7],[239.2,239.2,0,7],[-1,239.2,0,7],[3.8,238.0,3,1],[0.1,233.0,11,6],[83.1,233.0,0,1],[1.2,217.2,37,5],[1.0,213.1,9,4],[29.0,205.9,1,4],[22.3,205.3,2,1],[0.7,204.8,13,4],[2.2,199.1,18,5],[2.9,197.0,7,4],[35.5,197.0,0,4],[2.6,197.0,15,4],[0.2,191.0,7,8],[2.2,190.2,1,1],[0.0,184.1,2,13],[0.3,180.7,43,0],[25.1,179.1,2,12],[92.0,175.2,0,11],[1.0,170.2,18,5],[72.0,166.9,0,10],[3.0,164.1,1,3],[1.1,158.9,4,0],[0.1,157.2,27,17],[1.2,156.9,26,5],[121.2,149.9,0,6],[2.2,149.2,39,1],[111.3,147.2,0,10],[0.3,146.2,16,1],[0.1,143.1,18,0],[0.9,143.1,19,5],[17.0,143.0,4,0],[28.2,142.9,1,3],[1.2,140.1,13,1],[2.0,139.2,5,15],[0.0,132.9,18,1],[0.2,131.3,25,0],[0.2,129.1,17,5],[45.1,126.0,0,18],[41.2,125.2,0,11],[0.3,121.2,20,5],[29.0,121.1,1,18],[0.2,119.9,36,0],[32.2,119.3,0,12],[119.0,119.0,0,12],[1.2,115.1,22,17],[15.3,113.2,4,7],[1.2,111.0,5,8],[7.1,107.9,1,12],[2.2,106.0,28,0],[1.0,103.9,6,4],[14.1,101.2,3,0],[34.0,101.2,0,3],[101.0,101.0,0,3],[2.2,99.0,12,6],[74.0,97.3,0,14],[97.1,97.1,0,4],[84.2,84.2,0,12],[41.1,84.2,0,9],[34.1,78.9,0,1],[30.1,78.0,0,6],[3.2,73.1,2,14],[-1,73.1,0,14],[5.1,73.0,20,8],[0.2,73.0,18,8],[10.2,62.2,3,5],[4.3,59.2,22,0],[0.1,59.1,23,4],[2.0,41.2,10,10],[6.0,41.2,3,10],[38.2,38.2,0,1],[38.1,38.1,0,7],[1.0,37.2,39,8],[8.8,35.0,3,12],[31.2,34.1,0,1],[31.2,31.2,0,3],[0.3,30.0,15,0],[1.1,24.1,19,0],[6.1,23.2,7,3],[10.2,21.0,2,9],[1.2,21.0,5,18],[0.7,17.0,17,7],[1.0,16.7,13,5],[0.1,16.0,13,3],[14.1,15.9,3,6],[0.8,10.8,4,12],[-1,9.3,0,0],[2.2,8.0,3,3],[0.9,7.9,3,3],[-1,7.9,0,3],[-1,7.9,0,3],[-1,7.9,0,3],[1.2,7.0,1,4],[0.1,6.9,5,3],[0.9,6.9,7,3],[-1,6.9,0,3],[0.2,6.9,10,3],[1.2,6.9,9,3],[0.8,6.9,4,3],[0.4,6.9,6,3],[0.8,6.9,8,3],[0.3,6.9,8,3],[0.7,6.9,5,3],[1.4,6.9,5,3],[3.2,3.2,0,5],[1.0,3.2,1,3]]};
+    const AUDIT_DATA = {"depts":[["Own Retail Store Outlets","store_own"],["Franchise Store Outlets (FC)","store_fc"],["Finance, Accounting, and Tax","hq"],["ADP: Manufacture and Warehouse","hq"],["Ops","hq"],["Merchandising Sales","hq"],["Marketing","hq"],["External Partners & KPMG","external"],["Ops: E-Commerce","hq"],["ExCo (Executive Committee)","exco"],["Merchandising Production","hq"],["Tech","hq"],["Unassigned (All Users Only)","hq"],["Product Development","hq"],["Malaysia","hq"],["Customer Service","hq"],["Administrators","hq"],["Data Analyst (BI)","hq"],["ADP: Finance, Accounting, Tax","hq"],["HR","hq"],["ADP: Sales and Marketing","hq"],["Purchasing","hq"]],"users":[{"id":354,"n":"BS Store - Jewel Changi Singapore","e":"bs.changi@modinity.com","di":0,"g":"z Store: BS Store - Jewel Changi Singapore","ld":"Never","dl":-1,"jd":"2026-01-02","dj":321.3,"l30":0,"q30":0,"act":"cut_60"},{"id":344,"n":"BS Store - Lifestyle Pondok Indah Mall 3 Jakarta","e":"bs.lifestyle@buttonscarves.com","di":0,"g":"z Store: BS Store - Lifestyle Pondok Indah Mall 3 Jakarta","ld":"Never","dl":-1,"jd":"2026-01-02","dj":321.3,"l30":0,"q30":0,"act":"cut_60"},{"id":276,"n":"CTL Store - Kuta Bali","e":"ctl.bali@modinity.com","di":0,"g":"z Store: CTL Store - Kuta Bali","ld":"Never","dl":-1,"jd":"2025-12-05","dj":348.9,"l30":0,"q30":0,"act":"cut_60"},{"id":458,"n":"Krishan Mohan","e":"krishanmohan@kpmg.com","di":7,"g":"KPMG","ld":"Never","dl":-1,"jd":"2026-03-25","dj":239.2,"l30":0,"q30":0,"act":"cut_60"},{"id":538,"n":"Nurul Syifa Binti Mohammad Radzi","e":"nurul.syifa@modinity.com","di":14,"g":"Malaysia","ld":"Never","dl":-1,"jd":"2026-09-07","dj":73.1,"l30":0,"q30":0,"act":"cut_60"},{"id":456,"n":"Vipul Jain","e":"vipuljain8@kpmg.com","di":7,"g":"KPMG","ld":"Never","dl":-1,"jd":"2026-03-25","dj":239.2,"l30":0,"q30":0,"act":"cut_60"},{"id":87,"n":"Dominikus Waso Nono","e":"dominikus@modinity.com","di":19,"g":"HR","ld":"2025-05-20","dl":548.1,"jd":"2025-05-15","dj":553.2,"l30":0,"q30":0,"act":"cut_60"},{"id":313,"n":"Misovi Misovi","e":"misovi@modinity.com","di":12,"g":"All Users Only","ld":"2025-12-13","dl":341.0,"jd":"2025-12-13","dj":341.0,"l30":0,"q30":0,"act":"cut_60"},{"id":427,"n":"Performance Modinity Group","e":"performance@modinity.com","di":12,"g":"All Users Only","ld":"2026-02-05","dl":287.2,"jd":"2026-02-05","dj":287.2,"l30":0,"q30":0,"act":"cut_60"},{"id":449,"n":"Benang Jarum 23 Semarang","e":"bj.23semarang@modinity.com","di":12,"g":"All Users Only","ld":"2026-03-01","dl":263.2,"jd":"2026-02-18","dj":274.2,"l30":0,"q30":0,"act":"cut_60"},{"id":415,"n":"M. Nu'man Arif Hidayatulloh","e":"numan.arif@modinity.com","di":11,"g":"Tech","ld":"2026-03-04","dl":260.3,"jd":"2026-01-22","dj":301.3,"l30":0,"q30":0,"act":"cut_60"},{"id":457,"n":"Diksha Sharma","e":"dikshasharma2@kpmg.com","di":7,"g":"KPMG","ld":"2026-03-25","dl":239.2,"jd":"2026-03-25","dj":239.2,"l30":0,"q30":0,"act":"cut_60"},{"id":387,"n":"Benang Jarum Banjarbaru","e":"bj.banjarbaru@modinity.com","di":1,"g":"z Store: FC BJ Store - QMall Banjarbaru","ld":"2026-04-01","dl":232.3,"jd":"2026-01-02","dj":321.2,"l30":0,"q30":0,"act":"cut_60"},{"id":413,"n":"Ersa  Ivadany","e":"ersa.ivadany@modinity.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-04-13","dl":220.2,"jd":"2026-01-19","dj":304.0,"l30":0,"q30":0,"act":"cut_60"},{"id":392,"n":"Benang Jarum DeliPark Medan","e":"bj.deliparkmedan@modinity.com","di":1,"g":"z Store: FC BJ Store - Delipark Mall Medan","ld":"2026-05-10","dl":193.0,"jd":"2026-01-02","dj":321.2,"l30":0,"q30":0,"act":"cut_60"},{"id":191,"n":"Farid Muhammad Eryanto","e":"farid.eryanto@modinity.com","di":11,"g":"Tech","ld":"2026-05-28","dl":175.2,"jd":"2025-07-25","dj":482.0,"l30":0,"q30":0,"act":"cut_60"},{"id":171,"n":"Berka Irfansyah","e":"berka@modinity.com","di":11,"g":"Tech","ld":"2026-06-18","dl":153.9,"jd":"2025-06-20","dj":517.0,"l30":0,"q30":0,"act":"cut_60"},{"id":442,"n":"Woro Agti Kinasih","e":"woro.kinasih@modinity.com","di":14,"g":"Malaysia","ld":"2026-07-16","dl":126.2,"jd":"2026-02-12","dj":280.0,"l30":0,"q30":0,"act":"cut_60"},{"id":490,"n":"Jashyeva Adelia Ardhanaswari","e":"jashyeva.ardhanaswari@modinity.com","di":6,"g":"Marketing","ld":"2026-07-21","dl":121.2,"jd":"2026-06-22","dj":149.9,"l30":0,"q30":0,"act":"cut_60"},{"id":513,"n":"Retail Training Modinity","e":"training@modinity.com","di":12,"g":"All Users Only","ld":"2026-07-23","dl":119.0,"jd":"2026-07-23","dj":119.0,"l30":0,"q30":0,"act":"cut_60"},{"id":382,"n":"Benang Jarum FX","e":"bj.fxsudirman@modinity.com","di":0,"g":"z Store: BJ Store - FX Sudirman Jakarta","ld":"2026-07-29","dl":113.2,"jd":"2026-01-02","dj":321.2,"l30":0,"q30":0,"act":"cut_60"},{"id":66,"n":"Dewi Pratiwi","e":"dewi@modinity.com","di":2,"g":"ADP: Manufacture and Warehouse | Finance, Accounting, and Tax | Purchasing","ld":"2026-07-29","dl":113.0,"jd":"2025-05-14","dj":554.1,"l30":0,"q30":0,"act":"cut_60"},{"id":492,"n":"Rahmiyanti Mahmud","e":"rahmiyanti-intern@modinity.com","di":10,"g":"Merchandising Production","ld":"2026-07-31","dl":111.3,"jd":"2026-06-25","dj":147.2,"l30":0,"q30":0,"act":"cut_60"},{"id":155,"n":"Aliza Chasanovani Bakhair","e":"aliza@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-08-04","dl":107.1,"jd":"2025-06-04","dj":532.9,"l30":0,"q30":0,"act":"cut_60"},{"id":522,"n":"Ridha Adelina Nabilah","e":"ridha@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-08-10","dl":101.0,"jd":"2026-08-10","dj":101.0,"l30":0,"q30":0,"act":"cut_60"},{"id":527,"n":"Operation Event","e":"operation.event@modinity.com","di":4,"g":"Ops","ld":"2026-08-14","dl":97.1,"jd":"2026-08-14","dj":97.1,"l30":0,"q30":0,"act":"cut_60"},{"id":243,"n":"Azizah Nur Fadilah","e":"azizah@modinity.com","di":19,"g":"HR","ld":"2026-08-19","dl":92.2,"jd":"2025-10-13","dj":402.2,"l30":0,"q30":0,"act":"cut_60"},{"id":8,"n":"Data Team Modinity","e":"data@modinity.com","di":12,"g":"All Users Only","ld":"2026-08-19","dl":92.2,"jd":"2025-04-21","dj":577.0,"l30":0,"q30":0,"act":"cut_60"},{"id":483,"n":"Berdianto Widyastomo Anggoro Putro","e":"berdianto@modinity.com","di":11,"g":"Tech","ld":"2026-08-19","dl":92.0,"jd":"2026-05-28","dj":175.2,"l30":0,"q30":0,"act":"cut_60"},{"id":531,"n":"Intan Permatasari","e":"intan.permatasari@modinity.com","di":12,"g":"All Users Only","ld":"2026-08-27","dl":84.2,"jd":"2026-08-27","dj":84.2,"l30":0,"q30":0,"act":"cut_60"},{"id":461,"n":"Risnaeni Risnaeni","e":"risnaeni-intern@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-08-28","dl":83.1,"jd":"2026-03-31","dj":233.0,"l30":0,"q30":0,"act":"cut_60"},{"id":95,"n":"Nadia Talitha","e":"nadia@modinity.com","di":11,"g":"Tech","ld":"2026-08-31","dl":80.6,"jd":"2025-05-16","dj":552.2,"l30":0,"q30":0,"act":"cut_60"},{"id":70,"n":"Gilang Cahya Ramadhan","e":"gilang.cahya@modinity.com","di":2,"g":"ADP: Manufacture and Warehouse | Finance, Accounting, and Tax | Purchasing","ld":"2026-09-01","dl":79.2,"jd":"2025-05-14","dj":554.0,"l30":0,"q30":0,"act":"cut_60"},{"id":385,"n":"Benang Jarum  Cibinong City Mall","e":"bj.ccm@modinity.com","di":0,"g":"z Store: BJ Store - Cibinong City Mall Bogor","ld":"2026-09-03","dl":76.8,"jd":"2026-01-02","dj":321.2,"l30":0,"q30":0,"act":"cut_60"},{"id":20,"n":"Muthia Rifa Khalda","e":"muthia.rifa@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-09-04","dl":76.2,"jd":"2025-05-05","dj":563.2,"l30":0,"q30":0,"act":"cut_60"},{"id":525,"n":"Farah Nabilah Binti Abd Rashid","e":"farah.nabilah@modinity.com","di":14,"g":"Malaysia","ld":"2026-09-06","dl":74.0,"jd":"2026-08-14","dj":97.3,"l30":0,"q30":0,"act":"cut_60"},{"id":485,"n":"Sarasati Andisa Putri","e":"sarasati@modinity.com","di":10,"g":"Merchandising Production","ld":"2026-09-08","dl":72.0,"jd":"2026-06-05","dj":166.9,"l30":0,"q30":0,"act":"cut_60"},{"id":333,"n":"Benang Jarum Trans Studio Mall Makassar","e":"bj.makassar@modinity.com","di":1,"g":"z Store: FC BS BJ Store - Trans Studio Mall Makassar","ld":"2026-09-11","dl":68.9,"jd":"2026-01-02","dj":321.3,"l30":0,"q30":0,"act":"cut_60"},{"id":172,"n":"Dhian Rahma Prasetyo","e":"dhian@modinity.com","di":11,"g":"Tech","ld":"2026-09-25","dl":54.7,"jd":"2025-06-20","dj":516.9,"l30":0,"q30":0,"act":"cut_30"},{"id":223,"n":"Admin Packing","e":"admin.packing@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-09-26","dl":54.2,"jd":"2025-09-10","dj":435.1,"l30":0,"q30":0,"act":"cut_30"},{"id":507,"n":"Edi Riyan Efendi","e":"edi.efendi@modinity.com","di":18,"g":"ADP: Finance, Accounting, Tax | ADP: Manufacture and Warehouse | ADP: Sales and Marketing","ld":"2026-10-05","dl":45.1,"jd":"2026-07-16","dj":126.0,"l30":0,"q30":0,"act":"cut_30"},{"id":80,"n":"Alinda Dwi Histiyanto","e":"alinda@modinity.com","di":10,"g":"Merchandising Production","ld":"2026-10-06","dl":44.2,"jd":"2025-05-15","dj":553.2,"l30":0,"q30":0,"act":"cut_30"},{"id":195,"n":"Ajeng Annisa Faradhila","e":"ajeng.annisa@modinity.com","di":13,"g":"Product Development","ld":"2026-10-07","dl":43.1,"jd":"2025-07-31","dj":475.9,"l30":0,"q30":0,"act":"cut_30"},{"id":97,"n":"Mayla Najla Putri","e":"mayla.najla@modinity.com","di":11,"g":"Tech","ld":"2026-10-08","dl":42.1,"jd":"2025-05-16","dj":552.2,"l30":0,"q30":0,"act":"cut_30"},{"id":508,"n":"Daren Ferreiro Thene","e":"daren@modinity.com","di":11,"g":"Tech","ld":"2026-10-09","dl":41.2,"jd":"2026-07-17","dj":125.2,"l30":0,"q30":0,"act":"cut_30"},{"id":360,"n":"Buttonscarves Bukit Tinggi","e":"bs.bukittinggi@buttonscarves.com","di":1,"g":"z Store: FC BS Store - Benteng Pasar Bukittinggi","ld":"2026-10-10","dl":40.0,"jd":"2026-01-02","dj":321.3,"l30":0,"q30":0,"act":"cut_30"},{"id":548,"n":"Dewi Roshadi","e":"dewi.roshadi-intern@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-10-12","dl":38.2,"jd":"2026-10-12","dj":38.2,"l30":0,"q30":0,"act":"cut_30"},{"id":549,"n":"Christina","e":"christina@ascendiz.id","di":7,"g":"z External: Ascendiz","ld":"2026-10-12","dl":38.1,"jd":"2026-10-12","dj":38.1,"l30":0,"q30":0,"act":"cut_30"},{"id":450,"n":"Tasya Nadinda Aprilia","e":"tasya.nadinda@modinity.com","di":10,"g":"Merchandising Production","ld":"2026-10-12","dl":37.9,"jd":"2026-02-20","dj":272.1,"l30":0,"q30":0,"act":"cut_30"},{"id":390,"n":"Benang Jarum Padang","e":"bj.padang@modinity.com","di":1,"g":"z Store: FC BJ Store - Veteran Padang","ld":"2026-10-13","dl":36.8,"jd":"2026-01-02","dj":321.2,"l30":0,"q30":0,"act":"cut_30"},{"id":474,"n":"Eka Satria Putra","e":"eka.satria@modinity.com","di":4,"g":"Ops","ld":"2026-10-15","dl":35.5,"jd":"2026-05-06","dj":197.0,"l30":0,"q30":0,"act":"cut_30"},{"id":158,"n":"Emmanuel","e":"anel@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-10-15","dl":35.1,"jd":"2025-06-10","dj":527.0,"l30":0,"q30":0,"act":"cut_30"},{"id":190,"n":"Kristanto Deo","e":"kristanto@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-10-16","dl":34.2,"jd":"2025-07-24","dj":483.1,"l30":0,"q30":0,"act":"cut_30"},{"id":534,"n":"Yuni Asih","e":"yuni.asih@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-10-16","dl":34.1,"jd":"2026-09-01","dj":78.9,"l30":0,"q30":0,"act":"cut_30"},{"id":521,"n":"Tania Yaumil Jamil","e":"tania@modinity.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-10-16","dl":34.0,"jd":"2026-08-10","dj":101.2,"l30":0,"q30":0,"act":"cut_30"},{"id":329,"n":"Benang Jarum Bekasi","e":"bj.bekasi@modinity.com","di":0,"g":"z Store: BS BJ Store - Grand Metropolitan Mall Bekasi","ld":"2026-10-17","dl":33.1,"jd":"2026-01-02","dj":321.3,"l30":0,"q30":0,"act":"cut_30"},{"id":512,"n":"Benang Jarum Surabaya Gubeng","e":"bj.surabayagubeng@modinity.com","di":12,"g":"All Users Only","ld":"2026-10-18","dl":32.2,"jd":"2026-07-23","dj":119.3,"l30":0,"q30":0,"act":"cut_30"},{"id":554,"n":"buni","e":"buni@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-10-19","dl":31.2,"jd":"2026-10-19","dj":31.2,"l30":0,"q30":0,"act":"cut_30"},{"id":553,"n":"Satriya Adinugroho","e":"satriya.adinugroho@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-10-19","dl":31.2,"jd":"2026-10-16","dj":34.1,"l30":0,"q30":0,"act":"cut_30"},{"id":142,"n":"Tria Jatnika","e":"triaj@modinity.com","di":13,"g":"Product Development","ld":"2026-10-19","dl":31.2,"jd":"2025-05-30","dj":538.2,"l30":0,"q30":0,"act":"cut_30"},{"id":535,"n":"Maria Oktaviani","e":"maria@modinity.com","di":6,"g":"Marketing","ld":"2026-10-20","dl":30.1,"jd":"2026-09-02","dj":78.0,"l30":0,"q30":0,"act":"cut_30"},{"id":567,"n":"BS BJ Store Grand Outlet Karawang","e":"bsbj.outletkarawang@modinity.com","di":0,"g":"z Store: BS BJ Store - Grand Outlet Karawang","ld":"Never","dl":-1,"jd":"2026-11-10","dj":9.3,"l30":0,"q30":0,"act":"portal_own"},{"id":497,"n":"BS NP Store Villagio Karawang","e":"bs.npvillagiokarawang@modinity.com","di":0,"g":"z Store: BS NP Store - Villagio Karawang","ld":"2026-11-02","dl":17.0,"jd":"2026-06-29","dj":143.0,"l30":4,"q30":126,"act":"portal_own"},{"id":285,"n":"Nada Puspita Samarinda","e":"np.samarinda@nadapuspita.com","di":0,"g":"z Store: NP Store - Big Mall Samarinda","ld":"2026-11-02","dl":17.0,"jd":"2025-12-06","dj":348.0,"l30":1,"q30":30,"act":"portal_own"},{"id":326,"n":"Benang Jarum Senayan City","e":"bj.sency@modinity.com","di":0,"g":"z Store: BS BJ Store - Senayan City Jakarta","ld":"2026-11-02","dl":16.7,"jd":"2026-01-02","dj":321.3,"l30":8,"q30":1601,"act":"portal_own"},{"id":278,"n":"Zyta Delia Pondok Indah Mall","e":"zd.pim@modinity.com","di":0,"g":"z Store: ZD Store - Pondok Indah Mall 1 Jakarta","ld":"2026-11-03","dl":16.2,"jd":"2025-12-05","dj":348.9,"l30":5,"q30":740,"act":"portal_own"},{"id":520,"n":"Buttonscarves 23 Semarang","e":"bs.23semarang@modinity.com","di":0,"g":"z Store: BS Store - 23 Mall Semarang","ld":"2026-11-05","dl":14.1,"jd":"2026-08-10","dj":101.2,"l30":3,"q30":124,"act":"portal_own"},{"id":306,"n":"Tyga Gaia Mall Pontianak","e":"tyga.gaia@modinity.com","di":0,"g":"z Store: TG Store - Gaia Bumi Raya City Pontianak","ld":"2026-11-07","dl":12.2,"jd":"2025-12-09","dj":345.2,"l30":2,"q30":32,"act":"portal_own"},{"id":287,"n":"Nada Puspita Padang","e":"np.padang@nadapuspita.com","di":0,"g":"z Store: NP Store - Ujung Gurun Padang","ld":"2026-11-09","dl":10.1,"jd":"2025-12-06","dj":348.0,"l30":5,"q30":245,"act":"portal_own"},{"id":324,"n":"Benang Jarum Cirebon","e":"bj.cirebon@modinity.com","di":0,"g":"z Store: BS BJ Store - Kedawung Cirebon","ld":"2026-11-10","dl":9.3,"jd":"2026-01-02","dj":321.3,"l30":2,"q30":171,"act":"portal_own"},{"id":376,"n":"Benang Jarum Lombok","e":"bj.lombok@modinity.com","di":0,"g":"z Store: BJ Store - Epicentrum Mall Lombok","ld":"2026-11-11","dl":8.1,"jd":"2026-01-02","dj":321.2,"l30":4,"q30":265,"act":"portal_own"},{"id":379,"n":"Benang Jarum Pollux Mall Batam","e":"bj.polluxbatam@modinity.com","di":0,"g":"z Store: BJ Store - Pollux Mall Batam","ld":"2026-11-12","dl":7.1,"jd":"2026-01-02","dj":321.2,"l30":7,"q30":342,"act":"portal_own"},{"id":542,"n":"Nada Puspita Summarecon Bandung","e":"np.sumaba@modinity.com","di":0,"g":"z Store: NP Store - Summarecon Mall Bandung","ld":"2026-11-15","dl":4.3,"jd":"2026-09-21","dj":59.2,"l30":22,"q30":1355,"act":"portal_own"},{"id":296,"n":"Nada Puspita  Medan","e":"np.medan@nadapuspita.com","di":0,"g":"z Store: NP Store - Delipark Mall Medan","ld":"2026-11-15","dl":4.1,"jd":"2025-12-06","dj":348.0,"l30":14,"q30":525,"act":"portal_own"},{"id":399,"n":"Benang Jarum Bintaro Jaya Xchange","e":"bj.bxchange@modinity.com","di":0,"g":"z Store: BJ Store - Bintaro Xchange Tangerang","ld":"2026-11-15","dl":4.0,"jd":"2026-01-02","dj":321.0,"l30":20,"q30":1289,"act":"portal_own"},{"id":331,"n":"Benang Jarum Riau Bandung","e":"bj.bandung@modinity.com","di":0,"g":"z Store: BS BJ Store - RE Martadinata Bandung","ld":"2026-11-16","dl":3.2,"jd":"2026-01-02","dj":321.3,"l30":4,"q30":163,"act":"portal_own"},{"id":307,"n":"Nada Puspita Cirebon Superblok","e":"np.cirebon@modinity.com","di":0,"g":"z Store: NP Store - Cirebon Super Block Mall","ld":"2026-11-16","dl":3.2,"jd":"2025-12-09","dj":345.2,"l30":9,"q30":1400,"act":"portal_own"},{"id":327,"n":"Benang Jarum Margo City","e":"bj.margocity@modinity.com","di":0,"g":"z Store: BS BJ Store - Margo City Depok","ld":"2026-11-16","dl":3.1,"jd":"2026-01-02","dj":321.3,"l30":4,"q30":309,"act":"portal_own"},{"id":340,"n":"Buttonscarves Soekarno Hatta T3","e":"bs.soeta@modinity.com","di":0,"g":"z Store: BS Store - Terminal 3 Soetta","ld":"2026-11-16","dl":3.1,"jd":"2026-01-02","dj":321.3,"l30":16,"q30":736,"act":"portal_own"},{"id":424,"n":"Tyga Pondok Indah Mall 3","e":"tyga.pim3@modinity.com","di":0,"g":"z Store: TG Store - Pondok Indah Mall 3 Jakarta","ld":"2026-11-16","dl":3.1,"jd":"2026-01-30","dj":292.9,"l30":10,"q30":799,"act":"portal_own"},{"id":338,"n":"Buttonscarves Lombok","e":"bs.lombok@modinity.com","di":0,"g":"z Store: BS Store - Epicentrum Mall Lombok","ld":"2026-11-16","dl":3.0,"jd":"2026-01-02","dj":321.3,"l30":7,"q30":192,"act":"portal_own"},{"id":421,"n":"Buttonscarves Palangkaraya","e":"bs.palangkaraya@modinity.com","di":0,"g":"z Store: BS Store - Duta Mall Palangkaraya","ld":"2026-11-16","dl":3.0,"jd":"2026-01-28","dj":294.9,"l30":21,"q30":1292,"act":"portal_own"},{"id":279,"n":"Zyta Delia Pollux Mall Batam","e":"zd.polluxbatam@zytadelia.com","di":0,"g":"z Store: ZD Store - Pollux Mall Batam","ld":"2026-11-17","dl":2.3,"jd":"2025-12-05","dj":348.9,"l30":3,"q30":631,"act":"portal_own"},{"id":325,"n":"Benang Jarum Couture PIM","e":"bjc.pim@modinity.com","di":0,"g":"z Store: BJ Couture Store - Pondok Indah Mall 2 Jakarta","ld":"2026-11-17","dl":2.2,"jd":"2026-01-02","dj":321.3,"l30":19,"q30":1062,"act":"portal_own"},{"id":346,"n":"Buttonscarves Pollux Mall Batam","e":"bs.polluxbatam@modinity.com","di":0,"g":"z Store: BS Store - Polux Mall Batam","ld":"2026-11-17","dl":2.2,"jd":"2026-01-02","dj":321.3,"l30":21,"q30":2823,"act":"portal_own"},{"id":352,"n":"Buttonscarves PVJ","e":"bs.pvj@modinity.com","di":0,"g":"z Store: BS Store - Paris Van Java Bandung","ld":"2026-11-17","dl":2.2,"jd":"2026-01-02","dj":321.3,"l30":12,"q30":1305,"act":"portal_own"},{"id":518,"n":"Nada Puspita Jakarta Premium Outlet","e":"np.jpo@modinity.com","di":0,"g":"z Store: NP Store - Jakarta Premium Outlet Jakarta","ld":"2026-11-17","dl":2.2,"jd":"2026-08-05","dj":106.0,"l30":28,"q30":2683,"act":"portal_own"},{"id":455,"n":"Rizman Ruzaini Pondok Indah Mall 2","e":"rr.pim2@modinity.com","di":0,"g":"z Store: RR Store - Pondok Indah Mall 2 Jakarta","ld":"2026-11-17","dl":2.2,"jd":"2026-03-13","dj":251.1,"l30":23,"q30":1045,"act":"portal_own"},{"id":409,"n":"Buttonscarves Beauty Gaia Mall Pontianak","e":"bsb.gaia@modinity.com","di":0,"g":"z Store: BSB Store - Gaia Bumi Raya City Pontianak","ld":"2026-11-17","dl":1.9,"jd":"2026-01-09","dj":314.1,"l30":5,"q30":238,"act":"portal_own"},{"id":282,"n":"Nada Puspita Pollux Mall Batam","e":"np.polluxbatam@nadapuspita.com","di":0,"g":"z Store: NP Store - Pollux Mall Batam","ld":"2026-11-17","dl":1.8,"jd":"2025-12-05","dj":348.9,"l30":12,"q30":803,"act":"portal_own"},{"id":377,"n":"Benang Jarum Big Mall Samarinda","e":"bj.samarinda@modinity.com","di":0,"g":"z Store: BJ Store - Big Mall Samarinda","ld":"2026-11-18","dl":1.3,"jd":"2026-01-02","dj":321.2,"l30":27,"q30":672,"act":"portal_own"},{"id":298,"n":"Nada Puspita Banjarmasin","e":"np.banjarmasin@nadapuspita.com","di":0,"g":"z Store: NP Store - Duta Mall Banjarmasin","ld":"2026-11-18","dl":1.3,"jd":"2025-12-06","dj":348.0,"l30":22,"q30":998,"act":"portal_own"},{"id":323,"n":"Buttonscarves Cirebon","e":"bs.cirebon@buttonscarves.com","di":0,"g":"z Store: BS BJ Store - Kedawung Cirebon","ld":"2026-11-18","dl":1.2,"jd":"2026-01-02","dj":321.3,"l30":19,"q30":3940,"act":"portal_own"},{"id":343,"n":"Buttonscarves Pekanbaru","e":"bs.pekanbaru@modinity.com","di":0,"g":"z Store: BS Store - Living World Pekanbaru","ld":"2026-11-18","dl":1.2,"jd":"2026-01-02","dj":321.3,"l30":53,"q30":6354,"act":"portal_own"},{"id":291,"n":"Nada Puspita Senayan City","e":"np.sency@nadapuspita.com","di":0,"g":"z Store: NP Store - Senayan City Jakarta","ld":"2026-11-18","dl":1.2,"jd":"2025-12-06","dj":348.0,"l30":45,"q30":6374,"act":"portal_own"},{"id":380,"n":"Benang Jarum Pekanbaru","e":"bj.pekanbaru@modinity.com","di":0,"g":"z Store: BJ Store - Living World Pekanbaru","ld":"2026-11-18","dl":1.1,"jd":"2026-01-02","dj":321.2,"l30":38,"q30":3872,"act":"portal_own"},{"id":332,"n":"Buttonscarves Bandung","e":"bs.bandung@modinity.com","di":0,"g":"z Store: BS BJ Store - RE Martadinata Bandung","ld":"2026-11-18","dl":1.1,"jd":"2026-01-02","dj":321.3,"l30":16,"q30":1191,"act":"portal_own"},{"id":487,"n":"Buttonscarves Benang Jarum The Grand Outlet Karawang","e":"bs.bjoutletkarawang@modinity.com","di":0,"g":"z Store: BS BJ Store - Grand Outlet Karawang","ld":"2026-11-18","dl":1.1,"jd":"2026-06-13","dj":158.9,"l30":4,"q30":199,"act":"portal_own"},{"id":351,"n":"Buttonscarves Deltamas Cikarang","e":"bs.aeoncikarang@modinity.com","di":0,"g":"z Store: BS Store - AEON Deltamas Cikarang","ld":"2026-11-18","dl":1.1,"jd":"2026-01-02","dj":321.3,"l30":16,"q30":998,"act":"portal_own"},{"id":556,"n":"Rizman Ruzaini JPO","e":"rr.jpo@modinity.com","di":0,"g":"z Store: RR Store - Jakarta Premium Outlet Jakarta","ld":"2026-11-18","dl":1.1,"jd":"2026-10-26","dj":24.1,"l30":19,"q30":562,"act":"portal_own"},{"id":378,"n":"Benang Jarum PIM 3","e":"bj.pim3@modinity.com","di":0,"g":"z Store: BJ Store - Pondok Indah Mall 3 Jakarta","ld":"2026-11-18","dl":1.0,"jd":"2026-01-02","dj":321.2,"l30":23,"q30":1884,"act":"portal_own"},{"id":348,"n":"Buttonscarves FX","e":"bs.fx@modinity.com","di":0,"g":"z Store: BS Store - FX Sudirman Jakarta","ld":"2026-11-18","dl":1.0,"jd":"2026-01-02","dj":321.3,"l30":23,"q30":2150,"act":"portal_own"},{"id":277,"n":"Calla The Label Pondok Indah Mall 1","e":"ctl.pim1@modinity.com","di":0,"g":"z Store: CTL Store - Pondok Indah Mall 1 Jakarta","ld":"2026-11-18","dl":1.0,"jd":"2025-12-05","dj":348.9,"l30":24,"q30":577,"act":"portal_own"},{"id":283,"n":"Nada Puspita PIM","e":"np.pim@nadapuspita.com","di":0,"g":"z Store: NP Store - Pondok Indah Mall 2 Jakarta","ld":"2026-11-18","dl":0.9,"jd":"2025-12-06","dj":348.0,"l30":21,"q30":2289,"act":"portal_own"},{"id":384,"n":"Benang Jarum Gaia Mall Pontianak","e":"bj.gaia@modinity.com","di":0,"g":"z Store: BJ Store - Gaia Bumi Raya City Pontianak","ld":"2026-11-18","dl":0.8,"jd":"2026-01-02","dj":321.2,"l30":9,"q30":860,"act":"portal_own"},{"id":309,"n":"Zyta Delia Duta Mall Banjarmasin","e":"zd.banjarmasin@modinity.com","di":0,"g":"z Store: ZD Store - Duta Mall Banjarmasin","ld":"2026-11-18","dl":0.7,"jd":"2025-12-10","dj":344.1,"l30":6,"q30":140,"act":"portal_own"},{"id":386,"n":"Benang Jarum Pakuwon Mall Bekasi","e":"bj.pakuwonbekasi@modinity.com","di":0,"g":"z Store: BJ Store - Pakuwon Mall Bekasi","ld":"2026-11-19","dl":0.3,"jd":"2026-01-02","dj":321.2,"l30":31,"q30":983,"act":"portal_own"},{"id":481,"n":"Benang Jarum Palangkaraya","e":"bj.palangkaraya@modinity.com","di":0,"g":"z Store: BJ Store - Duta Mall Palangkaraya","ld":"2026-11-19","dl":0.3,"jd":"2026-05-22","dj":180.7,"l30":43,"q30":2074,"act":"portal_own"},{"id":381,"n":"Benang Jarum Plaza Indonesia","e":"bj.plazaindonesia@modinity.com","di":0,"g":"z Store: BJ Store - Plaza Indonesia Jakarta","ld":"2026-11-19","dl":0.3,"jd":"2026-01-02","dj":321.2,"l30":33,"q30":2940,"act":"portal_own"},{"id":426,"n":"Benang Jarum Summarecon Mall Bekasi 2","e":"bj.smb2@modinity.com","di":0,"g":"z Store: BJ Store - Summarecon Mall Bekasi 2","ld":"2026-11-19","dl":0.3,"jd":"2026-02-01","dj":291.0,"l30":30,"q30":1022,"act":"portal_own"},{"id":350,"n":"Buttonscarves Aeon","e":"bs.aeon@modinity.com","di":0,"g":"z Store: BS Store - AEON Sentul","ld":"2026-11-19","dl":0.3,"jd":"2026-01-02","dj":321.3,"l30":38,"q30":6398,"act":"portal_own"},{"id":356,"n":"Buttonscarves Pakuwon Mall Bekasi","e":"bs.pakuwonbekasi@modinity.com","di":0,"g":"z Store: BS Store - Pakuwon Mall Bekasi","ld":"2026-11-19","dl":0.3,"jd":"2026-01-02","dj":321.3,"l30":29,"q30":3653,"act":"portal_own"},{"id":265,"n":"Buttonscarves Pejaten","e":"bs.pejaten@modinity.com","di":0,"g":"z Store: BS Store - Pejaten Jakarta","ld":"2026-11-19","dl":0.3,"jd":"2025-11-24","dj":360.1,"l30":38,"q30":2191,"act":"portal_own"},{"id":342,"n":"Buttonscarves PIM","e":"bs.pim@modinity.com","di":0,"g":"z Store: BS Store - Pondok Indah Mall 1 Jakarta","ld":"2026-11-19","dl":0.3,"jd":"2026-01-02","dj":321.3,"l30":31,"q30":1968,"act":"portal_own"},{"id":339,"n":"Buttonscarves Samarinda","e":"bs.samarinda@modinity.com","di":0,"g":"z Store: BS Store - Big Mall Samarinda","ld":"2026-11-19","dl":0.3,"jd":"2026-01-02","dj":321.3,"l30":33,"q30":1287,"act":"portal_own"},{"id":280,"n":"Nada Puspita Deltamas Cikarang","e":"np.aeoncikarang@nadapuspita.com","di":0,"g":"z Store: NP Store - AEON Deltamas Cikarang","ld":"2026-11-19","dl":0.3,"jd":"2025-12-05","dj":348.9,"l30":33,"q30":1499,"act":"portal_own"},{"id":422,"n":"Nada Puspita Palangkaraya","e":"np.palangkaraya@modinity.com","di":0,"g":"z Store: NP Store - Duta Mall Palangkaraya","ld":"2026-11-19","dl":0.3,"jd":"2026-01-28","dj":294.9,"l30":37,"q30":1580,"act":"portal_own"},{"id":555,"n":"Zyta Delia Metropolitan Mall Bekasi","e":"zd.mmbekasi@modinity.com","di":0,"g":"z Store:  ZD Store - Metropolitan Mall Bekasi","ld":"2026-11-19","dl":0.3,"jd":"2026-10-20","dj":30.0,"l30":15,"q30":603,"act":"portal_own"},{"id":383,"n":"Benang Jarum Jakarta Premium Outlet","e":"bj.premiumoutlet@modinity.com","di":0,"g":"z Store: BJ Store - Jakarta Premium Outlet Jakarta","ld":"2026-11-19","dl":0.2,"jd":"2026-01-02","dj":321.2,"l30":30,"q30":2187,"act":"portal_own"},{"id":505,"n":"BS Store Summarecon Mall Bekasi","e":"bs.summareconbekasi@modinity.com","di":0,"g":"z Store: BS Store - Summarecon Mall Bekasi","ld":"2026-11-19","dl":0.2,"jd":"2026-07-11","dj":131.3,"l30":25,"q30":2194,"act":"portal_own"},{"id":341,"n":"Buttonscarves Aeon BSD","e":"bs.aeonbsd@buttonscarves.com","di":0,"g":"z Store: BS Store - AEON BSD","ld":"2026-11-19","dl":0.2,"jd":"2026-01-02","dj":321.3,"l30":34,"q30":2021,"act":"portal_own"},{"id":320,"n":"Buttonscarves Cibubur","e":"bs.cibubur@modinity.com","di":0,"g":"z Store: BS Store - Trans Studio Mall Cibubur","ld":"2026-11-19","dl":0.2,"jd":"2025-12-18","dj":335.9,"l30":45,"q30":5335,"act":"portal_own"},{"id":397,"n":"Buttonscarves Gaia Mall Pontianak","e":"bs.gaia@modinity.com","di":0,"g":"z Store: BS Store - Gaia Bumi Raya City Pontianak","ld":"2026-11-19","dl":0.2,"jd":"2026-01-02","dj":321.1,"l30":24,"q30":719,"act":"portal_own"},{"id":355,"n":"Buttonscarves Gandaria City","e":"bs.gancit@modinity.com","di":0,"g":"z Store: BS Store - Gandaria City Jakarta","ld":"2026-11-19","dl":0.2,"jd":"2026-01-02","dj":321.3,"l30":15,"q30":940,"act":"portal_own"},{"id":353,"n":"Buttonscarves Jakarta Premium Outlet","e":"bs.premiumoutlet@modinity.com","di":0,"g":"z Store: BS Store - Jakarta Premium Outlet Jakarta","ld":"2026-11-19","dl":0.2,"jd":"2026-01-02","dj":321.3,"l30":33,"q30":7101,"act":"portal_own"},{"id":328,"n":"Buttonscarves Margo City","e":"bs.margo@buttonscarves.com","di":0,"g":"z Store: BS BJ Store - Margo City Depok","ld":"2026-11-19","dl":0.2,"jd":"2026-01-02","dj":321.3,"l30":36,"q30":4957,"act":"portal_own"},{"id":321,"n":"Buttonscarves Senayan City","e":"bs.sency@modinity.com","di":0,"g":"z Store: BS BJ Store - Senayan City Jakarta","ld":"2026-11-19","dl":0.2,"jd":"2025-12-18","dj":335.7,"l30":40,"q30":2350,"act":"portal_own"},{"id":345,"n":"Buttonscarves TSM Bandung","e":"bs.tsmbandung@modinity.com","di":0,"g":"z Store: BS Store - Trans Studio Mall Bandung","ld":"2026-11-19","dl":0.2,"jd":"2026-01-02","dj":321.3,"l30":24,"q30":1102,"act":"portal_own"},{"id":273,"n":"Calla The Label Gaia Mall Pontianak","e":"ctl.gaia@modinity.com","di":0,"g":"z Store: CTL Store - Gaia Bumi Raya City Pontianak","ld":"2026-11-19","dl":0.2,"jd":"2025-12-05","dj":348.9,"l30":10,"q30":469,"act":"portal_own"},{"id":511,"n":"Nada Puspita 23 Semarang","e":"np.23semarang@modinity.com","di":0,"g":"z Store: NP Store - 23 Mall Semarang","ld":"2026-11-19","dl":0.2,"jd":"2026-07-22","dj":119.9,"l30":36,"q30":1595,"act":"portal_own"},{"id":412,"n":"Nada Puspita Palembang","e":"np.palembang@modinity.com","di":0,"g":"z Store: NP Store - Palembang Indah Mall","ld":"2026-11-19","dl":0.2,"jd":"2026-01-16","dj":306.9,"l30":34,"q30":2997,"act":"portal_own"},{"id":495,"n":"BJ 23 Semarang Mall","e":"bj.23semarangmall@modinity.com","di":0,"g":"z Store: BJ Store - 23 Mall Semarang","ld":"2026-11-19","dl":0.1,"jd":"2026-06-29","dj":143.1,"l30":18,"q30":1397,"act":"portal_own"},{"id":330,"n":"Buttonscarves Bekasi","e":"bs.bekasi@modinity.com","di":0,"g":"z Store: BS BJ Store - Grand Metropolitan Mall Bekasi","ld":"2026-11-19","dl":0.1,"jd":"2026-01-02","dj":321.3,"l30":31,"q30":6162,"act":"portal_own"},{"id":347,"n":"Buttonscarves Paskal","e":"bs.paskal@modinity.com","di":0,"g":"z Store: BS Store - Paskal 23 Bandung","ld":"2026-11-19","dl":0.1,"jd":"2026-01-02","dj":321.3,"l30":33,"q30":3607,"act":"portal_own"},{"id":337,"n":"Buttonscarves Plaza Indonesia","e":"bs.plazaindonesia@modinity.com","di":0,"g":"z Store: BS Store - Plaza Indonesia Jakarta","ld":"2026-11-19","dl":0.1,"jd":"2026-01-02","dj":321.3,"l30":97,"q30":9750,"act":"portal_own"},{"id":300,"n":"Nada Puspita Ruko Pekanbaru","e":"np.pekanbaru@modinity.com","di":0,"g":"z Store: NP Store - Marpoyan Damai Pekanbaru","ld":"2026-11-19","dl":0.1,"jd":"2025-12-06","dj":348.0,"l30":41,"q30":2204,"act":"portal_own"},{"id":336,"n":"Buttonscarves Botani Square","e":"bs.botani@buttonscarves.com","di":0,"g":"z Store: BS Store - Botani Square Bogor","ld":"2026-11-19","dl":0.0,"jd":"2026-01-02","dj":321.3,"l30":35,"q30":2154,"act":"portal_own"},{"id":349,"n":"Buttonscarves PIM 3","e":"bs.pim3@modinity.com","di":0,"g":"z Store: BS Store - Pondok Indah Mall 3 Jakarta","ld":"2026-11-19","dl":0.0,"jd":"2026-01-02","dj":321.3,"l30":62,"q30":6535,"act":"portal_own"},{"id":393,"n":"Benang Jarum Pentacity Balikpapan","e":"bj.pentacity@modinity.com","di":1,"g":"z Store: FC BJ Store - Pentacity Mall Balikpapan","ld":"2026-11-05","dl":14.2,"jd":"2026-01-02","dj":321.2,"l30":2,"q30":28,"act":"portal_fc"},{"id":454,"n":"Benang Jarum Semarang","e":"bj.semarang@modinity.com","di":1,"g":"z Store: FC BS BJ Store - DI Panjaitan Semarang","ld":"2026-11-13","dl":6.3,"jd":"2026-03-04","dj":260.3,"l30":5,"q30":157,"act":"portal_fc"},{"id":362,"n":"Buttonscarves Padang","e":"bs.padang@buttonscarves.com","di":1,"g":"z Store: FC BS Store - Veteran Padang","ld":"2026-11-15","dl":4.3,"jd":"2026-01-02","dj":321.3,"l30":7,"q30":410,"act":"portal_fc"},{"id":365,"n":"Buttonscarves Medan Sun Plaza","e":"bs.sunplaza@buttonscarves.com","di":1,"g":"z Store: FC BS Store - Sun Plaza Medan","ld":"2026-11-16","dl":3.2,"jd":"2026-01-02","dj":321.3,"l30":10,"q30":329,"act":"portal_fc"},{"id":303,"n":"Nada Puspita Malang","e":"np.malang@modinity.com","di":1,"g":"z Store: FC NP Store - Malang","ld":"2026-11-16","dl":3.1,"jd":"2025-12-08","dj":346.0,"l30":16,"q30":1111,"act":"portal_fc"},{"id":418,"n":"Buttonscarves Palembang Indah Mall","e":"bs.palembang2@modinity.com","di":1,"g":"z Store: FC BS Store - Palembang Indah Mall","ld":"2026-11-16","dl":3.0,"jd":"2026-01-23","dj":300.0,"l30":20,"q30":665,"act":"portal_fc"},{"id":370,"n":"Buttonscarves Bungo","e":"bs.bungo@buttonscarves.com","di":1,"g":"z Store: FC BS Store - Pasar Muara Bungo","ld":"2026-11-16","dl":2.9,"jd":"2026-01-02","dj":321.3,"l30":24,"q30":2064,"act":"portal_fc"},{"id":398,"n":"Benang Jarum Malang","e":"bj.malang@modinity.com","di":1,"g":"z Store: FC BJ Store - Malang","ld":"2026-11-17","dl":2.3,"jd":"2026-01-02","dj":321.0,"l30":24,"q30":1337,"act":"portal_fc"},{"id":388,"n":"Benang Jarum Jambi","e":"bj.jambi@modinity.com","di":1,"g":"z Store: FC BJ Store - Telanaipura Jambi","ld":"2026-11-17","dl":2.2,"jd":"2026-01-02","dj":321.2,"l30":18,"q30":959,"act":"portal_fc"},{"id":400,"n":"Buttonscarves Malang","e":"bs.malang@modinity.com","di":1,"g":"z Store: FC BS Store - Malang","ld":"2026-11-17","dl":2.0,"jd":"2026-01-03","dj":320.2,"l30":23,"q30":2031,"act":"portal_fc"},{"id":274,"n":"Calla The Label Tunjungan Plaza Surabaya","e":"ctl.surabaya@modinity.com","di":1,"g":"z Store: FC CTL Store - Tunjungan Plaza Surabaya","ld":"2026-11-17","dl":1.9,"jd":"2025-12-05","dj":348.9,"l30":10,"q30":684,"act":"portal_fc"},{"id":366,"n":"Buttonscarves Bintaro Jaya Xchange","e":"bs.bxchange@modinity.com","di":1,"g":"z Store: FC BS Store - Bintaro Xchange Tangerang","ld":"2026-11-18","dl":1.3,"jd":"2026-01-02","dj":321.3,"l30":39,"q30":5507,"act":"portal_fc"},{"id":391,"n":"Benang Jarum Bukit Tinggi","e":"bj.bukittinggi@modinity.com","di":1,"g":"z Store: FC BJ Store - Benteng Pasar Bukittinggi","ld":"2026-11-18","dl":1.2,"jd":"2026-01-02","dj":321.2,"l30":4,"q30":80,"act":"portal_fc"},{"id":374,"n":"Buttonscarves Deli Park Medan","e":"bs.deliparkmedan@buttonscarves.com","di":1,"g":"z Store: FC BS Store - Delipark Mall Medan","ld":"2026-11-18","dl":1.2,"jd":"2026-01-02","dj":321.3,"l30":7,"q30":338,"act":"portal_fc"},{"id":358,"n":"Buttonscarves Kota Kasablanka","e":"bs.kokas@buttonscarves.com","di":1,"g":"z Store: FC BS Store - Kota Kasablanka Jakarta","ld":"2026-11-18","dl":1.2,"jd":"2026-01-02","dj":321.3,"l30":8,"q30":1043,"act":"portal_fc"},{"id":288,"n":"Nada Puspita Bintaro Jaya Xchange","e":"np.bxchange@modinity.com","di":1,"g":"z Store: FC NP Store - Bintaro Xchange Tangerang","ld":"2026-11-18","dl":1.2,"jd":"2025-12-06","dj":348.0,"l30":26,"q30":996,"act":"portal_fc"},{"id":292,"n":"Nada Puspita Summarecon Mall Bekasi","e":"np.summareconbekasi@modinity.com","di":1,"g":"z Store: FC NP Store - Summarecon Bekasi","ld":"2026-11-18","dl":1.2,"jd":"2025-12-06","dj":348.0,"l30":14,"q30":1871,"act":"portal_fc"},{"id":357,"n":"Buttonscarves Banjarbaru","e":"bs.banjarbaru@buttonscarves.com","di":1,"g":"z Store: FC BS Store - QMall Banjarbaru","ld":"2026-11-18","dl":1.1,"jd":"2026-01-02","dj":321.3,"l30":2,"q30":50,"act":"portal_fc"},{"id":290,"n":"Nada Puspita Surabaya","e":"np.surabaya@nadapuspita.com","di":1,"g":"z Store: FC NP Store - Tunjungan Plaza Surabaya","ld":"2026-11-18","dl":1.0,"jd":"2025-12-06","dj":348.0,"l30":19,"q30":3289,"act":"portal_fc"},{"id":372,"n":"Buttonscarves Banjarmasin","e":"bs.banjarmasin@buttonscarves.com","di":1,"g":"z Store: FC BS Store - Duta Mall Banjarmasin","ld":"2026-11-19","dl":0.5,"jd":"2026-01-02","dj":321.3,"l30":4,"q30":72,"act":"portal_fc"},{"id":395,"n":"Benang Jarum Yogyakarta","e":"bj.yogyakarta@modinity.com","di":1,"g":"z Store: FC BJ Store - Gondokusuman Yogyakarta","ld":"2026-11-19","dl":0.3,"jd":"2026-01-02","dj":321.2,"l30":38,"q30":924,"act":"portal_fc"},{"id":375,"n":"Buttonscarves  Makassar Panakkukang","e":"bs.mks.panakkukang@modinity.com","di":1,"g":"z Store: FC BS Store - Panakkukang Makassar","ld":"2026-11-19","dl":0.3,"jd":"2026-01-02","dj":321.3,"l30":68,"q30":7506,"act":"portal_fc"},{"id":359,"n":"Buttonscarves Jogja","e":"bs.jogja@buttonscarves.com","di":1,"g":"z Store: FC BS Store - Jetis Yogyakarta","ld":"2026-11-19","dl":0.3,"jd":"2026-01-02","dj":321.3,"l30":33,"q30":1994,"act":"portal_fc"},{"id":367,"n":"Buttonscarves Semarang","e":"bs.semarang@buttonscarves.com","di":1,"g":"z Store: FC BS BJ Store - DI Panjaitan Semarang","ld":"2026-11-19","dl":0.3,"jd":"2026-01-02","dj":321.3,"l30":31,"q30":1345,"act":"portal_fc"},{"id":371,"n":"Buttonscarves TP Surabaya","e":"bs.tpsurabaya@modinity.com","di":1,"g":"z Store: FC BS Store - Tunjungan Plaza Surabaya","ld":"2026-11-19","dl":0.3,"jd":"2026-01-02","dj":321.3,"l30":38,"q30":1561,"act":"portal_fc"},{"id":334,"n":"Buttonscarves TSM Makassar","e":"bs.makassar@modinity.com","di":1,"g":"z Store: FC BS BJ Store - Trans Studio Mall Makassar","ld":"2026-11-19","dl":0.3,"jd":"2026-01-02","dj":321.3,"l30":55,"q30":14338,"act":"portal_fc"},{"id":297,"n":"Nada Puspita  Pakuwon Mall Bekasi","e":"np.pakuwonbekasi@modinity.com","di":1,"g":"z Store: FC NP Store - Pakuwon Mall Bekasi | z Store: NP Store - Pakuwon Mall Bekasi","ld":"2026-11-19","dl":0.3,"jd":"2025-12-06","dj":348.0,"l30":30,"q30":2819,"act":"portal_fc"},{"id":286,"n":"Nada Puspita Paskal","e":"np.paskal@modinity.com","di":1,"g":"z Store: FC NP Store - Paskal Bandung","ld":"2026-11-19","dl":0.3,"jd":"2025-12-06","dj":348.0,"l30":26,"q30":1618,"act":"portal_fc"},{"id":294,"n":"Nada Puspita Pentacity Balikpapan","e":"np.pentacity@modinity.com","di":1,"g":"z Store: FC NP Store - Pentacity Mall Balikpapan","ld":"2026-11-19","dl":0.3,"jd":"2025-12-06","dj":348.0,"l30":38,"q30":1869,"act":"portal_fc"},{"id":293,"n":"Nada Puspita Q Mall Banjarbaru","e":"np.banjarbaru@modinity.com","di":1,"g":"z Store: FC NP Store - QMall Banjarbaru","ld":"2026-11-19","dl":0.3,"jd":"2025-12-06","dj":348.0,"l30":54,"q30":874,"act":"portal_fc"},{"id":301,"n":"Nada Puspita Ruko Aceh","e":"np.aceh@modinity.com","di":1,"g":"z Store: FC NP Store - Lueng Bata Aceh","ld":"2026-11-19","dl":0.3,"jd":"2025-12-06","dj":348.0,"l30":31,"q30":2664,"act":"portal_fc"},{"id":299,"n":"Nada Puspita Ruko Lampung","e":"np.lampung@modinity.com","di":1,"g":"z Store: FC NP Store - Tanjung Karang Pusat Lampung","ld":"2026-11-19","dl":0.3,"jd":"2025-12-06","dj":348.0,"l30":34,"q30":2407,"act":"portal_fc"},{"id":289,"n":"Nada Puspita Ruko Yogyakarta","e":"np.yogyakarta@modinity.com","di":1,"g":"z Store: FC NP Store - Gondokusuman Yogyakarta","ld":"2026-11-19","dl":0.3,"jd":"2025-12-06","dj":348.0,"l30":34,"q30":1463,"act":"portal_fc"},{"id":364,"n":"Buttonscarves Aceh","e":"bs.aceh@buttonscarves.com","di":1,"g":"z Store: FC BS Store - Lueng Bata Aceh","ld":"2026-11-19","dl":0.2,"jd":"2026-01-02","dj":321.3,"l30":90,"q30":5596,"act":"portal_fc"},{"id":281,"n":"Nada Puspita Cibinong City Mall","e":"np.ccm@modinity.com","di":1,"g":"z Store: FC NP Store - Cibinong City Mall","ld":"2026-11-19","dl":0.2,"jd":"2025-12-05","dj":348.9,"l30":43,"q30":1499,"act":"portal_fc"},{"id":284,"n":"Nada Puspita Makassar","e":"np.makassar@modinity.com","di":1,"g":"z Store: FC NP Store - Trans Studio Mall Makassar","ld":"2026-11-19","dl":0.2,"jd":"2025-12-06","dj":348.0,"l30":38,"q30":3747,"act":"portal_fc"},{"id":394,"n":"Benang Jarum  Banjarmasin","e":"bj.banjarmasin@buttonscarves.com","di":1,"g":"z Store: FC BJ Store - Duta Mall Banjarmasin","ld":"2026-11-19","dl":0.1,"jd":"2026-01-02","dj":321.2,"l30":4,"q30":186,"act":"portal_fc"},{"id":389,"n":"Benang Jarum Palembang","e":"bj.palembang@modinity.com","di":1,"g":"z Store: FC BJ Store - Ilir Barat Palembang","ld":"2026-11-19","dl":0.1,"jd":"2026-01-02","dj":321.2,"l30":22,"q30":732,"act":"portal_fc"},{"id":368,"n":"buttonscarves balikpapan","e":"bs.balikpapan@modinity.com","di":1,"g":"z Store: FC BS Store - Pentacity Mall Balikpapan","ld":"2026-11-19","dl":0.1,"jd":"2026-01-02","dj":321.3,"l30":35,"q30":2869,"act":"portal_fc"},{"id":361,"n":"Buttonscarves Jambi","e":"bs.jambi@buttonscarves.com","di":1,"g":"z Store: FC BS Store - Telanaipura Jambi","ld":"2026-11-19","dl":0.1,"jd":"2026-01-02","dj":321.3,"l30":16,"q30":797,"act":"portal_fc"},{"id":363,"n":"Buttonscarves Lampung","e":"bs.lampung@buttonscarves.com","di":1,"g":"z Store: FC BS Store - Tanjung Karang Pusat Lampung","ld":"2026-11-19","dl":0.1,"jd":"2026-01-02","dj":321.3,"l30":34,"q30":1320,"act":"portal_fc"},{"id":373,"n":"Buttonscarves Pangkal Pinang","e":"bs.pangkalpinang@buttonscarves.com","di":1,"g":"z Store: FC BS Store - Taman Sari Pangkalpinang","ld":"2026-11-19","dl":0.1,"jd":"2026-01-02","dj":321.3,"l30":40,"q30":3092,"act":"portal_fc"},{"id":295,"n":"Nada Puspita Jambi","e":"np.jambi@nadapuspita.com","di":1,"g":"z Store: FC NP Store - Telanaipura Jambi","ld":"2026-11-19","dl":0.1,"jd":"2025-12-06","dj":348.0,"l30":34,"q30":907,"act":"portal_fc"},{"id":369,"n":"Buttonscarves Palembang","e":"bs.palembang@buttonscarves.com","di":1,"g":"z Store: FC BS Store - Ilir Barat Palembang","ld":"2026-11-19","dl":0.0,"jd":"2026-01-02","dj":321.3,"l30":40,"q30":1641,"act":"portal_fc"},{"id":335,"n":"Buttonscarves Surabaya Ngagel","e":"bs.surabayangagel@modinity.com","di":1,"g":"z Store: FC BS BJ Store - Gubeng Surabaya","ld":"2026-11-19","dl":0.0,"jd":"2026-01-02","dj":321.3,"l30":61,"q30":2763,"act":"portal_fc"},{"id":302,"n":"Nada Puspita Gaia Mall Pontianak","e":"np.gaia@modinity.com","di":1,"g":"z Store: FC NP Store - Gaia Bumi Raya City Pontianak","ld":"2026-11-19","dl":0.0,"jd":"2025-12-08","dj":346.0,"l30":28,"q30":1834,"act":"portal_fc"},{"id":129,"n":"Anindito Nur Ramadhan","e":"dito@modinity.com","di":9,"g":"ExCo | HR","ld":"2026-08-30","dl":80.7,"jd":"2025-05-21","dj":547.3,"l30":0,"q30":0,"act":"keep_exco"},{"id":125,"n":"Avantika Rajagopalan","e":"avantika@modinity.com","di":9,"g":"ExCo | Finance, Accounting, and Tax","ld":"2026-09-01","dl":79.2,"jd":"2025-05-21","dj":547.3,"l30":0,"q30":0,"act":"keep_exco"},{"id":130,"n":"Sunarwan Alvito","e":"sunarwan@aliatexprint.com","di":9,"g":"ADP: Manufacture and Warehouse | ExCo","ld":"2026-09-03","dl":77.2,"jd":"2025-05-21","dj":547.3,"l30":0,"q30":0,"act":"keep_exco"},{"id":532,"n":"Niccolas Niccolas","e":"nic@modinity.com","di":9,"g":"ExCo","ld":"2026-10-09","dl":41.1,"jd":"2026-08-27","dj":84.2,"l30":0,"q30":0,"act":"keep_exco"},{"id":417,"n":"Alda Prawitera","e":"alda.prawitera@modinity.com","di":9,"g":"ExCo","ld":"2026-10-27","dl":23.0,"jd":"2026-01-22","dj":300.9,"l30":2,"q30":108,"act":"keep_exco"},{"id":126,"n":"Zyta Delia Rahma","e":"zyta@modinity.com","di":9,"g":"ExCo | Product Development","ld":"2026-10-29","dl":21.0,"jd":"2025-05-21","dj":547.3,"l30":2,"q30":29,"act":"keep_exco"},{"id":559,"n":"Kanya Anindyajati Trihapsari","e":"kanya@modinity.com","di":9,"g":"ExCo","ld":"2026-11-09","dl":10.2,"jd":"2026-10-29","dj":21.0,"l30":2,"q30":914,"act":"keep_exco"},{"id":31,"n":"Bunga Wijaya","e":"bunga@modinity.com","di":9,"g":"ExCo | Marketing","ld":"2026-11-09","dl":10.1,"jd":"2025-05-13","dj":555.2,"l30":1,"q30":22,"act":"keep_exco"},{"id":253,"n":"Willy Widiatmiko Soedjono","e":"willy@modinity.com","di":9,"g":"ExCo | Tech","ld":"2026-11-10","dl":9.0,"jd":"2025-11-04","dj":380.2,"l30":3,"q30":301,"act":"keep_exco"},{"id":127,"n":"Yeri Afriyani","e":"yeri@modinity.com","di":9,"g":"ExCo | Product Development","ld":"2026-11-18","dl":1.3,"jd":"2025-05-21","dj":547.3,"l30":15,"q30":321,"act":"keep_exco"},{"id":89,"n":"Mifthahul Jannah","e":"mitha@modinity.com","di":9,"g":"ExCo | Product Development","ld":"2026-11-18","dl":1.2,"jd":"2025-05-16","dj":552.3,"l30":12,"q30":1439,"act":"keep_exco"},{"id":251,"n":"Suyenna Gusti","e":"suyenna@modinity.com","di":9,"g":"ExCo | Merchandising Sales","ld":"2026-11-18","dl":1.1,"jd":"2025-11-04","dj":380.2,"l30":104,"q30":14873,"act":"keep_exco"},{"id":124,"n":"Linda Anggrea","e":"linda@modinity.com","di":9,"g":"ExCo","ld":"2026-11-18","dl":1.0,"jd":"2025-05-21","dj":547.3,"l30":1,"q30":42,"act":"keep_exco"},{"id":244,"n":"Lee Scott James Walker","e":"lee.walker@modinity.com","di":9,"g":"ExCo | Ops","ld":"2026-11-19","dl":0.3,"jd":"2025-10-13","dj":402.1,"l30":48,"q30":6091,"act":"keep_exco"},{"id":570,"n":"diah ayu adp","e":"diah.ayu@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"Never","dl":-1,"jd":"2026-11-11","dj":7.9,"l30":0,"q30":0,"act":"keep_new"},{"id":571,"n":"putri adp","e":"putri@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"Never","dl":-1,"jd":"2026-11-11","dj":7.9,"l30":0,"q30":0,"act":"keep_new"},{"id":572,"n":"sales adp","e":"info@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"Never","dl":-1,"jd":"2026-11-11","dj":7.9,"l30":0,"q30":0,"act":"keep_new"},{"id":576,"n":"Teguh ADP","e":"teguh@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"Never","dl":-1,"jd":"2026-11-12","dj":6.9,"l30":0,"q30":0,"act":"keep_new"},{"id":444,"n":"Hanafi","e":"ishanomodekreasi@gmail.com","di":7,"g":"z External: PT Ishano Mode Kreasi","ld":"2026-11-01","dl":17.9,"jd":"2026-02-12","dj":279.9,"l30":1,"q30":819,"act":"keep_ext"},{"id":443,"n":"Weny Suryani","e":"wenyninos@gmail.com","di":7,"g":"z External: PT Amanda Kreasi Abadi","ld":"2026-11-02","dl":17.1,"jd":"2026-02-12","dj":279.9,"l30":2,"q30":348,"act":"keep_ext"},{"id":433,"n":"Ayu Nurma Apriyanti","e":"ayunurmaapriyanti51@gmail.com","di":7,"g":"z External: PT Dianfia Berkah Utama","ld":"2026-11-02","dl":16.8,"jd":"2026-02-09","dj":283.2,"l30":2,"q30":186,"act":"keep_ext"},{"id":515,"n":"Mifthahul Jannah","e":"ineoktavina2@gmail.com","di":7,"g":"z External: CV Retail Bersama","ld":"2026-11-04","dl":15.3,"jd":"2026-07-29","dj":113.2,"l30":4,"q30":709,"act":"keep_ext"},{"id":445,"n":"Vebby Dwi Amanda","e":"vebby_amanda@yahoo.com","di":7,"g":"z External: CV Amanda Corp","ld":"2026-11-06","dl":13.2,"jd":"2026-02-12","dj":279.9,"l30":2,"q30":150,"act":"keep_ext"},{"id":435,"n":"Winda Bachtiar","e":"soniaiphone899@gmail.com","di":7,"g":"z External: CV Baumo","ld":"2026-11-09","dl":10.1,"jd":"2026-02-09","dj":283.2,"l30":7,"q30":1699,"act":"keep_ext"},{"id":432,"n":"Agus Trianto","e":"ops@atpcorpora.com","di":7,"g":"z External: Nashatih","ld":"2026-11-18","dl":1.2,"jd":"2026-02-09","dj":283.2,"l30":18,"q30":3237,"act":"keep_ext"},{"id":437,"n":"Anisa Dwitiya Astuti","e":"dr.anisadwitiya@gmail.com","di":7,"g":"z External: PT Asamoda Gemilang Abadi","ld":"2026-11-18","dl":1.2,"jd":"2026-02-09","dj":282.9,"l30":15,"q30":7010,"act":"keep_ext"},{"id":438,"n":"Mifthahul Jannah","e":"ptfminternasional@gmail.com","di":7,"g":"z External: PT Firta Maayish","ld":"2026-11-18","dl":1.1,"jd":"2026-02-09","dj":282.9,"l30":19,"q30":1488,"act":"keep_ext"},{"id":561,"n":"Asri Kenzi","e":"asrikenzi17@gmail.com","di":7,"g":"z External: PT Azi Cahaya Kreasi","ld":"2026-11-18","dl":0.7,"jd":"2026-11-02","dj":17.0,"l30":17,"q30":4303,"act":"keep_ext"},{"id":434,"n":"Syendy Emilya","e":"syendyemilya191087@gmail.com","di":7,"g":"z External: CV Raden Aceh Sejahtera","ld":"2026-11-18","dl":0.7,"jd":"2026-02-09","dj":283.2,"l30":21,"q30":1668,"act":"keep_ext"},{"id":431,"n":"Bima Laga","e":"bima@warnamodern.id","di":7,"g":"z External: WMI","ld":"2026-11-19","dl":0.1,"jd":"2026-02-09","dj":283.2,"l30":45,"q30":5315,"act":"keep_ext"},{"id":407,"n":"Mifthahul Jannah","e":"jena@modinity.com","di":4,"g":"Ops","ld":"2026-10-21","dl":29.2,"jd":"2026-01-06","dj":317.2,"l30":1,"q30":83,"act":"keep_hq"},{"id":213,"n":"Isna Yusara","e":"isna@modinity.com","di":4,"g":"Ops | Project & VM","ld":"2026-10-21","dl":29.1,"jd":"2025-08-28","dj":447.9,"l30":1,"q30":9,"act":"keep_hq"},{"id":510,"n":"Lulu Listiani","e":"lulu.listiani@modinity.com","di":18,"g":"ADP: Finance, Accounting, Tax | ADP: Manufacture and Warehouse | ADP: Sales and Marketing","ld":"2026-10-21","dl":29.0,"jd":"2026-07-21","dj":121.1,"l30":1,"q30":6,"act":"keep_hq"},{"id":468,"n":"M. Ilmi Ar-Rofii Dermawan","e":"rofii.dermawan@modinity.com","di":4,"g":"Ops","ld":"2026-10-21","dl":29.0,"jd":"2026-04-27","dj":205.9,"l30":1,"q30":0,"act":"keep_hq"},{"id":498,"n":"Muizti","e":"muizti.rimadhona@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-10-22","dl":28.2,"jd":"2026-06-29","dj":142.9,"l30":1,"q30":1,"act":"keep_hq"},{"id":207,"n":"Ahmad Fajar Bara","e":"bara@modinity.com","di":4,"g":"Ops | Project & VM","ld":"2026-10-22","dl":28.1,"jd":"2025-08-28","dj":447.9,"l30":1,"q30":1,"act":"keep_hq"},{"id":482,"n":"Nada Puspita Living World Pekanbaru","e":"np.lwpku@modinity.com","di":12,"g":"All Users Only","ld":"2026-10-25","dl":25.1,"jd":"2026-05-24","dj":179.1,"l30":2,"q30":0,"act":"keep_hq"},{"id":469,"n":"Chandra Aditya Bima Saputra","e":"bima@modinity.com","di":2,"g":"ADP: Finance, Accounting, Tax | Finance, Accounting, and Tax","ld":"2026-10-28","dl":22.3,"jd":"2026-04-28","dj":205.3,"l30":2,"q30":109,"act":"keep_hq"},{"id":99,"n":"Nyimas Sri Dewi Lentera","e":"nyimas.lentera@modinity.com","di":11,"g":"Tech","ld":"2026-10-28","dl":22.1,"jd":"2025-05-16","dj":552.2,"l30":1,"q30":3,"act":"keep_hq"},{"id":100,"n":"Junie Kristawati  Putri","e":"junie.kristawati@modinity.com","di":13,"g":"Product Development","ld":"2026-10-28","dl":22.0,"jd":"2025-05-19","dj":549.2,"l30":3,"q30":56,"act":"keep_hq"},{"id":67,"n":"Nurlia Munawaroh","e":"nurlia.nunu@modinity.com","di":21,"g":"Purchasing","ld":"2026-10-28","dl":22.0,"jd":"2025-05-14","dj":554.1,"l30":1,"q30":3,"act":"keep_hq"},{"id":44,"n":"Annisa Lastania","e":"annisa.lastania@modinity.com","di":6,"g":"Marketing","ld":"2026-10-30","dl":20.3,"jd":"2025-05-13","dj":555.2,"l30":1,"q30":27,"act":"keep_hq"},{"id":45,"n":"Nabila Yusup","e":"nabila.yusup@modinity.com","di":6,"g":"Marketing","ld":"2026-10-30","dl":20.3,"jd":"2025-05-13","dj":555.2,"l30":2,"q30":85,"act":"keep_hq"},{"id":254,"n":"Obed Maher Ostita","e":"obed@modinity.com","di":11,"g":"Tech","ld":"2026-10-30","dl":20.3,"jd":"2025-11-05","dj":379.0,"l30":1,"q30":28,"act":"keep_hq"},{"id":261,"n":"Iqbal Muharram Taofik","e":"iqbal.taofik@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse | ADP: Sales and Marketing","ld":"2026-10-30","dl":20.0,"jd":"2025-11-13","dj":371.3,"l30":2,"q30":7,"act":"keep_hq"},{"id":270,"n":"Finance Aliatex","e":"finance@aliatexprint.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-02","dl":17.3,"jd":"2025-12-02","dj":352.0,"l30":1,"q30":0,"act":"keep_hq"},{"id":242,"n":"Nabila Ramadhanti","e":"nabila@modinity.com","di":2,"g":"ADP: Manufacture and Warehouse | Finance, Accounting, and Tax | HR","ld":"2026-11-02","dl":17.0,"jd":"2025-10-13","dj":402.2,"l30":1,"q30":30,"act":"keep_hq"},{"id":92,"n":"Rifa Fajriati","e":"rifa.fajriati@modinity.com","di":13,"g":"Product Development","ld":"2026-11-02","dl":17.0,"jd":"2025-05-16","dj":552.3,"l30":1,"q30":45,"act":"keep_hq"},{"id":102,"n":"Siti Nur Hayati Azizah","e":"siti@modinity.com","di":13,"g":"Product Development","ld":"2026-11-02","dl":17.0,"jd":"2025-05-19","dj":549.2,"l30":2,"q30":182,"act":"keep_hq"},{"id":318,"n":"Jessenia Hayfa Irtikha","e":"jessenia@modinity.com","di":6,"g":"Marketing","ld":"2026-11-02","dl":16.9,"jd":"2025-12-18","dj":336.2,"l30":1,"q30":52,"act":"keep_hq"},{"id":91,"n":"Rizma Nurhana","e":"rizma@modinity.com","di":13,"g":"Product Development","ld":"2026-11-03","dl":15.9,"jd":"2025-05-16","dj":552.3,"l30":1,"q30":44,"act":"keep_hq"},{"id":61,"n":"Nabila Ghiffari Annisa","e":"nabila.ghiffari@modinity.com","di":4,"g":"Ops","ld":"2026-11-04","dl":15.1,"jd":"2025-05-13","dj":554.9,"l30":1,"q30":2244,"act":"keep_hq"},{"id":179,"n":"Resti Kartika Wilis","e":"resti.wilis@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-05","dl":14.2,"jd":"2025-07-07","dj":500.1,"l30":8,"q30":43,"act":"keep_hq"},{"id":565,"n":"Adinda Salsabil","e":"adinda.salsabil@modinity.com","di":6,"g":"Marketing","ld":"2026-11-05","dl":14.1,"jd":"2026-11-03","dj":15.9,"l30":3,"q30":22,"act":"keep_hq"},{"id":176,"n":"Fania Aulia Widya Sari","e":"fania@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-05","dl":14.0,"jd":"2025-06-30","dj":506.9,"l30":1,"q30":4,"act":"keep_hq"},{"id":541,"n":"Mahda Rida Aulia","e":"mahda.aulia@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-09","dl":10.2,"jd":"2026-09-18","dj":62.2,"l30":3,"q30":500,"act":"keep_hq"},{"id":411,"n":"Fadya Wulan Tedjasukmana","e":"fadya.wulan@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-09","dl":10.1,"jd":"2026-01-15","dj":308.1,"l30":2,"q30":16,"act":"keep_hq"},{"id":60,"n":"Mutia Nur Avifah","e":"mutia.nur@modinity.com","di":4,"g":"Ops","ld":"2026-11-09","dl":10.1,"jd":"2025-05-13","dj":554.9,"l30":3,"q30":689,"act":"keep_hq"},{"id":420,"n":"Ichika Baby Zangayu","e":"ichika@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-10","dl":9.2,"jd":"2026-01-27","dj":296.1,"l30":5,"q30":40,"act":"keep_hq"},{"id":147,"n":"Jemmy Lamani","e":"jemmy.lamani@modinity.com","di":4,"g":"Ops","ld":"2026-11-10","dl":9.2,"jd":"2025-06-02","dj":535.1,"l30":6,"q30":965,"act":"keep_hq"},{"id":403,"n":"Nadia Azzahra  Putri","e":"nadia.putri@modinity.com","di":4,"g":"Ops","ld":"2026-11-10","dl":9.2,"jd":"2026-01-06","dj":317.2,"l30":3,"q30":175,"act":"keep_hq"},{"id":311,"n":"Kiandra Amara","e":"kiandra@modinity.com","di":6,"g":"Marketing","ld":"2026-11-10","dl":9.0,"jd":"2025-12-11","dj":343.1,"l30":2,"q30":111,"act":"keep_hq"},{"id":552,"n":"Modinity Grand Outlet Bali","e":"grand.outlet.bali@modinity.com","di":12,"g":"All Users Only","ld":"2026-11-10","dl":8.8,"jd":"2026-10-15","dj":35.0,"l30":3,"q30":0,"act":"keep_hq"},{"id":308,"n":"Raysa Septiana","e":"raysa.septiana@modinity.com","di":15,"g":"Customer Service","ld":"2026-11-11","dl":8.1,"jd":"2025-12-09","dj":345.0,"l30":8,"q30":106,"act":"keep_hq"},{"id":85,"n":"Fitria Anggraeni","e":"fitria@modinity.com","di":10,"g":"Merchandising Production","ld":"2026-11-11","dl":8.0,"jd":"2025-05-15","dj":553.2,"l30":3,"q30":86,"act":"keep_hq"},{"id":118,"n":"Johanna Sere T Simanjuntak","e":"johanna.sere@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-11","dl":8.0,"jd":"2025-05-20","dj":548.0,"l30":9,"q30":759,"act":"keep_hq"},{"id":46,"n":"Naura Awaliya","e":"naura@modinity.com","di":6,"g":"Marketing","ld":"2026-11-11","dl":8.0,"jd":"2025-05-13","dj":555.2,"l30":8,"q30":248,"act":"keep_hq"},{"id":82,"n":"Nirma Sugiarti","e":"nirma@modinity.com","di":10,"g":"Merchandising Production","ld":"2026-11-11","dl":8.0,"jd":"2025-05-15","dj":553.2,"l30":4,"q30":44,"act":"keep_hq"},{"id":188,"n":"Vera Agnesya","e":"vera.agnesya@modinity.com","di":4,"g":"Ops","ld":"2026-11-11","dl":8.0,"jd":"2025-07-23","dj":484.1,"l30":7,"q30":724,"act":"keep_hq"},{"id":517,"n":"Rahmiyanti Mahmud","e":"rahmiyanti@modinity.com","di":12,"g":"All Users Only","ld":"2026-11-12","dl":7.1,"jd":"2026-08-03","dj":107.9,"l30":1,"q30":0,"act":"keep_hq"},{"id":98,"n":"Afina Ryanie Dzikrie","e":"afina.dzikrie@modinity.com","di":11,"g":"Tech","ld":"2026-11-12","dl":7.0,"jd":"2025-05-16","dj":552.2,"l30":5,"q30":29,"act":"keep_hq"},{"id":167,"n":"Razak Harianto","e":"razak@aliatexprint.com","di":20,"g":"ADP: Sales and Marketing","ld":"2026-11-12","dl":7.0,"jd":"2025-06-17","dj":520.1,"l30":1,"q30":1,"act":"keep_hq"},{"id":305,"n":"Adriano Al Vajri","e":"adriano@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-12","dl":6.9,"jd":"2025-12-09","dj":345.2,"l30":3,"q30":136,"act":"keep_hq"},{"id":149,"n":"Gabriella Ara  Adventana","e":"gabriella@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-13","dl":6.2,"jd":"2025-06-03","dj":534.0,"l30":6,"q30":124,"act":"keep_hq"},{"id":151,"n":"Salsabila Rifda Aisya","e":"salsabila.rifda@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-13","dl":6.2,"jd":"2025-06-04","dj":533.2,"l30":9,"q30":206,"act":"keep_hq"},{"id":186,"n":"Amalia Rachmawati","e":"amalia.rachmawati@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-13","dl":6.1,"jd":"2025-07-22","dj":485.1,"l30":4,"q30":57,"act":"keep_hq"},{"id":557,"n":"Mia Febyanti","e":"mia.febyanti@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-13","dl":6.1,"jd":"2026-10-27","dj":23.2,"l30":7,"q30":30,"act":"keep_hq"},{"id":547,"n":"Albertus Enzji Soeparno","e":"albertus.soeparno@modinity.com","di":10,"g":"Merchandising Production","ld":"2026-11-13","dl":6.0,"jd":"2026-10-09","dj":41.2,"l30":3,"q30":6,"act":"keep_hq"},{"id":416,"n":"Rizki Septian Putri","e":"tian@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-13","dl":6.0,"jd":"2026-01-22","dj":301.1,"l30":8,"q30":88,"act":"keep_hq"},{"id":539,"n":"Mouliza Oktariani","e":"mouliza.oktariani@modinity.com","di":8,"g":"Ops: E-Commerce","ld":"2026-11-14","dl":5.1,"jd":"2026-09-07","dj":73.0,"l30":20,"q30":1322,"act":"keep_hq"},{"id":459,"n":"Aldi Rivaldi","e":"aldi.rivaldi@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-15","dl":3.8,"jd":"2026-03-26","dj":238.0,"l30":3,"q30":75,"act":"keep_hq"},{"id":170,"n":"Mochamad Rizky Ramadhony","e":"rizky.ramadhony@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-15","dl":3.8,"jd":"2025-06-19","dj":518.2,"l30":9,"q30":162,"act":"keep_hq"},{"id":81,"n":"Rahajeng Dea Proborini","e":"dea@modinity.com","di":10,"g":"Merchandising Production","ld":"2026-11-16","dl":3.3,"jd":"2025-05-15","dj":553.2,"l30":2,"q30":11,"act":"keep_hq"},{"id":90,"n":"Ayu Kencana Putri","e":"ayu@modinity.com","di":13,"g":"Product Development","ld":"2026-11-16","dl":3.2,"jd":"2025-05-16","dj":552.3,"l30":4,"q30":119,"act":"keep_hq"},{"id":537,"n":"Indahwati  Binti Miskun","e":"indahwati@modinity.com","di":14,"g":"Malaysia","ld":"2026-11-16","dl":3.2,"jd":"2026-09-07","dj":73.1,"l30":2,"q30":115,"act":"keep_hq"},{"id":585,"n":"Rachma Pratika","e":"rachma.pratika@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-16","dl":3.2,"jd":"2026-11-16","dj":3.2,"l30":0,"q30":4,"act":"keep_hq"},{"id":73,"n":"Teuku Erlangga Mubarak","e":"teuku.erlangga@modinity.com","di":8,"g":"Ops: E-Commerce","ld":"2026-11-16","dl":3.2,"jd":"2025-05-14","dj":554.0,"l30":10,"q30":734,"act":"keep_hq"},{"id":94,"n":"Vani Andriani","e":"vani@modinity.com","di":13,"g":"Product Development","ld":"2026-11-16","dl":3.2,"jd":"2025-05-16","dj":552.2,"l30":7,"q30":259,"act":"keep_hq"},{"id":425,"n":"Fauziyah Salsabila Witjaksono","e":"fauziyah.salsabila@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-16","dl":3.0,"jd":"2026-02-01","dj":291.0,"l30":8,"q30":533,"act":"keep_hq"},{"id":486,"n":"Rizky Maulana Acyuta Dzaky","e":"rizky.dzaky@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse | ADP: Sales and Marketing","ld":"2026-11-16","dl":3.0,"jd":"2026-06-08","dj":164.1,"l30":1,"q30":11,"act":"keep_hq"},{"id":473,"n":"Muhammad Eko Nurofik","e":"eko.nurofik@modinity.com","di":4,"g":"Ops","ld":"2026-11-16","dl":2.9,"jd":"2026-05-06","dj":197.0,"l30":7,"q30":140,"act":"keep_hq"},{"id":475,"n":"Dedi Trisakti","e":"dedi.trisakti@modinity.com","di":4,"g":"Ops","ld":"2026-11-17","dl":2.6,"jd":"2026-05-06","dj":197.0,"l30":15,"q30":682,"act":"keep_hq"},{"id":131,"n":"Lintang Kirana","e":"lintang.kirana@modinity.com","di":2,"g":"ADP: Finance, Accounting, Tax | Finance, Accounting, and Tax","ld":"2026-11-17","dl":2.4,"jd":"2025-05-21","dj":546.9,"l30":2,"q30":31,"act":"keep_hq"},{"id":227,"n":"Izza Izza","e":"izza@modinity.com","di":13,"g":"Product Development","ld":"2026-11-17","dl":2.3,"jd":"2025-09-18","dj":427.0,"l30":8,"q30":462,"act":"keep_hq"},{"id":139,"n":"Anita  Indrasari","e":"anita.indrasari@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-17","dl":2.2,"jd":"2025-05-28","dj":540.3,"l30":5,"q30":240,"act":"keep_hq"},{"id":478,"n":"Ketut Gede Yoga Wicaksana","e":"ketut.wicaksana@modinity.com","di":2,"g":"ADP: Finance, Accounting, Tax | Finance, Accounting, and Tax | Tech","ld":"2026-11-17","dl":2.2,"jd":"2026-05-13","dj":190.2,"l30":1,"q30":9,"act":"keep_hq"},{"id":491,"n":"Najwa Laila Nafilaty","e":"najwa.nafilaty-intern@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-17","dl":2.2,"jd":"2026-06-23","dj":149.2,"l30":39,"q30":2784,"act":"keep_hq"},{"id":524,"n":"Nurhalimah Nurhalimah","e":"nurhalimah@modinity.com","di":6,"g":"Marketing | Ops","ld":"2026-11-17","dl":2.2,"jd":"2026-08-12","dj":99.0,"l30":12,"q30":1459,"act":"keep_hq"},{"id":568,"n":"Suci Amalia Safira","e":"safira@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-17","dl":2.2,"jd":"2026-11-11","dj":8.0,"l30":3,"q30":35,"act":"keep_hq"},{"id":471,"n":"Wika Ayu Lestari","e":"wika.lestari@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-17","dl":2.2,"jd":"2026-05-04","dj":199.1,"l30":18,"q30":1160,"act":"keep_hq"},{"id":132,"n":"Astrid Putri  Dewantari","e":"astrid.dewantari@modinity.com","di":2,"g":"ADP: Finance, Accounting, Tax | Finance, Accounting, and Tax","ld":"2026-11-17","dl":2.1,"jd":"2025-05-21","dj":546.9,"l30":28,"q30":531,"act":"keep_hq"},{"id":10,"n":"Eka  Alvianisari","e":"eka.alvianisari@modinity.com","di":2,"g":"ADP: Finance, Accounting, Tax | Finance, Accounting, and Tax","ld":"2026-11-17","dl":2.1,"jd":"2025-05-02","dj":565.9,"l30":3,"q30":50,"act":"keep_hq"},{"id":225,"n":"Muhamad Arief  Rachman","e":"arief.rachman@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-17","dl":2.1,"jd":"2025-09-11","dj":434.0,"l30":7,"q30":44,"act":"keep_hq"},{"id":501,"n":"Anindha Kiranti","e":"anindha@modinity.com","di":15,"g":"Customer Service","ld":"2026-11-17","dl":2.0,"jd":"2026-07-03","dj":139.2,"l30":5,"q30":25,"act":"keep_hq"},{"id":64,"n":"Cicih Karolina","e":"cicih@modinity.com","di":15,"g":"Customer Service","ld":"2026-11-17","dl":2.0,"jd":"2025-05-13","dj":554.9,"l30":9,"q30":56,"act":"keep_hq"},{"id":42,"n":"Diva Alma  Putriani","e":"diva.putriani@modinity.com","di":6,"g":"Marketing","ld":"2026-11-17","dl":2.0,"jd":"2025-05-13","dj":555.2,"l30":7,"q30":227,"act":"keep_hq"},{"id":546,"n":"Riaty .","e":"riaty@modinity.com","di":10,"g":"Merchandising Production","ld":"2026-11-17","dl":2.0,"jd":"2026-10-09","dj":41.2,"l30":10,"q30":63,"act":"keep_hq"},{"id":584,"n":"Abdul Raouf","e":"abdul.raouf1@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-18","dl":1.4,"jd":"2026-11-12","dj":6.9,"l30":5,"q30":416,"act":"keep_hq"},{"id":47,"n":"Bunga","e":"bunga.zhafirah@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-18","dl":1.3,"jd":"2025-05-13","dj":555.2,"l30":15,"q30":148,"act":"keep_hq"},{"id":410,"n":"Muthia Adriqni","e":"muthia@modinity.com","di":15,"g":"Customer Service","ld":"2026-11-18","dl":1.3,"jd":"2026-01-12","dj":311.2,"l30":5,"q30":28,"act":"keep_hq"},{"id":235,"n":"Siti Maesaroh","e":"siti.maesaroh@modinity.com","di":4,"g":"Ops","ld":"2026-11-18","dl":1.3,"jd":"2025-10-03","dj":412.1,"l30":21,"q30":3094,"act":"keep_hq"},{"id":578,"n":"Arfin Alamsyah","e":"arfin.alamsyah@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-18","dl":1.2,"jd":"2026-11-12","dj":6.9,"l30":9,"q30":826,"act":"keep_hq"},{"id":163,"n":"Chitra Gusti Indah Walpuri","e":"chitra.gusti@modinity.com","di":6,"g":"Marketing","ld":"2026-11-18","dl":1.2,"jd":"2025-06-12","dj":525.0,"l30":9,"q30":345,"act":"keep_hq"},{"id":36,"n":"Cindy  Joanna","e":"cindy.joanna@modinity.com","di":6,"g":"Marketing","ld":"2026-11-18","dl":1.2,"jd":"2025-05-13","dj":555.2,"l30":18,"q30":540,"act":"keep_hq"},{"id":14,"n":"Cindya Windari","e":"cindya@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-18","dl":1.2,"jd":"2025-05-05","dj":563.2,"l30":19,"q30":340,"act":"keep_hq"},{"id":40,"n":"Fiana Rizki Trianti","e":"fiana@modinity.com","di":6,"g":"Marketing","ld":"2026-11-18","dl":1.2,"jd":"2025-05-13","dj":555.2,"l30":7,"q30":247,"act":"keep_hq"},{"id":463,"n":"Heshritanti Febrina","e":"tanti@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-18","dl":1.2,"jd":"2026-04-16","dj":217.2,"l30":37,"q30":1499,"act":"keep_hq"},{"id":489,"n":"Mardiana Syarifuddin","e":"mardiana.syarifuddin@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-18","dl":1.2,"jd":"2026-06-15","dj":156.9,"l30":26,"q30":7136,"act":"keep_hq"},{"id":226,"n":"May Nanda Kusumaningrum","e":"may.nanda@modinity.com","di":4,"g":"Ops","ld":"2026-11-18","dl":1.2,"jd":"2025-09-15","dj":430.0,"l30":18,"q30":1972,"act":"keep_hq"},{"id":514,"n":"Nyoman Nadia Devi Laksmiati","e":"nyoman.laksmiati@modinity.com","di":17,"g":"Data Analyst (BI)","ld":"2026-11-18","dl":1.2,"jd":"2026-07-27","dj":115.1,"l30":22,"q30":3110,"act":"keep_hq"},{"id":500,"n":"Rama Hafiz Akmala","e":"rama.akmala@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-18","dl":1.2,"jd":"2026-07-02","dj":140.1,"l30":13,"q30":915,"act":"keep_hq"},{"id":110,"n":"Rizka Fadjriah","e":"rizka.fadjriah@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-18","dl":1.2,"jd":"2025-05-20","dj":548.0,"l30":11,"q30":3863,"act":"keep_hq"},{"id":79,"n":"Tenia Aprilita","e":"tenia.apr@modinity.com","di":10,"g":"Merchandising Production | Purchasing","ld":"2026-11-18","dl":1.2,"jd":"2025-05-15","dj":553.2,"l30":20,"q30":344,"act":"keep_hq"},{"id":560,"n":"Widya Cahyatiyani","e":"widya.cahyatiyani@modinity.com","di":18,"g":"ADP: Finance, Accounting, Tax | ADP: Manufacture and Warehouse | ADP: Sales and Marketing","ld":"2026-11-18","dl":1.2,"jd":"2026-10-29","dj":21.0,"l30":5,"q30":17,"act":"keep_hq"},{"id":516,"n":"Wira Hadinata","e":"wira.hadinata@modinity.com","di":8,"g":"Ops: E-Commerce","ld":"2026-11-18","dl":1.2,"jd":"2026-07-31","dj":111.0,"l30":5,"q30":516,"act":"keep_hq"},{"id":573,"n":"Zakia Tessa Anditha","e":"zakia.anditha@modinity.com","di":4,"g":"Ops","ld":"2026-11-18","dl":1.2,"jd":"2026-11-12","dj":7.0,"l30":1,"q30":213,"act":"keep_hq"},{"id":53,"n":"Anggita Anggreni","e":"anggita@modinity.com","di":4,"g":"Ops","ld":"2026-11-18","dl":1.1,"jd":"2025-05-13","dj":554.9,"l30":4,"q30":327,"act":"keep_hq"},{"id":48,"n":"Aprillia Nurrani","e":"aprillia@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-18","dl":1.1,"jd":"2025-05-13","dj":555.0,"l30":13,"q30":1515,"act":"keep_hq"},{"id":178,"n":"Aszafaika Ladidinanda","e":"faika@modinity.com","di":6,"g":"Marketing","ld":"2026-11-18","dl":1.1,"jd":"2025-07-01","dj":506.2,"l30":11,"q30":3978,"act":"keep_hq"},{"id":257,"n":"Berly Berly","e":"berly@modinity.com","di":11,"g":"Tech","ld":"2026-11-18","dl":1.1,"jd":"2025-11-11","dj":373.6,"l30":1,"q30":0,"act":"keep_hq"},{"id":401,"n":"Rafi Pebrian Suban","e":"rafi.suban@modinity.com","di":6,"g":"Marketing","ld":"2026-11-18","dl":1.1,"jd":"2026-01-05","dj":318.1,"l30":32,"q30":6838,"act":"keep_hq"},{"id":52,"n":"Rumia Dwi Senny","e":"rumia@modinity.com","di":4,"g":"Ops","ld":"2026-11-18","dl":1.1,"jd":"2025-05-13","dj":554.9,"l30":20,"q30":4131,"act":"keep_hq"},{"id":37,"n":"Safira Nabila","e":"safira@modinity.com","di":6,"g":"Marketing","ld":"2026-11-18","dl":1.1,"jd":"2025-05-13","dj":555.2,"l30":7,"q30":377,"act":"keep_hq"},{"id":17,"n":"Syaharani Ain Tsabit","e":"syaharani.tsabit@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-18","dl":1.1,"jd":"2025-05-05","dj":563.2,"l30":11,"q30":222,"act":"keep_hq"},{"id":232,"n":"Afifah Nur Shabrina","e":"afifah.shabrina@modinity.com","di":6,"g":"Marketing","ld":"2026-11-18","dl":1.0,"jd":"2025-09-29","dj":416.2,"l30":13,"q30":6676,"act":"keep_hq"},{"id":264,"n":"Amelia Hariza","e":"amelia.hariza@modinity.com","di":6,"g":"Marketing","ld":"2026-11-18","dl":1.0,"jd":"2025-11-21","dj":363.2,"l30":13,"q30":2290,"act":"keep_hq"},{"id":419,"n":"Annisa Yaumil Salsabila","e":"annisa.yaumil@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-18","dl":1.0,"jd":"2026-01-26","dj":296.7,"l30":7,"q30":63,"act":"keep_hq"},{"id":550,"n":"Brandon Savero Emirulhaq","e":"brandon.emirulhaq@modinity.com","di":8,"g":"Ops: E-Commerce","ld":"2026-11-18","dl":1.0,"jd":"2026-10-13","dj":37.2,"l30":39,"q30":13406,"act":"keep_hq"},{"id":266,"n":"Chelsie Gesitha Giovannie","e":"chelsie.giovannie@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-18","dl":1.0,"jd":"2025-12-01","dj":353.1,"l30":10,"q30":280,"act":"keep_hq"},{"id":405,"n":"Deka Adestya Wulandari","e":"deka@modinity.com","di":13,"g":"Product Development","ld":"2026-11-18","dl":1.0,"jd":"2026-01-06","dj":317.2,"l30":13,"q30":574,"act":"keep_hq"},{"id":519,"n":"Elsa Tiurma Tobing","e":"elsa.tobing@modinity.com","di":4,"g":"Ops","ld":"2026-11-18","dl":1.0,"jd":"2026-08-07","dj":103.9,"l30":6,"q30":208,"act":"keep_hq"},{"id":58,"n":"Firda  Yuniar","e":"firda@modinity.com","di":4,"g":"Ops","ld":"2026-11-18","dl":1.0,"jd":"2025-05-13","dj":554.9,"l30":16,"q30":3550,"act":"keep_hq"},{"id":484,"n":"Mawar Winona Lubis","e":"mawar.lubis@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-18","dl":1.0,"jd":"2026-06-02","dj":170.2,"l30":18,"q30":3299,"act":"keep_hq"},{"id":465,"n":"Maysarah Maysarah","e":"maysarah@modinity.com","di":4,"g":"Ops","ld":"2026-11-18","dl":1.0,"jd":"2026-04-20","dj":213.1,"l30":9,"q30":550,"act":"keep_hq"},{"id":63,"n":"Mohammad Fikri","e":"fikri@modinity.com","di":4,"g":"Customer Service | Ops","ld":"2026-11-18","dl":1.0,"jd":"2025-05-13","dj":554.9,"l30":1,"q30":25,"act":"keep_hq"},{"id":56,"n":"Ninda Yulia  Dewi","e":"ninda.yulia@modinity.com","di":4,"g":"Ops","ld":"2026-11-18","dl":1.0,"jd":"2025-05-13","dj":554.9,"l30":19,"q30":6529,"act":"keep_hq"},{"id":586,"n":"Salsabilla Salsabilla","e":"salsabilla@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-18","dl":1.0,"jd":"2026-11-16","dj":3.2,"l30":1,"q30":12,"act":"keep_hq"},{"id":562,"n":"Viona Maulidia","e":"viona.maulidia@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-18","dl":1.0,"jd":"2026-11-02","dj":16.7,"l30":13,"q30":2603,"act":"keep_hq"},{"id":496,"n":"Cynthia Francisca","e":"cynthia.francisca@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-18","dl":0.9,"jd":"2026-06-29","dj":143.1,"l30":19,"q30":2760,"act":"keep_hq"},{"id":268,"n":"Fransiska Ayu Septhiani","e":"fransiska.ayu@modinity.com","di":2,"g":"ADP: Finance, Accounting, Tax | Finance, Accounting, and Tax","ld":"2026-11-18","dl":0.9,"jd":"2025-12-02","dj":352.0,"l30":5,"q30":56,"act":"keep_hq"},{"id":569,"n":"Kinanti Hazara","e":"kinanti@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-18","dl":0.9,"jd":"2026-11-11","dj":7.9,"l30":3,"q30":24,"act":"keep_hq"},{"id":222,"n":"Novwida Wifa Tsabita","e":"bita@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-18","dl":0.9,"jd":"2025-09-10","dj":435.2,"l30":16,"q30":1123,"act":"keep_hq"},{"id":32,"n":"Rizantia Anggraini","e":"rizantia@modinity.com","di":6,"g":"Marketing","ld":"2026-11-18","dl":0.9,"jd":"2025-05-13","dj":555.2,"l30":17,"q30":3739,"act":"keep_hq"},{"id":575,"n":"Sonalala Halawa","e":"sonalala@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-18","dl":0.9,"jd":"2026-11-12","dj":6.9,"l30":7,"q30":427,"act":"keep_hq"},{"id":121,"n":"Syifa Fauzia","e":"syifa@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-18","dl":0.9,"jd":"2025-05-20","dj":548.0,"l30":21,"q30":1515,"act":"keep_hq"},{"id":579,"n":"Bagas Saputra","e":"bagas.saputra@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-18","dl":0.8,"jd":"2026-11-12","dj":6.9,"l30":4,"q30":317,"act":"keep_hq"},{"id":581,"n":"Daniel Christian Resmol","e":"daniel@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-18","dl":0.8,"jd":"2026-11-12","dj":6.9,"l30":8,"q30":612,"act":"keep_hq"},{"id":566,"n":"Dio Arif Shandi","e":"dio.shandi@modinity.com","di":12,"g":"All Users Only","ld":"2026-11-18","dl":0.8,"jd":"2026-11-08","dj":10.8,"l30":4,"q30":0,"act":"keep_hq"},{"id":228,"n":"Jihan Putri Amelia","e":"jihan.amelia@modinity.com","di":8,"g":"Ops: E-Commerce","ld":"2026-11-18","dl":0.8,"jd":"2025-09-22","dj":423.1,"l30":21,"q30":3283,"act":"keep_hq"},{"id":470,"n":"Aruliyansyah Aruliyansyah","e":"aruliyansyah@modinity.com","di":4,"g":"Ops","ld":"2026-11-18","dl":0.7,"jd":"2026-04-28","dj":204.8,"l30":13,"q30":320,"act":"keep_hq"},{"id":74,"n":"Chaedir Ardiansyah","e":"chaedir.ardiansyah@modinity.com","di":8,"g":"Ops: E-Commerce","ld":"2026-11-18","dl":0.7,"jd":"2025-05-14","dj":553.9,"l30":20,"q30":1843,"act":"keep_hq"},{"id":583,"n":"Muhammad Hafidz Rizki","e":"hafidz@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-18","dl":0.7,"jd":"2026-11-12","dj":6.9,"l30":5,"q30":687,"act":"keep_hq"},{"id":1,"n":"Rahadian Djati Pramono","e":"rahadian@modinity.com","di":16,"g":"Administrators","ld":"2026-11-18","dl":0.7,"jd":"2025-04-21","dj":577.2,"l30":18,"q30":1835,"act":"keep_hq"},{"id":423,"n":"Andriyansah Andriyansah","e":"andriansyah@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-19","dl":0.5,"jd":"2026-01-30","dj":293.0,"l30":14,"q30":332,"act":"keep_hq"},{"id":580,"n":"Wahid Andrianto","e":"wahid@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-19","dl":0.4,"jd":"2026-11-12","dj":6.9,"l30":6,"q30":658,"act":"keep_hq"},{"id":51,"n":"Widodo Cipto Wening","e":"widodo@modinity.com","di":4,"g":"Ops","ld":"2026-11-19","dl":0.4,"jd":"2025-05-13","dj":554.9,"l30":42,"q30":3357,"act":"keep_hq"},{"id":21,"n":"Annisha Clarina Nurtjahjo","e":"annisha.clarina@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-19","dl":0.3,"jd":"2025-05-05","dj":563.2,"l30":14,"q30":231,"act":"keep_hq"},{"id":404,"n":"Arrazzaq Arrazzaq","e":"arrazzaq@modinity.com","di":4,"g":"Ops","ld":"2026-11-19","dl":0.3,"jd":"2026-01-06","dj":317.2,"l30":8,"q30":931,"act":"keep_hq"},{"id":12,"n":"Avia Kenya Arindita","e":"avia.kenya@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-19","dl":0.3,"jd":"2025-05-05","dj":563.2,"l30":147,"q30":2224,"act":"keep_hq"},{"id":493,"n":"Dani A Nainggolan","e":"dani.nainggolan@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-19","dl":0.3,"jd":"2026-06-26","dj":146.2,"l30":16,"q30":202,"act":"keep_hq"},{"id":115,"n":"Danty  Octovia","e":"danty.octovia@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-19","dl":0.3,"jd":"2025-05-20","dj":548.0,"l30":34,"q30":1535,"act":"keep_hq"},{"id":436,"n":"Mettadevi S Gunawan","e":"mettadevi@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-19","dl":0.3,"jd":"2026-02-09","dj":282.9,"l30":25,"q30":223,"act":"keep_hq"},{"id":439,"n":"Nandhita Vida Assyfa","e":"nandhita@modinity.com","di":2,"g":"ADP: Finance, Accounting, Tax | Finance, Accounting, and Tax","ld":"2026-11-19","dl":0.3,"jd":"2026-02-10","dj":282.3,"l30":10,"q30":166,"act":"keep_hq"},{"id":78,"n":"Nida  Karina","e":"nida.karina@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-19","dl":0.3,"jd":"2025-05-14","dj":553.9,"l30":19,"q30":1356,"act":"keep_hq"},{"id":15,"n":"Novetalia Vally Puspitasari","e":"novetalia@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-19","dl":0.3,"jd":"2025-05-05","dj":563.2,"l30":14,"q30":778,"act":"keep_hq"},{"id":582,"n":"Riza Miftahul Luqman","e":"riza.luqman@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-19","dl":0.3,"jd":"2026-11-12","dj":6.9,"l30":8,"q30":520,"act":"keep_hq"},{"id":441,"n":"Sharifah  Itasha Jamalullai","e":"itasha@modinity.com","di":14,"g":"Malaysia","ld":"2026-11-19","dl":0.3,"jd":"2026-02-11","dj":281.3,"l30":7,"q30":267,"act":"keep_hq"},{"id":26,"n":"Untari Asriningsih","e":"untari@modinity.com","di":8,"g":"Ops: E-Commerce","ld":"2026-11-19","dl":0.3,"jd":"2025-05-07","dj":561.2,"l30":51,"q30":571,"act":"keep_hq"},{"id":509,"n":"Wening Larasati","e":"wening.larasati@modinity.com","di":5,"g":"Merchandising Sales | Ops: E-Commerce","ld":"2026-11-19","dl":0.3,"jd":"2026-07-21","dj":121.2,"l30":20,"q30":5407,"act":"keep_hq"},{"id":540,"n":"Adinda Aisyah Wulandewi","e":"adinda.wulandewi@modinity.com","di":8,"g":"Ops: E-Commerce","ld":"2026-11-19","dl":0.2,"jd":"2026-09-07","dj":73.0,"l30":18,"q30":1969,"act":"keep_hq"},{"id":506,"n":"Afifah Sadida","e":"afifah.sadida@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-19","dl":0.2,"jd":"2026-07-13","dj":129.1,"l30":17,"q30":901,"act":"keep_hq"},{"id":4,"n":"Ajeng Arifa Chantika Rindu","e":"ajeng.arifa@modinity.com","di":16,"g":"Administrators","ld":"2026-11-19","dl":0.2,"jd":"2025-04-21","dj":577.1,"l30":47,"q30":12857,"act":"keep_hq"},{"id":111,"n":"Aneesha Syavira","e":"aneesha@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-19","dl":0.2,"jd":"2025-05-20","dj":548.0,"l30":21,"q30":1739,"act":"keep_hq"},{"id":221,"n":"Anggita Devi Lestari","e":"anggita.devi@modinity.com","di":6,"g":"Marketing","ld":"2026-11-19","dl":0.2,"jd":"2025-09-08","dj":437.2,"l30":12,"q30":3898,"act":"keep_hq"},{"id":72,"n":"Arif Nasikhudin","e":"arif.nasikhudin@modinity.com","di":8,"g":"Ops: E-Commerce","ld":"2026-11-19","dl":0.2,"jd":"2025-05-14","dj":554.0,"l30":24,"q30":4899,"act":"keep_hq"},{"id":16,"n":"Diana Rifka Mulyadi","e":"diana.rifka@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-19","dl":0.2,"jd":"2025-05-05","dj":563.2,"l30":66,"q30":2130,"act":"keep_hq"},{"id":477,"n":"Diandini Putri Yoda","e":"diandini@modinity.com","di":8,"g":"Ops: E-Commerce","ld":"2026-11-19","dl":0.2,"jd":"2026-05-12","dj":191.0,"l30":7,"q30":49,"act":"keep_hq"},{"id":38,"n":"Diva Dewayuningtyas Sumarsono","e":"diva.dewa@modinity.com","di":6,"g":"Marketing","ld":"2026-11-19","dl":0.2,"jd":"2025-05-13","dj":555.2,"l30":6,"q30":226,"act":"keep_hq"},{"id":50,"n":"Fanny Putri Utami","e":"fanny.utami@modinity.com","di":6,"g":"Marketing | Ops","ld":"2026-11-19","dl":0.2,"jd":"2025-05-13","dj":554.9,"l30":27,"q30":5243,"act":"keep_hq"},{"id":24,"n":"Fitri Paris","e":"fitri@modinity.com","di":10,"g":"Merchandising Production","ld":"2026-11-19","dl":0.2,"jd":"2025-05-06","dj":562.2,"l30":3,"q30":53,"act":"keep_hq"},{"id":204,"n":"Hanifa Nurshabira","e":"hanifa@modinity.com","di":17,"g":"Data Analyst (BI)","ld":"2026-11-19","dl":0.2,"jd":"2025-08-28","dj":448.2,"l30":20,"q30":4670,"act":"keep_hq"},{"id":113,"n":"Hasna Salsabila Syifa  Wahyudi","e":"hasna.salsabila@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-19","dl":0.2,"jd":"2025-05-20","dj":548.0,"l30":19,"q30":286,"act":"keep_hq"},{"id":322,"n":"Jamaluddin Siregar","e":"jamaluddin@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-19","dl":0.2,"jd":"2025-12-22","dj":332.1,"l30":25,"q30":4701,"act":"keep_hq"},{"id":13,"n":"Kemia Indriyani","e":"kemia@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-19","dl":0.2,"jd":"2025-05-05","dj":563.2,"l30":17,"q30":635,"act":"keep_hq"},{"id":272,"n":"Miftahul Jannah","e":"mifta.jannah@modinity.com","di":8,"g":"Ops: E-Commerce","ld":"2026-11-19","dl":0.2,"jd":"2025-12-04","dj":350.1,"l30":18,"q30":1331,"act":"keep_hq"},{"id":185,"n":"Muhamad Irawan Karmiandi","e":"irawan@modinity.com","di":8,"g":"Ops: E-Commerce","ld":"2026-11-19","dl":0.2,"jd":"2025-07-21","dj":486.2,"l30":16,"q30":1313,"act":"keep_hq"},{"id":114,"n":"Novi Dwi Prasetya","e":"novi.dwi@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-19","dl":0.2,"jd":"2025-05-20","dj":548.0,"l30":19,"q30":1103,"act":"keep_hq"},{"id":577,"n":"Sahrul Maulana","e":"sahrul.maulana@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-19","dl":0.2,"jd":"2026-11-12","dj":6.9,"l30":10,"q30":1090,"act":"keep_hq"},{"id":192,"n":"Satwika Uttama Purusa","e":"satwika@modinity.com","di":8,"g":"Ops: E-Commerce","ld":"2026-11-19","dl":0.2,"jd":"2025-07-28","dj":479.2,"l30":22,"q30":2512,"act":"keep_hq"},{"id":19,"n":"Savira Sudarma","e":"savira@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-19","dl":0.2,"jd":"2025-05-05","dj":563.2,"l30":14,"q30":182,"act":"keep_hq"},{"id":180,"n":"Shania Irnawati Arief","e":"shania.arief@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-19","dl":0.2,"jd":"2025-07-08","dj":499.2,"l30":15,"q30":1391,"act":"keep_hq"},{"id":146,"n":"Shinta Nadilla Nurafi","e":"shinta.nurafi@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-19","dl":0.2,"jd":"2025-06-02","dj":535.1,"l30":27,"q30":2044,"act":"keep_hq"},{"id":173,"n":"Amanda Salsabila","e":"amanda.salsabila@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-19","dl":0.1,"jd":"2025-06-23","dj":514.0,"l30":15,"q30":1914,"act":"keep_hq"},{"id":233,"n":"Christian Coe","e":"christian.coe@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-19","dl":0.1,"jd":"2025-09-29","dj":415.9,"l30":5,"q30":265,"act":"keep_hq"},{"id":29,"n":"Dian Puspita","e":"dian@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-19","dl":0.1,"jd":"2025-05-09","dj":559.1,"l30":2,"q30":107,"act":"keep_hq"},{"id":2,"n":"Faathir Muhammad","e":"faathir@modinity.com","di":16,"g":"Administrators","ld":"2026-11-19","dl":0.1,"jd":"2025-04-21","dj":577.1,"l30":23,"q30":3789,"act":"keep_hq"},{"id":164,"n":"Fabi Zaki Alfarizi","e":"fabi.alfarizi@modinity.com","di":4,"g":"Ops","ld":"2026-11-19","dl":0.1,"jd":"2025-06-16","dj":521.0,"l30":8,"q30":1639,"act":"keep_hq"},{"id":446,"n":"Fadhila Harbi","e":"fadhila.harbi@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-19","dl":0.1,"jd":"2026-02-13","dj":279.0,"l30":9,"q30":137,"act":"keep_hq"},{"id":460,"n":"Jasmine Aaliya Nasution","e":"jasmine.aaliya@modinity.com","di":6,"g":"Marketing","ld":"2026-11-19","dl":0.1,"jd":"2026-03-31","dj":233.0,"l30":11,"q30":554,"act":"keep_hq"},{"id":545,"n":"Lely Lutfiyani","e":"lely.lutfiyani@modinity.com","di":4,"g":"Ops","ld":"2026-11-19","dl":0.1,"jd":"2026-09-21","dj":59.1,"l30":23,"q30":1592,"act":"keep_hq"},{"id":184,"n":"Maria Penta Bella  Pertiwi","e":"maria.pertiwi@modinity.com","di":10,"g":"Merchandising Production | Purchasing","ld":"2026-11-19","dl":0.1,"jd":"2025-07-17","dj":490.0,"l30":9,"q30":79,"act":"keep_hq"},{"id":488,"n":"Melani Ayu Azizah","e":"melani.azizah-intern@modinity.com","di":17,"g":"Data Analyst (BI)","ld":"2026-11-19","dl":0.1,"jd":"2026-06-15","dj":157.2,"l30":27,"q30":7316,"act":"keep_hq"},{"id":574,"n":"Mochamad Ikbal Ramdoni","e":"mochamad.ramdoni@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-19","dl":0.1,"jd":"2026-11-12","dj":6.9,"l30":5,"q30":55,"act":"keep_hq"},{"id":231,"n":"Muhammad Rifki","e":"rifki@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-19","dl":0.1,"jd":"2025-09-24","dj":420.9,"l30":3,"q30":90,"act":"keep_hq"},{"id":23,"n":"Nabilah Mardhiyah","e":"nabilah.lala@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-19","dl":0.1,"jd":"2025-05-05","dj":563.1,"l30":20,"q30":6133,"act":"keep_hq"},{"id":237,"n":"Safina Qonita","e":"safina.qonita@modinity.com","di":8,"g":"Ops: E-Commerce","ld":"2026-11-19","dl":0.1,"jd":"2025-10-06","dj":409.1,"l30":16,"q30":414,"act":"keep_hq"},{"id":564,"n":"Umayah Umayah","e":"umayah@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-19","dl":0.1,"jd":"2026-11-03","dj":16.0,"l30":13,"q30":772,"act":"keep_hq"},{"id":136,"n":"Fajar","e":"fajar@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-19","dl":0.0,"jd":"2025-05-26","dj":542.0,"l30":44,"q30":15927,"act":"keep_hq"},{"id":503,"n":"Fauziah Eka Fitriyani","e":"fauziah.fitriyani@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-19","dl":0.0,"jd":"2026-07-09","dj":132.9,"l30":18,"q30":1427,"act":"keep_hq"},{"id":86,"n":"Feyza  Ashila","e":"feyza.ashila@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-19","dl":0.0,"jd":"2025-05-15","dj":553.2,"l30":22,"q30":3030,"act":"keep_hq"},{"id":22,"n":"Frinida Sausani  Nashita","e":"frinida.nashita@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-19","dl":0.0,"jd":"2025-05-05","dj":563.2,"l30":17,"q30":172,"act":"keep_hq"},{"id":57,"n":"Hadi Prabowo","e":"hadi.prabowo@modinity.com","di":4,"g":"Ops","ld":"2026-11-19","dl":0.0,"jd":"2025-05-13","dj":554.9,"l30":11,"q30":2018,"act":"keep_hq"},{"id":55,"n":"Indah  Mustari","e":"indah.mustari@modinity.com","di":4,"g":"Ops","ld":"2026-11-19","dl":0.0,"jd":"2025-05-13","dj":554.9,"l30":24,"q30":2453,"act":"keep_hq"},{"id":168,"n":"Miftah Jannati","e":"miftah@modinity.com","di":20,"g":"ADP: Sales and Marketing","ld":"2026-11-19","dl":0.0,"jd":"2025-06-17","dj":520.1,"l30":5,"q30":41,"act":"keep_hq"},{"id":479,"n":"Rimma Anzeliana Radhita","e":"rimma@modinity.com","di":13,"g":"Product Development","ld":"2026-11-19","dl":0.0,"jd":"2026-05-19","dj":184.1,"l30":2,"q30":92,"act":"keep_hq"},{"id":316,"n":"Sucy Widoretno","e":"sucy@aliatexprint.com","di":3,"g":"ADP: Manufacture and Warehouse","ld":"2026-11-19","dl":0.0,"jd":"2025-12-16","dj":338.2,"l30":126,"q30":39228,"act":"keep_hq"},{"id":30,"n":"Sumayyah Azzahra","e":"mayya@modinity.com","di":2,"g":"Finance, Accounting, and Tax","ld":"2026-11-19","dl":0.0,"jd":"2025-05-13","dj":555.3,"l30":5,"q30":132,"act":"keep_hq"},{"id":59,"n":"Triya Dewiyana","e":"triya@modinity.com","di":4,"g":"Ops","ld":"2026-11-19","dl":0.0,"jd":"2025-05-13","dj":554.9,"l30":14,"q30":5289,"act":"keep_hq"},{"id":143,"n":"Wuri Herdiyana","e":"wuri@modinity.com","di":5,"g":"Merchandising Sales","ld":"2026-11-19","dl":0.0,"jd":"2025-05-30","dj":538.2,"l30":18,"q30":1545,"act":"keep_hq"}]};
 
     const PAGE_TITLES = {
-      'overview': 'Executive Summary | Metabase Pro Seat & Cost Optimization',
-      'user-audit': 'Current User Audit (413 Seats) | Metabase Pro Optimization',
-      'cost-optimizer': 'Monthly Cost & Seat Optimizer | Metabase Pro Optimization',
-      'department-matrix': 'Department & Store Matrix | Metabase Pro Optimization',
-      'governance-plan': 'Rollout & Monthly Governance | Metabase Pro Optimization'
+      'overview': 'The 229-Seat Plan (Rp 57.7M/mo) | Metabase Pro Cost Optimization',
+      'store-portal': 'Free Store Portal Explained | Metabase Pro Cost Optimization',
+      'user-directory': 'All 413 Current Users (By Name) | Metabase Pro Cost Optimization',
+      'cost-simulator': 'Monthly Bill Calculator | Metabase Pro Cost Optimization',
+      'rollout-plan': 'Step-by-Step Rollout & Teams | Metabase Pro Cost Optimization'
     };
 
     const navButtons = document.querySelectorAll('.nav-btn');
     const mobileButtons = document.querySelectorAll('.mobile-tab-btn');
     const gotoButtons = document.querySelectorAll('[data-goto]');
     const views = document.querySelectorAll('.page-view');
-    const matrixToolbar = document.getElementById('matrix-toolbar');
-    const deptTable = document.getElementById('dept-table');
+    const userToolbar = document.getElementById('user-toolbar');
+    const userTable = document.getElementById('user-table');
 
-    function syncMatrixToolbarHeight() {
-      if (matrixToolbar) {
-        const h = matrixToolbar.getBoundingClientRect().height;
+    function escHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function syncUserToolbarHeight() {
+      if (userToolbar) {
+        const h = userToolbar.getBoundingClientRect().height;
         if (h > 0) {
-          document.documentElement.style.setProperty('--matrix-toolbar-h', Math.ceil(h) + 'px');
+          document.documentElement.style.setProperty('--user-toolbar-h', Math.ceil(h) + 'px');
         }
       }
     }
@@ -1742,7 +1651,7 @@ ORDER BY u.last_login NULLS FIRST;</pre>
       if (updateHash) {
         history.replaceState(null, '', '#' + targetId);
       }
-      syncMatrixToolbarHeight();
+      syncUserToolbarHeight();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -1756,7 +1665,152 @@ ORDER BY u.last_login NULLS FIRST;</pre>
       btn.addEventListener('click', () => switchView(btn.getAttribute('data-goto')));
     });
 
-    // Cost & Seat Calculation Helpers
+    // Action badge formatter in plain English
+    function formatActionBadge(act) {
+      switch (act) {
+        case 'cut_60':
+          return '<span class="status-pill pill-bad">Cut: Idle &gt; 2 Months</span><div class="cell-copy">Saves $12/mo (turn off before migrating)</div>';
+        case 'cut_30':
+          return '<span class="status-pill pill-warn">Cut: Idle 1 to 2 Months</span><div class="cell-copy">Saves $12/mo (1-click restore if needed)</div>';
+        case 'portal_own':
+          return '<span class="status-pill pill-blue">Move to Free Store Portal</span><div class="cell-copy">Own store ($0/mo embedded view)</div>';
+        case 'portal_fc':
+          return '<span class="status-pill pill-blue">Move to Free Store Portal</span><div class="cell-copy">Franchise store ($0/mo embedded view)</div>';
+        case 'keep_exco':
+          return '<span class="status-pill pill-good">Keep Paid Seat (ExCo)</span><div class="cell-copy">Protected executive account ($12/mo)</div>';
+        case 'keep_new':
+          return '<span class="status-pill pill-good">Keep Paid Seat (New Hire)</span><div class="cell-copy">Added &lt;14 days ago (onboarding grace)</div>';
+        case 'keep_ext':
+          return '<span class="status-pill pill-good">Keep Paid Seat (Partner)</span><div class="cell-copy">Active brand partner ($12/mo)</div>';
+        default:
+          return '<span class="status-pill pill-good">Keep Paid Seat (HQ/ADP)</span><div class="cell-copy">Active staff user ($12/mo)</div>';
+      }
+    }
+
+    // Render Full 413-User Directory (Chapter 03)
+    let activeUserFilter = 'all';
+    const userTbody = document.getElementById('user-tbody');
+    const inpUserSearch = document.getElementById('inp-user-search');
+    const lblUserCount = document.getElementById('lbl-user-count');
+    const userFilterBtns = document.querySelectorAll('[data-u-filter]');
+
+    function matchesUserFilter(u, f) {
+      if (f === 'all') return true;
+      if (f === 'cut_all') return u.act === 'cut_60' || u.act === 'cut_30';
+      if (f === 'cut_60') return u.act === 'cut_60';
+      if (f === 'cut_30') return u.act === 'cut_30';
+      if (f === 'portal') return u.act === 'portal_own' || u.act === 'portal_fc';
+      if (f === 'keep') return u.act.startsWith('keep_');
+      if (f === 'exco') return u.act === 'keep_exco';
+      return true;
+    }
+
+    function renderUserDirectory() {
+      if (!userTbody) return;
+      const q = (inpUserSearch ? inpUserSearch.value : '').trim().toLowerCase();
+      const matched = AUDIT_DATA.users.filter(u => {
+        if (!matchesUserFilter(u, activeUserFilter)) return false;
+        if (!q) return true;
+        const deptName = AUDIT_DATA.depts[u.di][0].toLowerCase();
+        return (
+          u.n.toLowerCase().includes(q) ||
+          u.e.toLowerCase().includes(q) ||
+          u.g.toLowerCase().includes(q) ||
+          deptName.includes(q)
+        );
+      });
+
+      if (lblUserCount) {
+        lblUserCount.textContent = matched.length + ' of 413 shown';
+      }
+
+      if (matched.length === 0) {
+        userTbody.innerHTML = '<tr><td colspan="6" style="padding:1.5rem; text-align:center; color:var(--text-muted);">No matching accounts found. Try clearing the search box or switching the filter above.</td></tr>';
+        return;
+      }
+
+      userTbody.innerHTML = matched.map(u => {
+        const deptName = AUDIT_DATA.depts[u.di][0];
+        const loginText = u.dl < 0
+          ? `<strong style="color:var(--status-bad-text);">Never logged in</strong><br><span style="font-size:0.74rem; color:var(--text-muted);">Added ${Math.round(u.dj)}d ago (${escHtml(u.jd)})</span>`
+          : `<strong>${u.dl < 1 ? 'Today' : Math.round(u.dl) + 'd ago'}</strong><br><span style="font-size:0.74rem; color:var(--text-muted);">${escHtml(u.ld)}</span>`;
+        const act30Text = u.l30 > 0 || u.q30 > 0
+          ? `${u.l30} logins<br><span style="font-size:0.73rem; color:var(--text-muted);">${u.q30.toLocaleString('en-US')} chart runs</span>`
+          : '<span style="color:var(--text-muted);">0 logins</span>';
+        return `
+          <tr>
+            <th scope="row" class="col-sticky">${escHtml(u.n)}</th>
+            <td class="mono" style="font-size:0.79rem;">${escHtml(u.e)}</td>
+            <td><strong>${escHtml(deptName)}</strong><br><span style="font-size:0.74rem; color:var(--text-muted);">${escHtml(u.g)}</span></td>
+            <td class="mono tabular">${loginText}</td>
+            <td class="mono tabular">${act30Text}</td>
+            <td>${formatActionBadge(u.act)}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    userFilterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        userFilterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeUserFilter = btn.getAttribute('data-u-filter');
+        renderUserDirectory();
+        syncUserToolbarHeight();
+        if (userTable && userToolbar) {
+          const rect = userTable.getBoundingClientRect();
+          const toolbarH = userToolbar.getBoundingClientRect().height;
+          if (rect.top < toolbarH) {
+            window.scrollTo({ top: Math.max(0, window.scrollY + rect.top - toolbarH), behavior: 'smooth' });
+          }
+        }
+      });
+    });
+
+    if (inpUserSearch) {
+      inpUserSearch.addEventListener('input', renderUserDirectory);
+    }
+
+    if (window.ResizeObserver && userToolbar) {
+      new ResizeObserver(syncUserToolbarHeight).observe(userToolbar);
+    }
+    window.addEventListener('resize', syncUserToolbarHeight);
+
+    // Render 22-Team Summary Table (Chapter 05)
+    function renderDeptSummary() {
+      const tbody = document.getElementById('dept-tbody');
+      if (!tbody) return;
+      const stats = AUDIT_DATA.depts.map((d, idx) => ({
+        name: d[0], seg: d[1], total: 0, cut: 0, portal: 0, paid: 0
+      }));
+
+      AUDIT_DATA.users.forEach(u => {
+        const s = stats[u.di];
+        s.total++;
+        if (u.act === 'cut_60' || u.act === 'cut_30') s.cut++;
+        else if (u.act === 'portal_own' || u.act === 'portal_fc') s.portal++;
+        else s.paid++;
+      });
+
+      stats.sort((a, b) => b.total - a.total);
+
+      tbody.innerHTML = stats.map(s => {
+        const usd = s.paid * 12;
+        const idrM = (usd * 18000 / 1e6).toFixed(2);
+        return `
+          <tr>
+            <th scope="row" class="col-sticky">${escHtml(s.name)}</th>
+            <td class="mono tabular"><strong>${s.total}</strong></td>
+            <td class="mono tabular">${s.seg === 'exco' ? '<span class="status-pill pill-good">Exempt</span>' : (s.cut > 0 ? '-' + s.cut : '0')}</td>
+            <td class="mono tabular">${s.portal > 0 ? '<span class="status-pill pill-blue">-' + s.portal + ' ($0 Portal)</span>' : '0'}</td>
+            <td class="mono tabular col-highlight-teal"><strong>${s.paid}</strong></td>
+            <td class="mono tabular">${s.paid === 0 ? '<strong style="color:var(--status-good-text);">Rp 0 ($0/mo)</strong>' : `Rp ${idrM}M ($${usd.toLocaleString('en-US')}/mo)`}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Monthly Cost Calculator (Chapter 04 - Defaults to Recommended 229-Seat Plan!)
     const FAT_CURVE = [399, 404, 409, 414, 419, 424, 429, 433, 438, 443, 448, 453];
     let useFatExactCurve = false;
 
@@ -1781,87 +1835,35 @@ ORDER BY u.last_login NULLS FIRST;</pre>
       const noCutoff = cutoffDays >= 125;
       let kept = 0;
       for (let i = 0; i < AUDIT_DATA.users.length; i++) {
-        const [dl, dj, l30, di] = AUDIT_DATA.users[i];
-        const seg = AUDIT_DATA.depts[di][1]; // exco, store_own, store_fc, external, hq
+        const u = AUDIT_DATA.users[i];
+        const seg = AUDIT_DATA.depts[u.di][1];
         const isExco = seg === 'exco';
 
-        // Step 1: Inactivity check
         let cutIdle = false;
         if (!noCutoff) {
-          const isIdle = (dl < 0) || (dl > cutoffDays);
+          const isIdle = (u.dl < 0) || (u.dl > cutoffDays);
           if (isIdle) {
-            if (protectExco && isExco) {
-              cutIdle = false;
-            } else if (grace14d && dl < 0 && dj <= 14) {
-              cutIdle = false;
-            } else {
-              cutIdle = true;
-            }
+            if (protectExco && isExco) cutIdle = false;
+            else if (grace14d && u.dl < 0 && u.dj <= 14) cutIdle = false;
+            else cutIdle = true;
           }
         }
         if (cutIdle) continue;
 
-        // Step 2: Store Guest Embeds offload
         if (storeMode === 'own' && seg === 'store_own') continue;
         if (storeMode === 'all' && (seg === 'store_own' || seg === 'store_fc')) continue;
-
-        // Step 3: Occasional 1x/mo HQ viewers to Digest/Modibot
-        if (moveDigest && seg === 'hq' && dl >= 0 && dl <= 30 && l30 <= 1) continue;
+        if (moveDigest && seg === 'hq' && u.dl >= 0 && u.dl <= 30 && u.l30 <= 1) continue;
 
         kept++;
       }
       return kept;
     }
 
-    // Build Department Table (Chapter 04)
-    function renderDeptTable() {
-      const tbody = document.getElementById('dept-tbody');
-      if (!tbody) return;
-      const stats = AUDIT_DATA.depts.map((d, idx) => ({
-        idx, name: d[0], seg: d[1], filterCat: d[2], note: d[3],
-        total: 0, le30: 0, cut60: 0, cut30: 0
-      }));
-
-      AUDIT_DATA.users.forEach(([dl, dj, l30, di]) => {
-        const s = stats[di];
-        const isExco = s.seg === 'exco';
-        s.total++;
-        if (dl >= 0 && dl <= 30) s.le30++;
-        if (!isExco && !(dl < 0 && dj <= 14)) {
-          if (dl < 0 || dl > 60) s.cut60++;
-          if (dl < 0 || dl > 30) s.cut30++;
-        }
-      });
-
-      stats.sort((a, b) => b.total - a.total);
-
-      tbody.innerHTML = stats.map(s => {
-        const kept30 = s.total - s.cut30;
-        const marginalUsd = kept30 * 12;
-        const marginalIdr = (marginalUsd * 18000 / 1e6).toFixed(2);
-        const cutPillClass = s.seg === 'exco' ? 'pill-good' : (s.cut30 > 0 ? 'pill-warn' : 'pill-neutral');
-        const cutLabel = s.seg === 'exco' ? '0 (Exempt)' : ('-' + s.cut30 + ' seats');
-        return `
-          <tr data-seg="${s.filterCat}">
-            <th scope="row" class="col-sticky">${s.name}</th>
-            <td class="mono tabular"><strong>${s.total}</strong></td>
-            <td class="mono tabular">${s.le30}</td>
-            <td class="mono tabular">${s.seg === 'exco' ? '0' : '-' + s.cut60}</td>
-            <td class="col-highlight-teal"><span class="status-pill ${cutPillClass}">${cutLabel}</span></td>
-            <td class="mono tabular col-highlight-teal"><strong>${kept30}</strong></td>
-            <td class="mono tabular">Rp ${marginalIdr}M<br><span style="font-size:0.73rem; color:var(--text-muted);">$${marginalUsd.toLocaleString('en-US')}/mo</span></td>
-            <td><div class="cell-copy">${s.note}</div></td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    // Simulator DOM Elements
+    const selStores = document.getElementById('sel-stores');
     const inpCutoff = document.getElementById('inp-cutoff');
     const chkExco = document.getElementById('chk-exco');
     const chkGrace = document.getElementById('chk-grace');
     const chkDigest = document.getElementById('chk-digest');
-    const selStores = document.getElementById('sel-stores');
     const inpGrowth = document.getElementById('inp-growth');
     const inpFx = document.getElementById('inp-fx');
 
@@ -1882,11 +1884,11 @@ ORDER BY u.last_login NULLS FIRST;</pre>
     const scheduleTbody = document.getElementById('schedule-tbody');
 
     const presetBtns = [
-      document.getElementById('preset-drift'),
-      document.getElementById('preset-fat'),
-      document.getElementById('preset-60d'),
+      document.getElementById('preset-rec229'),
       document.getElementById('preset-30d'),
-      document.getElementById('preset-phase2')
+      document.getElementById('preset-60d'),
+      document.getElementById('preset-fat'),
+      document.getElementById('preset-drift')
     ];
 
     function setActivePreset(activeBtn) {
@@ -1918,15 +1920,10 @@ ORDER BY u.last_login NULLS FIRST;</pre>
       const growth = parseInt(inpGrowth.value, 10);
       const fx = parseInt(inpFx.value, 10);
 
-      if (cutoff >= 125) {
-        lblCutoff.textContent = 'No cutoff (Keep all)';
-      } else if (cutoff === 30) {
-        lblCutoff.textContent = '> 30 days (1 mo)';
-      } else if (cutoff === 60) {
-        lblCutoff.textContent = '> 60 days (2 mo)';
-      } else {
-        lblCutoff.textContent = '> ' + cutoff + ' days';
-      }
+      if (cutoff >= 125) lblCutoff.textContent = 'Never turn off';
+      else if (cutoff === 30) lblCutoff.textContent = '> 30 days (1 mo)';
+      else if (cutoff === 60) lblCutoff.textContent = '> 60 days (2 mo)';
+      else lblCutoff.textContent = '> ' + cutoff + ' days';
 
       lblGrowth.textContent = useFatExactCurve ? '+4.9 / mo (FAT)' : ('+' + growth + ' / mo');
       lblFx.textContent = 'Rp ' + fx.toLocaleString('en-US');
@@ -1938,18 +1935,17 @@ ORDER BY u.last_login NULLS FIRST;</pre>
       const cutCount = 413 - uStart;
       const cutPct = ((cutCount / 413) * 100).toFixed(1);
 
-      // Reference benchmarks
       const driftCurve = sumCurveUsd(413, 14);
       const fatRefCurve = sumCurveUsd(399, 0, FAT_CURVE);
       const p60Curve = sumCurveUsd(375, 2);
       const p30Curve = sumCurveUsd(352, 2);
-      const p2Curve = sumCurveUsd(229, 2);
+      const rec229Curve = sumCurveUsd(229, 2);
 
-      lblRange.textContent = uStart + ' to ' + uEnd + ' seats';
+      lblRange.textContent = uStart + ' to ' + uEnd + ' paid seats';
       kpiKept.textContent = uStart;
       kpiCut.textContent = useFatExactCurve
-        ? '2027 FAT sheet baseline (399 -> 453)'
-        : (cutCount >= 0 ? `${cutCount} seats cut (-${cutPct}%)` : '0 seats cut');
+        ? '2027 Finance sheet (399 -> 453)'
+        : (cutCount > 0 ? `${cutCount} seats removed (-${cutPct}%)` : '0 seats removed');
       kpiM1.textContent = fmtIdrShort(activeCurve.monthlyUsd[0] * fx);
       kpiM1Usd.textContent = fmtUsd(activeCurve.monthlyUsd[0]) + ' / month';
       kpiYr.textContent = fmtIdrShort(activeCurve.total * fx);
@@ -1958,17 +1954,17 @@ ORDER BY u.last_login NULLS FIRST;</pre>
       const savedUsd = driftCurve.total - activeCurve.total;
       const savedPct = ((savedUsd / driftCurve.total) * 100).toFixed(1);
       kpiSave.textContent = (savedUsd >= 0 ? '' : '-') + fmtIdrShort(Math.abs(savedUsd) * fx);
-      kpiSavePct.textContent = savedUsd >= 0
-        ? `${savedPct}% lower than Rp ${(driftCurve.total * fx / 1e9).toFixed(2)}B drift`
-        : 'Matches unoptimized drift';
+      kpiSavePct.textContent = savedUsd > 0
+        ? `${savedPct}% cheaper than doing nothing`
+        : 'Same as doing nothing';
 
       const barItems = [
-        { label: 'Unoptimized Drift (413 -> 567)', usd: driftCurve.total, color: '#991b1b' },
-        { label: '2027 FAT Pro Sheet (399 -> 453)', usd: fatRefCurve.total, color: '#6b7280' },
-        { label: 'Policy 1A: 60d Cutoff (375 -> 397)', usd: p60Curve.total, color: '#1d4ed8' },
-        { label: 'Policy 1B: 30d Cutoff (352 -> 374)', usd: p30Curve.total, color: '#0f766e' },
-        { label: 'Phase 2: 30d + Store Embeds (229 -> 251)', usd: p2Curve.total, color: '#047857' },
-        { label: 'Your Selected Policy (' + uStart + ' -> ' + uEnd + ')', usd: activeCurve.total, color: '#111827' }
+        { label: 'Do Nothing (413 -> 567 seats)', usd: driftCurve.total, color: '#991b1b' },
+        { label: '2027 Finance Sheet (399 -> 453 seats)', usd: fatRefCurve.total, color: '#6b7280' },
+        { label: 'Cut >60d Idle Only (375 -> 397 seats)', usd: p60Curve.total, color: '#d97706' },
+        { label: 'Step 1 Only: Cut >30d (352 -> 374 seats)', usd: p30Curve.total, color: '#1d4ed8' },
+        { label: 'Recommended 229-Seat Plan (229 -> 251)', usd: rec229Curve.total, color: '#0f766e' },
+        { label: 'Your Selected Sliders (' + uStart + ' -> ' + uEnd + ')', usd: activeCurve.total, color: '#111827' }
       ];
       const maxUsd = Math.max(...barItems.map(b => b.usd), 1);
 
@@ -1985,18 +1981,17 @@ ORDER BY u.last_login NULLS FIRST;</pre>
         `;
       }).join('');
 
-      // Render 12-Month Schedule Table
       const schedRows = [
-        { pill: 'pill-bad', tag: 'Unoptimized Drift (+14/mo)', title: 'No Cleanup (413 -> 567)', curve: driftCurve, hl: '' },
-        { pill: 'pill-neutral', tag: '2027 FAT Budget Curve', title: 'FAT Sheet (399 -> 453)', curve: fatRefCurve, hl: '' },
-        { pill: 'pill-warn', tag: 'Policy 1A (2-Mo Idle)', title: '60-Day Cutoff + ExCo (375 -> 397)', curve: p60Curve, hl: '' },
-        { pill: 'pill-good', tag: 'Policy 1B (Recommended)', title: '30-Day Cutoff + ExCo (352 -> 374)', curve: p30Curve, hl: 'col-highlight-teal' },
-        { pill: 'pill-good', tag: 'Live Simulator Selection', title: `Selected (${uStart} -> ${uEnd} seats)`, curve: activeCurve, hl: 'col-highlight-blue' }
+        { pill: 'pill-bad', tag: 'Do Nothing (+14/mo)', title: 'Convert All (413 -> 567)', curve: driftCurve, hl: '' },
+        { pill: 'pill-neutral', tag: '2027 Finance Sheet', title: 'Previous Budget (399 -> 453)', curve: fatRefCurve, hl: '' },
+        { pill: 'pill-blue', tag: 'Step 1 Only', title: 'Cut >30d Idle Only (352 -> 374)', curve: p30Curve, hl: '' },
+        { pill: 'pill-good', tag: 'Recommended Plan', title: 'Cut >30d + Free Store Portal (229 -> 251)', curve: rec229Curve, hl: 'col-highlight-teal' },
+        { pill: 'pill-good', tag: 'Your Sliders', title: `Selected (${uStart} -> ${uEnd} seats)`, curve: activeCurve, hl: 'col-highlight-blue' }
       ];
 
       scheduleTbody.innerHTML = schedRows.map(r => {
         const cells = r.curve.monthlyUsd.map((uVal, i) =>
-          `<td class="mono tabular ${r.hl}">${fmtIdrExact(uVal * fx)}<br><span style="font-size:0.7rem; color:var(--text-muted);">${r.curve.monthlySeats[i]}u</span></td>`
+          `<td class="mono tabular ${r.hl}">${fmtIdrExact(uVal * fx)}<br><span style="font-size:0.7rem; color:var(--text-muted);">${r.curve.monthlySeats[i]} seats</span></td>`
         ).join('');
         return `
           <tr>
@@ -2011,40 +2006,13 @@ ORDER BY u.last_login NULLS FIRST;</pre>
       }).join('');
     }
 
-    // Wire Presets
-    document.getElementById('preset-drift').addEventListener('click', function() {
+    document.getElementById('preset-rec229').addEventListener('click', function() {
       useFatExactCurve = false;
-      inpCutoff.value = 125;
+      selStores.value = 'all';
+      inpCutoff.value = 30;
       chkExco.checked = true;
       chkGrace.checked = true;
       chkDigest.checked = false;
-      selStores.value = 'none';
-      inpGrowth.value = 14;
-      inpFx.value = 18000;
-      setActivePreset(this);
-      runOptimizer();
-    });
-
-    document.getElementById('preset-fat').addEventListener('click', function() {
-      useFatExactCurve = true;
-      inpCutoff.value = 125;
-      chkExco.checked = true;
-      chkGrace.checked = true;
-      chkDigest.checked = false;
-      selStores.value = 'none';
-      inpGrowth.value = 5;
-      inpFx.value = 18000;
-      setActivePreset(this);
-      runOptimizer();
-    });
-
-    document.getElementById('preset-60d').addEventListener('click', function() {
-      useFatExactCurve = false;
-      inpCutoff.value = 60;
-      chkExco.checked = true;
-      chkGrace.checked = true;
-      chkDigest.checked = false;
-      selStores.value = 'none';
       inpGrowth.value = 2;
       inpFx.value = 18000;
       setActivePreset(this);
@@ -2053,76 +2021,73 @@ ORDER BY u.last_login NULLS FIRST;</pre>
 
     document.getElementById('preset-30d').addEventListener('click', function() {
       useFatExactCurve = false;
-      inpCutoff.value = 30;
-      chkExco.checked = true;
-      chkGrace.checked = true;
-      chkDigest.checked = false;
       selStores.value = 'none';
-      inpGrowth.value = 2;
-      inpFx.value = 18000;
-      setActivePreset(this);
-      runOptimizer();
-    });
-
-    document.getElementById('preset-phase2').addEventListener('click', function() {
-      useFatExactCurve = false;
       inpCutoff.value = 30;
       chkExco.checked = true;
       chkGrace.checked = true;
       chkDigest.checked = false;
-      selStores.value = 'all';
       inpGrowth.value = 2;
       inpFx.value = 18000;
       setActivePreset(this);
       runOptimizer();
     });
 
-    [inpCutoff, chkExco, chkGrace, chkDigest, selStores, inpGrowth].forEach(el => {
-      el.addEventListener('input', () => {
+    document.getElementById('preset-60d').addEventListener('click', function() {
+      useFatExactCurve = false;
+      selStores.value = 'none';
+      inpCutoff.value = 60;
+      chkExco.checked = true;
+      chkGrace.checked = true;
+      chkDigest.checked = false;
+      inpGrowth.value = 2;
+      inpFx.value = 18000;
+      setActivePreset(this);
+      runOptimizer();
+    });
+
+    document.getElementById('preset-fat').addEventListener('click', function() {
+      useFatExactCurve = true;
+      selStores.value = 'none';
+      inpCutoff.value = 125;
+      chkExco.checked = true;
+      chkGrace.checked = true;
+      chkDigest.checked = false;
+      inpGrowth.value = 5;
+      inpFx.value = 18000;
+      setActivePreset(this);
+      runOptimizer();
+    });
+
+    document.getElementById('preset-drift').addEventListener('click', function() {
+      useFatExactCurve = false;
+      selStores.value = 'none';
+      inpCutoff.value = 125;
+      chkExco.checked = true;
+      chkGrace.checked = true;
+      chkDigest.checked = false;
+      inpGrowth.value = 14;
+      inpFx.value = 18000;
+      setActivePreset(this);
+      runOptimizer();
+    });
+
+    [selStores, inpCutoff, chkExco, chkGrace, chkDigest, inpGrowth].forEach(el => {
+      const handler = () => {
         useFatExactCurve = false;
         setActivePreset(null);
         runOptimizer();
-      });
-      el.addEventListener('change', () => {
-        useFatExactCurve = false;
-        setActivePreset(null);
-        runOptimizer();
-      });
+      };
+      el.addEventListener('input', handler);
+      el.addEventListener('change', handler);
     });
 
     inpFx.addEventListener('input', runOptimizer);
 
-    // Wire Department Filter Buttons
-    const segBtns = document.querySelectorAll('[data-seg-filter]');
-    if (window.ResizeObserver && matrixToolbar) {
-      new ResizeObserver(syncMatrixToolbarHeight).observe(matrixToolbar);
-    }
-    window.addEventListener('resize', syncMatrixToolbarHeight);
-
-    segBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        segBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.getAttribute('data-seg-filter');
-        document.querySelectorAll('#dept-tbody tr').forEach(row => {
-          const rSeg = row.getAttribute('data-seg');
-          row.style.display = (filter === 'all' || rSeg === filter) ? '' : 'none';
-        });
-        syncMatrixToolbarHeight();
-        if (deptTable && matrixToolbar) {
-          const rect = deptTable.getBoundingClientRect();
-          const toolbarH = matrixToolbar.getBoundingClientRect().height;
-          if (rect.top < toolbarH) {
-            window.scrollTo({ top: Math.max(0, window.scrollY + rect.top - toolbarH), behavior: 'smooth' });
-          }
-        }
-      });
-    });
-
-    // Initialize Tables, Simulator, and Hash Routing
-    renderDeptTable();
+    // Initialize everything on load
+    renderUserDirectory();
+    renderDeptSummary();
     runOptimizer();
-    syncMatrixToolbarHeight();
+    syncUserToolbarHeight();
 
     const initialHash = window.location.hash.replace('#', '');
     if (initialHash && document.getElementById('view-' + initialHash)) {
